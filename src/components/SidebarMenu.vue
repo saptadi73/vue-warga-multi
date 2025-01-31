@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="flex">
-      <div id="sidebar" class="bg-gradient-to-r from-purple-200 to-slate-100  pl-3 h-screen w-20 transition-transform duration-500 relative"><span id="panah" class="material-icons rotate-180 transition-transform duration-500 cursor-pointer bg-purple-700 text-white border border-purple-800 rounded-full absolute -right-3 top-9" :onclick="openSideBar">
+      <div id="sidebar" class="bg-gradient-to-r font-Poppins from-purple-200 to-slate-100  pl-3 h-screen w-20 transition-transform duration-500 relative"><span id="panah" class="material-icons rotate-180 transition-transform duration-500 cursor-pointer bg-purple-700 text-white border border-purple-800 rounded-full absolute -right-3 top-9" :onclick="openSideBar">
         arrow_back
         </span>
         <div class="flex items-center bg-gradient-to-r from-purple-200 to-white rounded-r-lg">
           <img src="../assets/logo_rukun.png" class="w-10 h-10"><h1 id="title1" class="font-Poppins hidden ml-5 text-xl"><span class="font-bold text-[#ca13c5]">RUKUN</span><span class="font-semibold text-[#2b94f1]">TETANGGA</span></h1>
         </div>
+        <div class="mt-8 ml-3 flex items-center hover:bg-slate-100 active:border-l-2 active:border-blue-800 cursor-pointer"><div class="material-icons text-[#e52bf1]">dashboard</div><span class="ml-2 text-blue-600">Dashboard</span></div>
+        <div class="mt-4 ml-3 flex items-center hover:bg-slate-100 active:border-l-2 active:border-blue-800 cursor-pointer"><div class="material-icons text-[#e52bf1]">group</div><div class="flex justify-between items-start w-full"><span class="ml-2 text-blue-600">Warga</span><span class="material-icons text-blue-600 right-2">arrow_drop_up</span></div></div>
       </div>
       <div class="p-7 text-slate-400 font-semibold font-Poppins">Homepage</div>
     </div>
