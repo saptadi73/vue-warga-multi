@@ -18,6 +18,11 @@ const router = createRouter({
       path: "/menu",
       name: "menu",
       component: () => import("../views/MainPageLayout.vue"),  
+    },
+    {
+      path: "/form",
+      name: "form",
+      component: () => import("../views/MainFormSample.vue"),
     }
   ],
 });

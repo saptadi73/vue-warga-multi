@@ -5,8 +5,8 @@
             <div class="">
                 <NavBarPreline/>
                 <div><CardWidthFull/></div>
-                <div><CardGridView/></div>
-                <div><CardColTiga/></div>
+                <div><CardTwoFormSample/></div>
+               
             </div>
         </div>
     </div>
@@ -17,7 +17,8 @@ import SidebarMain from '../components/SidebarMain.vue';
 import NavBarPreline from '../components/NavBarPreline.vue';
 import CardWidthFull from '../components/CardWidthFull.vue';
 import CardGridView from '../components/CardGridView.vue';
-import CardColTiga from '../components/CardColTiga.vue';
+import CardTwoFormSample from '../components/CardTwoFormSample.vue';
+
 
 </script>
 
