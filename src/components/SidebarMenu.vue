@@ -221,14 +221,14 @@
         <!-- End of Navbar -->
 
         <!-- Content Row#1 -->
-        <div>Test</div>
+        <div></div>
 
         <!-- Content Row#2 -->
-        <div>Test</div>
+        <div></div>
 
         <!-- Content Row#3 -->
-        <div>Test</div>
-        
+        <div></div>
+
       </div>
       <!-- dilarang Isi di sini -->
     </div>
