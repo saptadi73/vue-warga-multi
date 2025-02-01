@@ -14,6 +14,11 @@ const router = createRouter({
         name: "main",
         component: () => import("../views/MainLayoutView.vue"),
     },
+    {
+      path: "/menu",
+      name: "menu",
+      component: () => import("../views/MainPageLayout.vue"),  
+    }
   ],
 });
 
