@@ -17,7 +17,7 @@ export default {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    require('@tailwindcss/forms'),
+    //require('@tailwindcss/forms'),
     require('preline/plugin'),
     require('flowbite/plugin'),
   ],

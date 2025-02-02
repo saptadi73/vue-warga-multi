@@ -4,7 +4,7 @@
       class="grid p-5 md:grid-cols-2 md:gap-4 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70"
     >
       <!-- start Card  -->
-      <div id="card1" class="">
+      <div id="card1" class="w-[40vw]">
         <div class="p-4 md:p-5">
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">
             Card title
