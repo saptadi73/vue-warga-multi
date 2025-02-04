@@ -4,10 +4,7 @@
             <SidebarMain/>
             <div class="">
                 <NavBarPreline/>
-                <div><CardWidthFull/></div>
-                <div><InputProfileEntity/></div>
-                <div><DataTableSinglePage/></div>
-               
+                <div><RouterView/></div>
             </div>
         </div>
     </div>
@@ -16,10 +13,7 @@
 <script setup>
 import SidebarMain from '../components/SidebarMain.vue';
 import NavBarPreline from '../components/NavBarPreline.vue';
-import CardWidthFull from '../components/CardWidthFull.vue';
-import DataTableSinglePage from '../components/DataTableSinglePage.vue';
-import InputProfileEntity from '../profile/IsiProfileEntity.vue';
-
+import { RouterView } from 'vue-router';
 
 </script>
 

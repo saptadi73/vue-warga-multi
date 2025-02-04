@@ -21,8 +21,8 @@
           class="font-Poppins hidden ml-5 text-2xl"
           v-if="(isiSideBar = true)"
         >
-          <span class="font-bold text-[#ca13c5]">RUKUN</span
-          ><span class="font-semibold text-[#2b94f1]">TETANGGA</span>
+          <span class="font-bold text-[#ca13c5]">IURAN</span
+          ><span class="font-semibold text-[#2b94f1]">WARGA</span>
         </h1>
       </div>
       <div
