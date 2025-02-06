@@ -1,14 +1,13 @@
 <template>
     <div>
+      <h3 class="mx-auto md:text-xl text-center font-bold font-Roboto mt-10 text-blue-600 p-3 bg-gradient-to-r from-[#DAF7A6] to-yellow-50 rounded-lg">Pengisian Data Profile Wilayah</h3>
       <div
-        class="w-[90vw] grid p-5 md:grid-cols-2 md:gap-4 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70"
+        class="w-[85vw] grid p-5 md:grid-cols-2 md:gap-4 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70"
       >
         <!-- start Card  -->
-        <div id="card1" class="w-[40vw]">
+        <div id="card1" class="md:w-[40vw] w-full">
           <div class="p-4 md:p-5">
-            <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-              Input Data Wilayah Provinsi dan Kabupaten
-            </h3>
+            
             <div class="mt-10">
               <div class="relative">
                 <select id="provinsi" class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm  focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none
@@ -92,11 +91,8 @@
         </div>
   
         <!-- start Card  -->
-        <div id="card1" class="w-[40vw]">
+        <div id="card2" class="md:w-[40vw] w-full">
           <div class="p-4 md:p-5">
-            <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-              Input Data Wilayah Desa/Kelurahan dan Perumahan
-            </h3>
             <div class="mt-10">
               <div class="relative">
                 <select id="provinsi" class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm  focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none

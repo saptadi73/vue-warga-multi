@@ -63,10 +63,10 @@
         aria-labelledby="menu_profile"
       >
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
-          <a href="#">Profile RT/RW</a>
+          <router-link to="/profile/input">Profile RT/RW</router-link>
         </li>
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
-          <a href="#">Isi Map Wilayah</a>
+          <router-link to="/profile/input/polygon">Isi Map Wilayah</router-link>
         </li>
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
           <a href="#">Pendaftaran User</a>
@@ -197,6 +197,8 @@
 </template>
 
 <script>
+import { RouterLink } from 'vue-router';
+
 export default {
   data() {
     return {

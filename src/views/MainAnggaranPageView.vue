@@ -4,9 +4,7 @@
             <SidebarMain/>
             <div class="">
                 <NavBarPreline/>
-                <div><DataTable/></div>
-                
-               
+                <div><RouterView/></div>
             </div>
         </div>
     </div>
@@ -15,8 +13,7 @@
 <script setup>
 import SidebarMain from '../components/SidebarMain.vue';
 import NavBarPreline from '../components/NavBarPreline.vue';
-import DataTable from '../components/DataTable.vue';
-
+import { RouterView } from 'vue-router';
 
 </script>
 

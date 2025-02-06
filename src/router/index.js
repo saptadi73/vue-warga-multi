@@ -44,6 +44,7 @@ const router = createRouter({
           name: "register_user",
           component: () => import("../profile/RegisterUser.vue"),
         },
+        
       ],
     },
     {
@@ -55,6 +56,50 @@ const router = createRouter({
           path: "input/blok",
           name: "input_blok",
           component: () => import("../warga/InputBlokWarga.vue"),
+        },
+        {
+          path: "input/warga",
+          name: "input_warga",
+          component: () => import("../warga/IsiDataWarga.vue"),
+        },
+        {
+          path: "input/type",
+          name: "input_type",
+          component: () => import("../warga/InputTypeWarga.vue"),
+        }
+      ],
+    },
+    {
+      path: "/anggaran",
+      name: "anggaran",
+      component: () => import("../views/MainAnggaranPageView.vue"),
+      children: [
+        {
+          path: "input/type",
+          name: "input_type_anggaran",
+          component: () => import("../anggaran/InputTypeAnggaran.vue"),
+        },
+        {
+          path: "input/anggaran",
+          name: "input_anggaran",
+          component: () => import("../anggaran/InputAnggaranWarga.vue"),
+        },
+      ],
+    },
+    {
+      path: "/iuran",
+      name: "iuran",
+      component: () => import("../views/MainIuranPageView.vue"),
+      children: [
+        {
+          path: "input/iuran",
+          name: "input_iuran",
+          component: () => import("../iuran/IsiIuranWarga.vue"),
+        },
+        {
+          path: "input/jenis",
+          name: "input_jenis_iuran",
+          component: () => import("../iuran/IsiJenisIuran.vue"),
         },
       ],
     },
