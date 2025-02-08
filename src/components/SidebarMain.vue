@@ -69,10 +69,7 @@
           <router-link to="/profile/input/polygon">Isi Map Wilayah</router-link>
         </li>
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
-          <a href="#">Pendaftaran User</a>
-        </li>
-        <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
-          <a href="#">Daftar User</a>
+          <router-link to="/profile/register/user">Pendaftaran User</router-link>
         </li>
       </ul>
 
@@ -102,17 +99,21 @@
         class="hidden z-10 overflow-hidden text-[#0824a1] bg-yellow-200 rounded-md"
         aria-labelledby="menu_warga"
       >
+        
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
-          <a href="#">Daftar Blok</a>
-        </li>
-        <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
-          <a href="#">Isi Blok Baru</a>
+          <router-link to="/warga/input/blok">Isi Blok/No. Baru</router-link>
         </li>
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
           <a href="#">Daftar KK</a>
         </li>
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
-          <a href="#">Register KK Baru</a>
+          <router-link to="/warga/input/pekerjaan">Isi Jenis Pekerjaan</router-link>
+        </li>
+        <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
+          <router-link to="/warga/input/status">Isi Status Warga</router-link>
+        </li>
+        <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
+          <router-link to="/warga/input/warga">Register Warga Baru</router-link>
         </li>
       </ul>
 
@@ -143,7 +144,7 @@
         aria-labelledby="menu_iuran"
       >
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
-          <a href="#">Tambah Jenis Iuran</a>
+          <router-link to="/iuran/input/jenis">Tambah Jenis Iuran</router-link>
         </li>
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
           <a href="#">Warga Iuran</a>
@@ -180,10 +181,10 @@
         aria-labelledby="menu_anggaran"
       >
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
-          <a href="#">Isi Jenis Anggaran</a>
+          <router-link to="/anggaran/input/type">Isi Jenis Anggaran</router-link>
         </li>
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
-          <a href="#">Isi Anggaran</a>
+          <router-link to="/anggaran/input/anggaran">Isi Anggaran</router-link>
         </li>
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
           <a href="#">Laporan Anggaran</a>

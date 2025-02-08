@@ -66,7 +66,17 @@ const router = createRouter({
           path: "input/type",
           name: "input_type",
           component: () => import("../warga/InputTypeWarga.vue"),
-        }
+        },
+        {
+          path: "input/pekerjaan",
+          name: "input_pekerjaan",
+          component: () => import("../warga/InputPekerjaanWarga.vue"),
+        },
+        {
+          path: "input/status",
+          name: "input_status",
+          component: () => import("../warga/InputStatusWarga.vue"),
+        },
       ],
     },
     {
