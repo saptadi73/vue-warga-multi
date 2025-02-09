@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="flex">
-            <SidebarMain/>
+            <SidebarJoss/>
             <div class="">
                 <NavBarPreline/>
                 <div><RouterView/></div>
@@ -14,6 +14,7 @@
 import SidebarMain from '../components/SidebarMain.vue';
 import NavBarPreline from '../components/NavBarPreline.vue';
 import { RouterView } from 'vue-router';
+import SidebarJoss from '../components/SidebarJoss.vue';
 
 </script>
 

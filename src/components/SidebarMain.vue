@@ -69,9 +69,7 @@
           <router-link to="/profile/input/polygon">Isi Map Wilayah</router-link>
         </li>
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
-          <router-link to="/profile/register/user"
-            >Pendaftaran User</router-link
-          >
+          <router-link to="/profile/register/user">Pendaftaran User</router-link>
         </li>
       </ul>
 
@@ -101,6 +99,7 @@
         class="hidden z-10 overflow-hidden text-[#0824a1] bg-yellow-200 rounded-md"
         aria-labelledby="menu_warga"
       >
+        
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
           <router-link to="/warga/input/blok">Isi Blok/No. Baru</router-link>
         </li>
@@ -108,9 +107,7 @@
           <a href="#">Daftar KK</a>
         </li>
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
-          <router-link to="/warga/input/pekerjaan"
-            >Isi Jenis Pekerjaan</router-link
-          >
+          <router-link to="/warga/input/pekerjaan">Isi Jenis Pekerjaan</router-link>
         </li>
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
           <router-link to="/warga/input/status">Isi Status Warga</router-link>
@@ -184,9 +181,7 @@
         aria-labelledby="menu_anggaran"
       >
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
-          <router-link to="/anggaran/input/type"
-            >Isi Jenis Anggaran</router-link
-          >
+          <router-link to="/anggaran/input/type">Isi Jenis Anggaran</router-link>
         </li>
         <li class="hover:bg-slate-100 hover:font-semibold p-1 ml-2">
           <router-link to="/anggaran/input/anggaran">Isi Anggaran</router-link>
@@ -195,73 +190,16 @@
           <a href="#">Laporan Anggaran</a>
         </li>
       </ul>
-      <div
-        class="hs-dropdown [--strategy:absolute] [--flip:false] hs-dropdown-example relative inline-flex"
-      >
-        <button
-          id="hs-dropdown-example"
-          type="button"
-          class="hs-dropdown-toggle py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-          aria-haspopup="menu"
-          aria-expanded="false"
-          aria-label="Dropdown"
-        >
-          Actions
-          <svg
-            class="hs-dropdown-open:rotate-180 size-4 text-gray-600 dark:text-neutral-600"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="m6 9 6 6 6-6"></path>
-          </svg>
-        </button>
+      
 
-        <div
-          class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 w-56 hidden z-10 mt-2 min-w-60 bg-white shadow-md rounded-lg p-2 dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700"
-          role="menu"
-          aria-orientation="vertical"
-          aria-labelledby="hs-dropdown-example"
-        >
-          <a
-            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-            href="#"
-          >
-            Newsletter
-          </a>
-          <a
-            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-            href="#"
-          >
-            Purchases
-          </a>
-          <a
-            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-            href="#"
-          >
-            Downloads
-          </a>
-          <a
-            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-            href="#"
-          >
-            Team Account
-          </a>
-        </div>
-      </div>
+      
     </div>
     <!-- End of Sidebar -->
   </div>
 </template>
 
 <script>
-import { RouterLink } from "vue-router";
+import { RouterLink } from 'vue-router';
 
 export default {
   data() {

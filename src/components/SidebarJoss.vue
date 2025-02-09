@@ -1,0 +1,181 @@
+<template>
+  <div>
+    <!-- Start Side Bar -->
+    <div
+      :class="{
+        'w-14': !isiSidebar,
+        'w-64': isiSidebar,
+      }"
+      class="z-10 bg-gradient-to-r font-Poppins from-purple-200 to-slate-100 pl-3 h-[100vh] w-14 transition-transform duration-500 relative"
+    >
+      <span
+        @click="openSidebar"
+        class="material-icons transition-transform duration-500 cursor-pointer bg-purple-700 text-white border border-purple-800 rounded-full absolute -right-3 top-9"
+        :class="{
+          'rotate-180': !isiSidebar,
+          'rotate-0': isiSidebar,
+        }"
+        >arrow_back</span
+      >
+      <div
+        class="flex items-center bg-gradient-to-r from-purple-200 to-white rounded-r-lg space-x-2"
+      >
+        <img src="../assets/logo_rukun.png" class="w-10 h-10 animate-spin" />
+        <h1 v-if="isiSidebar" class="font-Poppins hidden ml-5 text-2xl">
+          <span class="font-bold text-[#ca13c5]">IURAN</span
+          ><span class="font-semibold text-[#2b94f1]">WARGA</span>
+        </h1>
+      </div>
+      <div v-for="menu in menus" :key="menu.title" class="mt-4">
+        <div
+          @click="toggleSubmenu(menu)"
+          class="flex items-center cursor-pointer ml-3 mt-4 hover:bg-slate-100 rounded-md"
+        >
+          <span class="material-icons text-[#e52bf1]">{{ menu.icon }}</span>
+          <span v-if="isiSidebar" class="ml-2 text-blue-600">{{
+            menu.title
+          }}</span>
+          <span
+            v-if="isiSidebar && menu.submenu"
+            class="material-icons text-blue-600 right-2"
+            >arrow_drop_down</span
+          >
+        </div>
+        <ul
+          v-if="menu.open && menu.submenu"
+          class="text-[#0824a1] bg-yellow-200 rounded-md ml-6 z-10"
+        >
+          <li
+            v-for="sub in menu.submenu"
+            :key="sub.name"
+            class="hover:bg-slate-100 hover:font-semibold p-1"
+          >
+            <RouterLink :to="sub.path" class="block">{{ sub.name }}</RouterLink>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { RouterLink } from "vue-router";
+
+export default {
+  data() {
+    return {
+      isiSidebar: false,
+      menus: [
+        {
+          title: "Dashboard",
+          icon: "dashboard",
+          link: "/dashboard",
+        },
+        {
+          title: "Profile",
+          icon: "settings_accessibility",
+          submenu: [
+            {
+              name: "Profile RT/RW",
+              path: "/profile/input",
+            },
+            {
+              name: "Isi Map Wilayah",
+              path: "/profile/input/polygon",
+            },
+            {
+              name: "Pendaftaran User",
+              path: "/profile/register/user",
+            },
+          ],
+          open: false,
+        },
+        {
+          title: "Warga",
+          path: "/warga",
+          icon: "group",
+          submenu: [
+            {
+              name: "Isi Blok/No. Baru",
+              path: "/warga/input/blok",
+            },
+            {
+              name: "Daftar KK",
+              path: "/warga/daftar/kk",
+            },
+            {
+              name: "Isi Jenis Pekerjaan",
+              path: "/warga/input/pekerjaan",
+            },
+            {
+              name: "Isi Status Warga",
+              path: "/warga/input/status",
+            },
+            {
+              name: "Registrasi Warga Baru",
+              path: "/warga/input/warga",
+            },
+          ],
+          open: false,
+        },
+        {
+          title: "Iuran Warga",
+          path: "/iuran",
+          icon: "savings",
+          submenu: [
+            {
+              name: "Tambah Jenis iuran",
+              path: "/iuran/input/jenis",
+            },
+            {
+              name: "Warga iuran",
+              path: "/iuran/warga/iuran",
+            },
+            {
+              name: "Warga Belum Iuran",
+              path: "/iuran/warga/belum",
+            },
+          ],
+          open: false,
+        },
+        {
+          title: "Anggaran",
+          path: "/anggaran",
+          icon: "account_balance",
+          submenu: [
+            {
+              name: "Isi Jenis Anggaran",
+              path: "/anggaran/input/type",
+            },
+            {
+              name: "Isi Anggaran",
+              path: "/anggaran/input/anggaran",
+            },
+            {
+              name: "Laporan Anggaran",
+              path: "/anggaran/laporan",
+            },
+          ],
+        },
+      ],
+    };
+  },
+  methods: {
+    openSidebar() {
+      this.isiSidebar = !this.isiSidebar;
+    },
+
+    toggleSubmenu(menu) {
+      menu.open = !menu.open;
+    },
+  },
+};
+</script>
+
+<style scoped>
+@media (max-width: 768px) {
+  .w-64 {
+    width: 100%;
+  }
+}
+</style>
