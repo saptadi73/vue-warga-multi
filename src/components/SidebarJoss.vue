@@ -21,28 +21,32 @@
         class="flex items-center bg-gradient-to-r from-purple-200 to-white rounded-r-lg space-x-2"
       >
         <img src="../assets/logo_rukun.png" class="w-10 h-10 animate-spin" />
-        <h1 v-if="isiSidebar" class="font-Poppins hidden ml-5 text-2xl">
+        <h1 v-if="isiSidebar" class="font-Poppins ml-5 text-2xl">
           <span class="font-bold text-[#ca13c5]">IURAN</span
           ><span class="font-semibold text-[#2b94f1]">WARGA</span>
         </h1>
       </div>
       <div v-for="menu in menus" :key="menu.title" class="mt-4">
-        <div
-          @click="toggleSubmenu(menu)"
-          class="flex items-center cursor-pointer ml-3 mt-4 hover:bg-slate-100 rounded-md"
-        >
-          <span class="material-icons text-[#e52bf1]">{{ menu.icon }}</span>
-          <span v-if="isiSidebar" class="ml-2 text-blue-600">{{
-            menu.title
-          }}</span>
-          <span
-            v-if="isiSidebar && menu.submenu"
-            class="material-icons text-blue-600 right-2"
-            >arrow_drop_down</span
+        <div class="flex justify-between  hover:bg-slate-100 rounded-md"><div
+            @click="toggleSubmenu(menu)"
+            class="flex items-center cursor-pointer ml-3 mt-4"
           >
-        </div>
+            <span class="material-icons text-[#e52bf1]">{{ menu.icon }}</span>
+            <span v-if="isiSidebar" class="ml-2 text-blue-600">{{
+              menu.title
+            }}</span>
+            
+          </div><span
+              v-if="isiSidebar && menu.submenu" :class="{
+                'rotate-180':menu.submenu && menu.open,
+                'rotate-0':!menu.submenu && menu.open,
+              }"
+              class="material-icons text-blue-600 right-2 mt-4"
+              >arrow_drop_down</span
+            ></div>
+        
         <ul
-          v-if="menu.open && menu.submenu"
+          v-if="menu.open && menu.submenu && isiSidebar"
           class="text-[#0824a1] bg-yellow-200 rounded-md ml-6 z-10"
         >
           <li
