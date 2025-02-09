@@ -113,6 +113,12 @@ const router = createRouter({
         },
       ],
     },
+
+    {
+      path: "/cobasidebar",
+      name: "cobasidebar",
+      component: () => import("../components/CobaSidebar.vue"),
+    }
   ],
 });
 
