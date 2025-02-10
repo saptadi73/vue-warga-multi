@@ -1,11 +1,11 @@
 <template>
     <div class="flex">
-        <SidebarMenu/>
+        <SidebarJoss/>
     </div>
 </template>
 
 <script setup>
-import SidebarMenu from '../components/SidebarMenu.vue';
+import SidebarJoss from '../components/SidebarJoss.vue';
 
 </script>
 
