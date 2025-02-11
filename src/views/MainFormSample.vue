@@ -1,19 +1,17 @@
 <template>
     <div>
         <div class="flex">
-            <SidebarMain/>
+            <SidebarJoss/>
             <div class="">
                 <NavBarPreline/>
                 <div><DataTable/></div>
-                
-               
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import SidebarMain from '../components/SidebarMain.vue';
+import SidebarJoss from '../components/SidebarJoss.vue';
 import NavBarPreline from '../components/NavBarPreline.vue';
 import DataTable from '../components/DataTable.vue';
 
