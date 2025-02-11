@@ -4,16 +4,16 @@
             <SidebarJoss/>
             <div class="">
                 <NavBarPreline/>
-                <div><RouterView/></div>
+                <div><DashboardBarisPertama/></div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import SidebarJoss from '../components/SidebarJoss.vue';
 import NavBarPreline from '../components/NavBarPreline.vue';
-import { RouterView } from 'vue-router';
+import SidebarJoss from '../components/SidebarJoss.vue';
+import DashboardBarisPertama from '../components/DashboardBarisPertama.vue';
 
 </script>
 

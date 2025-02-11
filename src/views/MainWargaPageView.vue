@@ -11,7 +11,6 @@
 </template>
 
 <script setup>
-import SidebarMain from '../components/SidebarMain.vue';
 import NavBarPreline from '../components/NavBarPreline.vue';
 import { RouterView } from 'vue-router';
 import SidebarJoss from '../components/SidebarJoss.vue';

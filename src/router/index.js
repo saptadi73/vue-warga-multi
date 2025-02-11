@@ -77,6 +77,11 @@ const router = createRouter({
           name: "input_status",
           component: () => import("../warga/InputStatusWarga.vue"),
         },
+        {
+          path: "modal",
+          name: "modal",
+          component: () => import("../components/ToastCard.vue"),
+        },
       ],
     },
     {
@@ -118,7 +123,12 @@ const router = createRouter({
       path: "/cobasidebar",
       name: "cobasidebar",
       component: () => import("../components/CobaSidebar.vue"),
-    }
+    },
+    {
+      path: "/dashboard",
+      name: "dashboard",
+      component: () => import("../views/MainDashboard.vue"),
+    },
   ],
 });
 
