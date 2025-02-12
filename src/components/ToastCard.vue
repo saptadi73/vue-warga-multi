@@ -2,7 +2,7 @@
   <div class="space-y-3">
     <!-- Toast -->
     <div
-      class="max-w-xs font-Poppins bg-green-500 text-sm text-white rounded-xl shadow-lg"
+      class="top-20 left-52 fixed max-w-xs font-Poppins bg-green-500 text-sm text-white rounded-xl shadow-lg"
     >
       <div id="" class="flex p-4">
         {{ message_toast }}

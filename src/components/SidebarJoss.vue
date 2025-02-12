@@ -31,10 +31,13 @@
             @click="toggleSubmenu(menu)"
             class="flex items-center cursor-pointer ml-3 mt-4"
           >
-            <RouterLink :to="menu.link"><span class="material-icons text-[#e52bf1]">{{ menu.icon }}</span>
+            
+              <RouterLink to="/dashboard">
+                <span class="material-icons text-[#e52bf1]">{{ menu.icon }}</span>
               <span v-if="isiSidebar" class="ml-2 text-blue-600">{{
                 menu.title
-              }}</span></RouterLink>
+              }}</span>
+              </RouterLink>
             
           </div><span
               v-if="isiSidebar && menu.submenu" :class="{
@@ -73,7 +76,7 @@ export default {
         {
           title: "Dashboard",
           icon: "dashboard",
-          link: "/dashboard",
+          path: "/dashboard",
         },
         {
           title: "Profile",

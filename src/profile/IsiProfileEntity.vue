@@ -322,9 +322,9 @@ export default {
 
     tutupToast() {
       this.showToast = false;
-      // if (this.isiProfile.status == "ok") {
-      //   this.$router.push("/asset/daftar/kk");
-      // }
+      if (this.isiProfile.status == "ok") {
+        this.$router.push("/dashboard");
+      }
     },
   },
 

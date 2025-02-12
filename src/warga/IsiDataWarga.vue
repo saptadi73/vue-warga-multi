@@ -830,7 +830,7 @@
             </div>
 
             <div
-              class="flex items-center space-x-1 mt-4 hidden"
+              class="flex items-center space-x-1 mt-4"
               data-hs-datatable-paging=""
             >
               <button

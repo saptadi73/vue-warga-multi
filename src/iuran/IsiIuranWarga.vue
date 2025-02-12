@@ -50,7 +50,6 @@
               >
             </div>
           </div>
-          
           <a
             class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-600 dark:focus:text-blue-600"
             href="#"
@@ -781,7 +780,7 @@
               </div>
   
               <div
-                class="flex items-center space-x-1 mt-4 hidden"
+                class="flex items-center space-x-1 mt-4"
                 data-hs-datatable-paging=""
               >
                 <button

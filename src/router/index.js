@@ -129,6 +129,11 @@ const router = createRouter({
       name: "dashboard",
       component: () => import("../views/MainDashboard.vue"),
     },
+    {
+      path: "/polygon",
+      name: "polygon",
+      component: () => import("../profile/GetPolygonData.vue"),
+    },
   ],
 });
 
