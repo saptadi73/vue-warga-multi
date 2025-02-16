@@ -70,6 +70,7 @@
                     <th class="py-1 text-start font-normal">Blok</th>
                     <th class="py-1 text-start font-normal">No.Rumah</th>
                     <th class="py-1 text-start font-normal">No.KK</th>
+                    <th class="py-1 text-start font-normal">Tempat Lahir</th>
 
                     <th class="py-2 px-3 text-end font-normal">Action</th>
                   </tr>
@@ -79,7 +80,7 @@
                     <td class="py-3 ps-3">
                       <div class="flex items-center h-5">
                         <input
-                          id="hs-table-filter-checkbox-{{ user.id }}"
+                          :id="'hs-table-filter-checkbox-' + user.id"
                           type="checkbox"
                           class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500"
                         />
@@ -114,6 +115,11 @@
                       class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
                     >
                       {{ user.no_kk }}
+                    </td>
+                    <td
+                      class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
+                    >
+                      {{ user.warga[0].tempat_lahir }}
                     </td>
                     <td
                       class="p-3 whitespace-nowrap text-end text-sm font-medium"
