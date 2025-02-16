@@ -278,7 +278,7 @@
             class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
           >
             <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-              Last updated 5 mins ago
+              {{ blokValue }}
             </p>
           </div>
         </div>
@@ -286,7 +286,7 @@
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
         >
           <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-            Last updated 5 mins ago
+            {{ blokValue }}
           </p>
         </div>
       </div>
@@ -295,6 +295,15 @@
       v-if="showToast"
       :message_toast="toastMessage"
       v-on:dismissToast="tutupToast"
+    />
+    <ModalInputCard
+    :title="ModalTitle"
+    :message_modal="ModalMessage"
+    :modelValue="blokValue"
+    v-on:cancelButton="tutupModal"
+    v-on:closeButton="tutupModal"
+    v-on:okeButton="updateBlok"
+    v-model:modelValue="blokValue"
     />
   </div>
 </template>
@@ -309,6 +318,7 @@ import { error } from "jquery";
 import DaftarKkWarga from "./DaftarKkWarga.vue";
 import TableKkWarga from "./TableKkWarga.vue";
 import TabelBlokWarga from "./TabelBlokWarga.vue";
+import ModalInputCard from "../components/ModalInputCard.vue";
 
 export default {
   components: {
@@ -316,6 +326,7 @@ export default {
     DaftarKkWarga,
     TableKkWarga,
     TabelBlokWarga,
+    ModalInputCard
   },
   data() {
     return {
@@ -332,10 +343,18 @@ export default {
 
   setup() {
     const showToast = ref(false);
+    const showModal = ref(false);
     const toastMessage = ref("");
+    const ModalMessage = ref("");
+    const ModalTitle = ref("");
+    const blokValue=ref("");
     return {
       showToast,
       toastMessage,
+      showModal,
+      ModalMessage,
+      ModalTitle,
+      blokValue
     };
   },
 
@@ -440,6 +459,8 @@ export default {
         });
     },
 
+    tutupModal() {},
+    updateBlok() {},
     
   },
   created() {
