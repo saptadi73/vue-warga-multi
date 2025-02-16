@@ -82,6 +82,11 @@ const router = createRouter({
           name: "modal",
           component: () => import("../components/ToastCard.vue"),
         },
+        {
+          path: 'daftar/kk',
+          name: 'daftar_kk',
+          component: () => import('../warga/DaftarKkWarga.vue'),
+        },
       ],
     },
     {
