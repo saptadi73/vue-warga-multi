@@ -252,7 +252,7 @@
             Card title
           </h3>
           <div>
-            <hasil/>
+            <TableKkWarga/>
           </div>
           <div
             class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
@@ -286,12 +286,14 @@ import { onMounted } from "vue";
 import { ref } from "vue";
 import { BASE_URL } from "../base.url.utils";
 import { error } from "jquery";
-import hasil from "./hasil.vue";
+import DaftarKkWarga from "./DaftarKkWarga.vue";
+import TableKkWarga from "./TableKkWarga.vue";
 
 export default {
   components: {
     ToastCard,
-    hasil,
+    DaftarKkWarga,
+    TableKkWarga,
   },
   data() {
     return {
