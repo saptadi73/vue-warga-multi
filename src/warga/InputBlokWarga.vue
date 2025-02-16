@@ -248,24 +248,7 @@
         class="flex p-5 flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70"
       >
         <div class="p-4 md:p-5">
-          <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-            Card title
-          </h3>
-          <div></div>
-          <div
-            class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
-          >
-            <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-              Last updated 5 mins ago
-            </p>
-          </div>
-        </div>
-        <div
-          class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
-        >
-          <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-            Last updated 5 mins ago
-          </p>
+          <TabelBlokWarga/>
         </div>
       </div>
     </div>
@@ -284,10 +267,12 @@ import { onMounted } from "vue";
 import { ref } from "vue";
 import { BASE_URL } from "../base.url.utils";
 import { error } from "jquery";
+import TabelBlokWarga from "./TabelBlokWarga.vue";
 
 export default {
   components: {
     ToastCard,
+    TabelBlokWarga,
   },
   data() {
     return {
