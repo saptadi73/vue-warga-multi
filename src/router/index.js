@@ -90,7 +90,7 @@ const router = createRouter({
         {
           path: 'daftar/table',
           name: 'daftar_table',
-          component: () => import('../warga/hasil.vue'),
+          component: () => import('../warga/TabelBlokWarga.vue'),
         },
       ],
     },
@@ -148,13 +148,6 @@ const router = createRouter({
       path: "/daftarkk",
       name: "daftarkk",
       component: () => import("../components/DaftarKK.vue"),
-      children:[
-        // {
-        //   path: "input/",
-        //   name: "input_type_anggaran",
-        //   component: () => import("../anggaran/InputTypeAnggaran.vue"),
-        // },
-      ]
     },
   ],
 });
