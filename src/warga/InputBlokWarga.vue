@@ -33,6 +33,22 @@
             Simpan
           </button>
         </div>
+        <table class="border-separate border-spacing-1 border border-slate-500 w-[30vw] mt-10">
+          <thead>
+            <tr class="bg-slate-200">
+              <th class="text-start">No</th>
+              <th class="text-start">Blok</th>
+              <th class="text-start">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(blok, index) in hasilBlok" :key="index" class="even:bg-slate-100">
+              <td class="justify-start">{{ index + 1 }}</td>
+              <td>{{blok.blok}}</td>
+              <td>Edit</td>
+            </tr>
+          </tbody>
+          </table>
         <div
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
         >
@@ -51,6 +67,7 @@
           <div class="mt-1">
             <div class="relative">
               <select
+              id="list_blok"
                 ref="list_blok"
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
@@ -126,6 +143,7 @@
           <div class="mt-1">
             <div class="relative">
               <select
+              id="jk"
                 ref="jk"
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
@@ -169,6 +187,7 @@
           <div class="mt-1">
             <div class="relative">
               <select
+              id="pekerjaan"
                 ref="pekerjaan"
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
@@ -205,6 +224,7 @@
           <div class="mt-1">
             <div class="relative">
               <select
+              id="status_warga"
                 ref="status_warga"
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
@@ -252,7 +272,7 @@
             Card title
           </h3>
           <div>
-            <TableKkWarga/>
+            <TabelBlokWarga/>
           </div>
           <div
             class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
@@ -288,12 +308,14 @@ import { BASE_URL } from "../base.url.utils";
 import { error } from "jquery";
 import DaftarKkWarga from "./DaftarKkWarga.vue";
 import TableKkWarga from "./TableKkWarga.vue";
+import TabelBlokWarga from "./TabelBlokWarga.vue";
 
 export default {
   components: {
     ToastCard,
     DaftarKkWarga,
     TableKkWarga,
+    TabelBlokWarga,
   },
   data() {
     return {
@@ -417,6 +439,8 @@ export default {
           console.log(error);
         });
     },
+
+    
   },
   created() {
     this.daftarBlok();
