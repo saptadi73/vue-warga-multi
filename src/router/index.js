@@ -87,6 +87,11 @@ const router = createRouter({
           name: 'daftar_kk',
           component: () => import('../warga/DaftarKkWarga.vue'),
         },
+        {
+          path: 'daftar/table',
+          name: 'daftar_table',
+          component: () => import('../warga/hasil.vue'),
+        },
       ],
     },
     {
