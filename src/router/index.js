@@ -139,6 +139,11 @@ const router = createRouter({
       name: "polygon",
       component: () => import("../profile/GetPolygonData.vue"),
     },
+    {
+      path: "/daftarkk",
+      name: "daftarkk",
+      component: () => import("../components/DaftarKK.vue"),
+    },
   ],
 });
 

@@ -17,8 +17,8 @@
                   >Isi Blok/No.Blok</span
                 >
                 <input
-                id="blok"
-                v-model="formValuesBlok.blok"
+                  id="blok"
+                  v-model="formValuesBlok.blok"
                   type="text"
                   class="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                 />
@@ -26,7 +26,7 @@
             </div>
           </div>
           <button
-          :onclick="addBlok"
+            :onclick="addBlok"
             class="mt-5 bg-purple-500 text-base font-semibold rounded-lg text-white decoration-2 hover:text-purple-200 hover:underline focus:underline focus:outline-none p-2 focus:text-purple-300 disabled:opacity-50 disabled:pointer-events-none"
             href="#"
           >
@@ -55,10 +55,17 @@
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
                 <option selected="">Pilih Blok/Nomor</option>
-                <option v-if="hasilBlok" v-for="resultku in hasilBlok" :key="resultku.id" :value="resultku.id">{{resultku.blok}}</option>
+                <option
+                  v-if="hasilBlok"
+                  v-for="resultku in hasilBlok"
+                  :key="resultku.id"
+                  :value="resultku.id"
+                >
+                  {{ resultku.blok }}
+                </option>
               </select>
               <label
-              for="list_blok"
+                for="list_blok"
                 class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-gray-500 dark:peer-focus:text-neutral-500 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500"
                 >Blok/No.</label
               >
@@ -71,7 +78,7 @@
                 >Nomor.Rumah</span
               >
               <input
-              ref="no_rumah"
+                ref="no_rumah"
                 type="number"
                 class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
               />
@@ -84,7 +91,7 @@
                 >No.Kartu Keluarga</span
               >
               <input
-              ref="id_kk"
+                ref="id_kk"
                 type="text"
                 class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
               />
@@ -97,7 +104,7 @@
                 >Nama Kepala Keluarga</span
               >
               <input
-              ref="nama"
+                ref="nama"
                 type="text"
                 class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
               />
@@ -110,7 +117,7 @@
                 >NIK Kepala Keluarga</span
               >
               <input
-              ref="nik"
+                ref="nik"
                 type="text"
                 class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
               />
@@ -127,7 +134,7 @@
                 <option value="0">Wanita</option>
               </select>
               <label
-              for="jk"
+                for="jk"
                 class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-gray-500 dark:peer-focus:text-neutral-500 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500"
                 >Jenis Kelamin</label
               >
@@ -140,7 +147,7 @@
                 >Tempat Lahir</span
               >
               <input
-              ref="tempat_lahir"
+                ref="tempat_lahir"
                 type="text"
                 class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
               />
@@ -153,7 +160,7 @@
                 >Tanggal Lahir</span
               >
               <input
-              ref="tanggal_lahir"
+                ref="tanggal_lahir"
                 type="date"
                 class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
               />
@@ -166,10 +173,17 @@
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
                 <option selected="">Pilih Pekerjaan</option>
-                <option v-if="hasilPekerjaan" v-for="resultku in hasilPekerjaan" :key="resultku.id" :value="resultku.id">{{resultku.nama}}</option>
+                <option
+                  v-if="hasilPekerjaan"
+                  v-for="resultku in hasilPekerjaan"
+                  :key="resultku.id"
+                  :value="resultku.id"
+                >
+                  {{ resultku.nama }}
+                </option>
               </select>
               <label
-              for="pekerjaan"
+                for="pekerjaan"
                 class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-gray-500 dark:peer-focus:text-neutral-500 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500"
                 >Pekerjaan</label
               >
@@ -182,7 +196,7 @@
                 >No.HP (WA aktif)</span
               >
               <input
-              ref="no_hp"
+                ref="no_hp"
                 type="text"
                 class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
               />
@@ -195,17 +209,24 @@
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
                 <option selected="">Pilih Status Kewargaan</option>
-                <option v-if="hasilStatus" v-for="resultku in hasilStatus" :key="resultku.id" :value="resultku.id">{{resultku.status}}</option>
+                <option
+                  v-if="hasilStatus"
+                  v-for="resultku in hasilStatus"
+                  :key="resultku.id"
+                  :value="resultku.id"
+                >
+                  {{ resultku.status }}
+                </option>
               </select>
               <label
-              for="status_warga"
+                for="status_warga"
                 class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-gray-500 dark:peer-focus:text-neutral-500 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500"
                 >Status Warga</label
               >
             </div>
           </div>
           <button
-           :onclick="addWarga"
+            :onclick="addWarga"
             class="mt-5 bg-purple-500 text-base font-semibold rounded-lg text-white decoration-2 hover:text-purple-200 hover:underline focus:underline focus:outline-none p-2 focus:text-purple-300 disabled:opacity-50 disabled:pointer-events-none"
             href="#"
           >
@@ -230,29 +251,14 @@
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">
             Card title
           </h3>
-          <div>
-            
-          </div>
-          <a
-            class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-600 dark:focus:text-blue-600"
-            href="#"
+          <div></div>
+          <div
+            class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
           >
-            Card link
-            <svg
-              class="shrink-0 size-4"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="m9 18 6-6-6-6"></path>
-            </svg>
-          </a>
+            <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
+              Last updated 5 mins ago
+            </p>
+          </div>
         </div>
         <div
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
@@ -272,16 +278,16 @@
 </template>
 
 <script>
-import ToastCard from '../components/ToastCard.vue';
-import axios from 'axios';
-import { onMounted } from 'vue';
-import { ref } from 'vue';
-import { BASE_URL } from '../base.url.utils';
-import { error } from 'jquery';
+import ToastCard from "../components/ToastCard.vue";
+import axios from "axios";
+import { onMounted } from "vue";
+import { ref } from "vue";
+import { BASE_URL } from "../base.url.utils";
+import { error } from "jquery";
 
 export default {
   components: {
-    ToastCard
+    ToastCard,
   },
   data() {
     return {
@@ -289,88 +295,91 @@ export default {
       tambahBlok: null,
       formValuesBlok: {},
       formValuesRumah: {},
-      tableBlokRumah:{},
-      hasilStatus:null,
+      tableBlokRumah: {},
+      hasilStatus: null,
       hasilPekerjaan: null,
       tambahKK: null,
-    }
+    };
   },
 
   setup() {
-    const showToast=ref(false);
-    const toastMessage=ref("");
+    const showToast = ref(false);
+    const toastMessage = ref("");
     return {
       showToast,
       toastMessage,
-    }
+    };
   },
 
   methods: {
     async addBlok() {
-      const url = BASE_URL + 'warga/add/blok';
+      const url = BASE_URL + "warga/add/blok";
       // console.log(this.formValuesBlok);
-      await axios.post(url, this.formValuesBlok, {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-          .then((response) => {
-            this.tambahBlok = response.data.result;
-            this.showToast=true;
-            this.toastMessage="Blok Berhasil Ditambahkan";
-            console.log("Tambah Blok Rumah:",this.tambahBlok);
-            this.daftarBlok();
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            this.showToast=true;
-            this.toastMessage=error;
-          })
+      await axios
+        .post(url, this.formValuesBlok, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          this.tambahBlok = response.data.result;
+          this.showToast = true;
+          this.toastMessage = "Blok Berhasil Ditambahkan";
+          console.log("Tambah Blok Rumah:", this.tambahBlok);
+          this.daftarBlok();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          this.showToast = true;
+          this.toastMessage = error;
+        });
     },
 
     async daftarBlok() {
-      const url = BASE_URL + 'warga/daftar/blok';
-      
+      const url = BASE_URL + "warga/daftar/blok";
 
-      await axios.get(url)
-          .then((response) => {
-            this.hasilBlok = response.data.result;
-            console.log("Daftar Blok Rumah:",this.hasilBlok);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          })
+      await axios
+        .get(url)
+        .then((response) => {
+          this.hasilBlok = response.data.result;
+          console.log("Daftar Blok Rumah:", this.hasilBlok);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     },
     tutupToast() {
       this.showToast = false;
     },
 
     async getStatusWarga() {
-      const url = BASE_URL + 'warga/list/status';
-      axios.get(url)
-      .then((response) => {
-        this.hasilStatus = response.data.result;
-        console.log("Status Warga:",this.hasilStatus);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+      const url = BASE_URL + "warga/list/status";
+      axios
+        .get(url)
+        .then((response) => {
+          this.hasilStatus = response.data.result;
+          console.log("Status Warga:", this.hasilStatus);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     },
 
     async getPekerjaan() {
-      const url = BASE_URL + 'warga/list/pekerjaan';
-      axios.get(url)
-      .then((response) => {
-        this.hasilPekerjaan = response.data.result;
-        console.log("Pekerjaan Warga:",this.hasilPekerjaan);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+      const url = BASE_URL + "warga/list/pekerjaan";
+      axios
+        .get(url)
+        .then((response) => {
+          this.hasilPekerjaan = response.data.result;
+          console.log("Pekerjaan Warga:", this.hasilPekerjaan);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
 
     async addWarga() {
-      const url = BASE_URL + 'warga/add/kk';
+      const url = BASE_URL + "warga/add/kk";
       this.formValuesRumah.id_blok = parseInt(this.$refs.list_blok.value);
       this.formValuesRumah.nama = this.$refs.nama.value;
       this.formValuesRumah.no_rumah = parseInt(this.$refs.no_rumah.value);
@@ -379,36 +388,36 @@ export default {
       this.formValuesRumah.nik = this.$refs.nik.value;
       this.formValuesRumah.jenis_kelamin = this.$refs.jk.value;
       this.formValuesRumah.id_pekerjaan = parseInt(this.$refs.pekerjaan.value);
-      this.formValuesRumah.id_status_warga = parseInt(this.$refs.status_warga.value);
-      this.formValuesRumah.tanggal_lahir = this.$refs.tanggal_lahir.value + " 00:00:00"
+      this.formValuesRumah.id_status_warga = parseInt(
+        this.$refs.status_warga.value
+      );
+      this.formValuesRumah.tanggal_lahir =
+        this.$refs.tanggal_lahir.value + " 00:00:00";
       this.formValuesRumah.tempat_lahir = this.$refs.tempat_lahir.value;
-      
 
       // console.log("Form Data",this.formValuesRumah);
 
-      await axios.post(url, this.formValuesRumah, {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-          .then((response) => {
-            this.tambahKK = response.data.result;
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          })
-
+      await axios
+        .post(url, this.formValuesRumah, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          this.tambahKK = response.data.result;
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
   created() {
     this.daftarBlok();
     this.getStatusWarga();
     this.getPekerjaan();
-  }
-}
-
-
+  },
+};
 </script>
 
 <style lang="css">
