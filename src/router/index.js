@@ -148,13 +148,6 @@ const router = createRouter({
       path: "/daftarkk",
       name: "daftarkk",
       component: () => import("../components/DaftarKK.vue"),
-      children:[
-        // {
-        //   path: "input/",
-        //   name: "input_type_anggaran",
-        //   component: () => import("../anggaran/InputTypeAnggaran.vue"),
-        // },
-      ]
     },
   ],
 });
