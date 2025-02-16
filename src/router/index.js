@@ -90,7 +90,7 @@ const router = createRouter({
         {
           path: 'daftar/table',
           name: 'daftar_table',
-          component: () => import('../warga/hasil.vue'),
+          component: () => import('../warga/TabelBlokWarga.vue'),
         },
       ],
     },
