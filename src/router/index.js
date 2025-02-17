@@ -92,6 +92,11 @@ const router = createRouter({
           name: 'daftar_table',
           component: () => import('../warga/TabelBlokWarga.vue'),
         },
+        {
+          path: 'tambah/warga',
+          name:  'tambah_warga',
+          component: () => import('../warga/TambahWarga.vue'),
+        },
       ],
     },
     {
