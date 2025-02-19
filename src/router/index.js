@@ -93,7 +93,7 @@ const router = createRouter({
           component: () => import('../warga/TabelBlokWarga.vue'),
         },
         {
-          path: 'tambah/warga',
+          path: 'tambah/warga/:nik/:kk',
           name:  'tambah_warga',
           component: () => import('../warga/TambahWarga.vue'),
         },

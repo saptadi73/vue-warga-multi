@@ -88,7 +88,7 @@
                         </th>
                         <th class="py-3 px-4 text-xs font-normal">NIK</th>
                         <th class="py-3 px-4 text-xs font-normal">
-                          Jenis Kelamin
+                          JK
                         </th>
                         <th class="py-3 px-4 text-xs font-normal">
                           Tempat Lahir
@@ -178,24 +178,24 @@
 
                         <!-- Tombol Aksi -->
                         <td class="p-4 text-end text-sm font-medium">
-                          <RouterLink to="/warga/tambah/warga"
+                          <RouterLink :to="`/warga/tambah/warga/${user.warga[0].uuid}/${user.uuid}`"
                             type="button"
                             class="text-blue-600 hover:text-blue-800"
                           >
-                            + Anggota Keluarga
+                            + Keluarga
                           </RouterLink>
-                          <RouterLink to="/warga/tambah/warga"
+                          <RouterLink :to="`/warga/tambah/warga/${user.warga[0].uuid}/${user.uuid}`"
                             type="button"
                             class="ml-4 text-blue-600 hover:text-blue-800"
                           >
-                            Edit
+                            Edit Wg
                           </RouterLink>
-                          <button
+                          <RouterLink :to="`/warga/tambah/warga/${user.warga[0].uuid}/${user.uuid}`"
                             type="button"
-                            class="ml-2 text-blue-600 hover:text-blue-800"
+                            class="ml-4 text-blue-600 hover:text-blue-800"
                           >
-                            Delete
-                          </button>
+                            Edit KK
+                          </RouterLink>
                         </td>
                       </tr>
                     </tbody>
@@ -290,9 +290,9 @@ function formatTanggal(dateString) {
 
 function jk(gender) {
   if (gender==true) {
-    return "Laki-laki";
+    return "L";
   }else{
-    return "Perempuan";
+    return "P";
   }
 }
 </script>

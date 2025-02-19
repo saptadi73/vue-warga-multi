@@ -8,13 +8,16 @@
         <div class="p-4 md:p-5">
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">
             Penambahan Anggota Keluarga
+            <span class="text-blue-600">{{ namaKK }}</span> no:{{ idKK }} dengan
+            Alamat :
+            <span class="text-purple-600">{{ blokKK }} / {{ noRumahKK }}</span>
           </h3>
 
           <div class="mt-3">
             <div class="flex rounded-lg shadow-sm">
               <span
                 class="inline-flex px-4 items-center min-w-fit rounded-s-md boder border-e-0 border-gray-600 text-sm text-gray-500 bg-slate-200"
-                >Nama Kepala Keluarga</span
+                >Nama</span
               >
               <input
                 ref="nama"
@@ -27,7 +30,7 @@
             <div class="flex rounded-lg shadow-sm">
               <span
                 class="inline-flex px-4 items-center min-w-fit rounded-s-md boder border-e-0 border-gray-600 text-sm text-gray-500 bg-slate-200"
-                >NIK Anggota Keluarga</span
+                >NIK</span
               >
               <input
                 ref="nik"
@@ -87,10 +90,10 @@
                 ref="type"
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
-                <option selected="">Jenis Anggota Keluarga</option>
+                <option selected="">Pilih Type Anggota Keluarga</option>
                 <option
-                  v-if="hasilPekerjaan"
-                  v-for="resultku in hasilPekerjaan"
+                  v-if="hasilType"
+                  v-for="resultku in hasilType"
                   :key="resultku.id"
                   :value="resultku.id"
                 >
@@ -98,9 +101,9 @@
                 </option>
               </select>
               <label
-                for="pekerjaan"
+                for="type"
                 class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-gray-500 dark:peer-focus:text-neutral-500 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500"
-                >Pekerjaan</label
+                >Type Anggota Keluarga</label
               >
             </div>
           </div>
@@ -189,26 +192,63 @@
       >
         <div class="p-4 md:p-5">
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-            Card title
+            Daftar Anggota
           </h3>
           <div>
-            <TabelBlokWarga />
+            <div class="relative overflow-x-auto">
+              <table
+                class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+              >
+                <thead
+                  class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+                >
+                  <tr>
+                    <th scope="col" class="px-6 py-3">No</th>
+                    <th scope="col" class="px-6 py-3">Nama</th>
+                    <th scope="col" class="px-6 py-3">Type</th>
+                    <th scope="col" class="px-6 py-3">NIK</th>
+                    <th scope="col" class="px-6 py-3">JK</th>
+                    <th scope="col" class="px-6 py-3">Tpt.Lahir</th>
+                    <th scope="col" class="px-6 py-3">Tgl.Lahir</th>
+                    <th scope="col" class="px-6 py-3">Pekerjaan</th>
+                    <th scope="col" class="px-6 py-3">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="resultku in hasilWargaPerKK"
+                    :key="resultku.id"
+                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200"
+                  >
+                    <td class="px-6 py-4">{{ resultku.id }}</td>
+                    <td
+                      scope="row"
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      {{ resultku.nama }}
+                    </td>
+                    <td class="px-6 py-4">{{ resultku.type.nama }}</td>
+                    <td class="px-6 py-4">{{ resultku.nik }}</td>
+                    <td class="px-6 py-4">{{ jk(resultku.jenis_kelamin) }}</td>
+                    <td class="px-6 py-4">{{ resultku.tempat_lahir }}</td>
+                    <td class="px-6 py-4">
+                      {{ formatTanggal(resultku.tanggal_lahir) }}
+                    </td>
+                    <td class="px-6 py-4">{{ resultku.pekerjaan.nama }}</td>
+                    <td class="px-6 py-4">{{ resultku.status_warga.status }}</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </div>
           </div>
           <div
             class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
-          >
-            <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-              {{ blokValue }}
-            </p>
-          </div>
+          ></div>
         </div>
         <div
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
-        >
-          <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-            {{ blokValue }}
-          </p>
-        </div>
+        ></div>
       </div>
     </div>
     <ToastCard
@@ -238,6 +278,7 @@ import DaftarKkWarga from "./DaftarKkWarga.vue";
 import TableKkWarga from "./TableKkWarga.vue";
 import TabelBlokWarga from "./TabelBlokWarga.vue";
 import ModalInputCard from "../components/ModalInputCard.vue";
+import { error } from "jquery";
 
 export default {
   components: {
@@ -255,6 +296,14 @@ export default {
       hasilStatus: null,
       hasilPekerjaan: null,
       tambahKK: null,
+      hasilType: null,
+      hasilFindKK: null,
+      namaKK: null,
+      blokKK: null,
+      noRumahKK: null,
+      idKK: null,
+      idBlok: null,
+      hasilWargaPerKK: null,
     };
   },
 
@@ -278,9 +327,23 @@ export default {
   },
 
   methods: {
-    
     tutupToast() {
       this.showToast = false;
+    },
+
+    formatTanggal(dateString) {
+      const tanggal = new Date(dateString);
+      const localeDate = tanggal.toLocaleDateString("en-GB");
+
+      return localeDate;
+    },
+
+    jk(gender) {
+      if (gender == true) {
+        return "L";
+      } else {
+        return "P";
+      }
     },
 
     async getStatusWarga() {
@@ -310,11 +373,10 @@ export default {
     },
 
     async addWarga() {
-      const url = BASE_URL + "warga/add/kk";
-      this.formValuesRumah.id_blok = parseInt(this.$refs.list_blok.value);
+      const url = BASE_URL + "warga/add/warga";
+      this.formValuesRumah.id_blok = parseInt(this.idBlok);
       this.formValuesRumah.nama = this.$refs.nama.value;
-      this.formValuesRumah.no_rumah = parseInt(this.$refs.no_rumah.value);
-      this.formValuesRumah.no_kk = this.$refs.id_kk.value;
+      this.formValuesRumah.id_kk = parseInt(this.idKK);
       this.formValuesRumah.no_hp = this.$refs.no_hp.value;
       this.formValuesRumah.nik = this.$refs.nik.value;
       this.formValuesRumah.jenis_kelamin = this.$refs.jk.value;
@@ -322,6 +384,7 @@ export default {
       this.formValuesRumah.id_status_warga = parseInt(
         this.$refs.status_warga.value
       );
+      this.formValuesRumah.id_type = parseInt(this.$refs.type.value);
       this.formValuesRumah.tanggal_lahir =
         this.$refs.tanggal_lahir.value + " 00:00:00";
       this.formValuesRumah.tempat_lahir = this.$refs.tempat_lahir.value;
@@ -347,6 +410,19 @@ export default {
       this.showModal = false;
     },
 
+    async getDaftarType() {
+      const url = BASE_URL + "warga/daftar/type";
+      await axios
+        .get(url)
+        .then((response) => {
+          this.hasilType = response.data.result;
+          console.log("daftar ype anggota: ", this.hasilType);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     bukaModal(idku) {
       this.showModal = true;
       this.ModalTitle = "Update Blok";
@@ -355,33 +431,53 @@ export default {
       this.formValuesRumah.id = parseInt(idku);
     },
 
-    async updateBlok() {
-      const url = BASE_URL + "warga/edit/blok";
-      this.formValuesRumah.blok = this.blokValue;
-      console.log("hasil FormValuesRumah: ", this.formValuesRumah);
+    async findKK() {
+      const uuidkk = this.$route.params.nik;
+      const url = BASE_URL + "warga/find/warga/" + uuidkk;
 
-      if (this.blokValue) {
-        await axios
-          .post(url, this.formValuesRumah, {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-          .then((response) => {
-            this.showToast = true;
-            this.toastMessage = response.data.message;
-          })
-          .catch((error) => {
-            this.showToast = true;
-            this.toastMessage = error;
-          });
-        this.showModal = false;
-      }
+      // console.log('uuid :', uuidkk)
+
+      await axios
+        .get(url)
+        .then((response) => {
+          this.hasilFindKK = response.data.result;
+          this.namaKK = this.hasilFindKK.nama;
+          this.blokKK = this.hasilFindKK.kk.blok.blok;
+          this.noRumahKK = this.hasilFindKK.kk.no_rumah;
+          this.idKK = this.hasilFindKK.id_kk;
+          this.idBlok = this.hasilFindKK.kk.blok.id;
+
+          console.log(
+            "hasil find warga: ",
+            this.hasilFindKK + " idkk:" + this.idKK
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async getWargaperKK() {
+      const uuidkk = this.$route.params.kk;
+      const url = BASE_URL + "warga/list/warga/" + uuidkk;
+      await axios
+        .get(url)
+        .then((response) => {
+          this.hasilWargaPerKK = response.data.result;
+          console.log(" Hasil warga per KK", this.hasilWargaPerKK);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
   created() {
     this.getStatusWarga();
     this.getPekerjaan();
+    this.getDaftarType();
+
+    this.getWargaperKK();
+    this.findKK();
   },
 };
 </script>
