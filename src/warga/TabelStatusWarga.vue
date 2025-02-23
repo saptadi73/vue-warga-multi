@@ -11,7 +11,7 @@
                 </button>
                 <!-- Dropdown menu -->
                 <div v-if="isDropdownOpen" class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
-                    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">
+                    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
                         <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reward</a></li>
                         <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Promote</a></li>
                         <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Activate account</a></li>
@@ -32,7 +32,7 @@
             </div>
         </div>
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <thead class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="p-4">
                         <div class="flex items-center">
@@ -40,14 +40,16 @@
                             <label for="checkbox-all-search" class="sr-only">checkbox</label>
                         </div>
                     </th>
-                    <th scope="col" class="px-6 py-3">Name</th>
-                    <th scope="col" class="px-6 py-3">Position</th>
-                    <th scope="col" class="px-6 py-3">Status</th>
-                    <th scope="col" class="px-6 py-3">Action</th>
+                    <th scope="col" class="text-left py-3 px-4 text-xs font-normal">Nama Lengkap</th>
+                    <th scope="col" class="py-3 px-4 text-xs font-normal">NIK/Paspor</th>
+                    <th scope="col" class="py-3 px-4 text-xs font-normal">Status Warga Negara</th>
+                    <th scope="col" class="py-3 px-4 text-xs font-normal">Keterangan</th>
+                    <th scope="col" class="py-3 px-4 text-xs font-normal">Status</th>
+                    <th scope="col" class="py-3 px-4 text-xs font-normal">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="user in filteredUsers" :key="user.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <tr v-for="user in filteredUsers" :key="user.id" class="text-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="w-4 p-4">
                         <div class="flex items-center">
                             <input :id="'checkbox-table-search-' + user.id" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -61,8 +63,10 @@
                             <div class="font-normal text-gray-500">{{ user.email }}</div>
                         </div>  
                     </th>
-                    <td class="px-6 py-4">{{ user.position }}</td>
-                    <td class="px-6 py-4">
+                    <td class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200">{{ user.nik }}</td>
+                    <td class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200">{{ user.swn }}</td>
+                    <td class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200">{{ user.keterangan }}</td>
+                    <td class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200">
                         <div class="flex items-center">
                             <div :class="{'h-2.5 w-2.5 rounded-full bg-green-500 me-2': user.status === 'Online', 'h-2.5 w-2.5 rounded-full bg-red-500 me-2': user.status === 'Offline'}"></div> {{ user.status }}
                         </div>
@@ -82,15 +86,22 @@ import { ref, computed } from 'vue';
 const isDropdownOpen = ref(false);
 const searchQuery = ref('');
 const users = ref([
-    { id: 1, name: 'Neil Sims', email: 'neil.sims@gmail.com', position: 'React Developer', status: 'Online', image: '../assets/cowok1.jpg' },
-    { id: 2, name: 'Bonnie Green', email: 'bonnie@gmail.com', position: 'Designer', status: 'Online', image: '../assets/cowok1.jpg' },
-    { id: 3, name: 'Jese Leos', email: 'jese@gmail.com', position: 'Vue JS Developer', status: 'Online', image: '../assets/cowok1.jpg' },
-    { id: 4, name: 'Thomas Lean', email: 'thomas@gmail.com', position: 'UI/UX Engineer', status: 'Online', image: '../assets/cowok1.jpg' },
-    { id: 5, name: 'Leslie Livingston', email: 'leslie@gmail.com', position: 'SEO Specialist', status: 'Offline', image: '../assets/cowok1.jpg' },
+    { id: 1, name: 'Neil Sims', email: 'neil.sims@gmail.com', nik: '3216019138120', swn: 'Warga Negeri Indonesia', keterangan: 'Pindahan', status: 'Online', image: '@/assets/cowok1.jpg'},
+    { id: 2, name: 'Bonnie Green', email: 'bonnie@gmail.com', nik: '1267498784769', swn: 'Warga Negeri Indonesia', keterangan: 'Pindahan', status: 'Online', image: '@/assets/cowok1.jpg' },
+    { id: 3, name: 'Jese Leos', email: 'jese@gmail.com', nik: '1268648612821', swn: 'Warga Negeri Indonesia', keterangan: 'Pindahan', status: 'Online', image: '@/assets/cowok1.jpg' },
+    { id: 4, name: 'Thomas Lean', email: 'thomas@gmail.com', nik: '1472397719711', swn: 'Warga Negeri Asing', keterangan: 'Pindahan', status: 'Online', image: '@/assets/cowok1.jpg' },
+    { id: 5, name: 'Leslie Livingston', email: 'leslie@gmail.com', nik: '1236126398612', swn: 'Warga Negeri Indonesia', keterangan: 'Pindahan', status: 'Offline', image: '@/assets/cowok1.jpg' },
 ]);
 
 const filteredUsers = computed(() => {
-    return users.value.filter(user => user.name.toLowerCase().includes(searchQuery.value.toLowerCase()));
+    const query = searchQuery.value.toLowerCase();
+    return users.value.filter(user =>
+        user.name.toLowerCase().includes(query) ||
+        user.email.toLowerCase().includes(query) ||
+        user.nik.toLowerCase().includes(query) ||
+        user.swn.toLowerCase().includes(query) ||
+        user.keterangan.toLowerCase().includes(query)
+    );
 });
 
 function toggleDropdown() {
@@ -99,8 +110,9 @@ function toggleDropdown() {
 
 // Close dropdown when clicking outside
 document.addEventListener('click', (event) => {
-    const dropdown = document.getElementById('dropdownAction');
-    if (!dropdown.contains(event.target) && !document.getElementById('dropdownActionButton').contains(event.target)) {
+    const dropdown = document.querySelector('.relative .z-10');
+    const button = event.target.closest('button');
+    if (dropdown && !dropdown.contains(event.target) && !button) {
         isDropdownOpen.value = false;
     }
 });
