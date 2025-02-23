@@ -173,7 +173,7 @@
             class="mt-5 bg-purple-500 text-base font-semibold rounded-lg text-white decoration-2 hover:text-purple-200 hover:underline focus:underline focus:outline-none p-2 focus:text-purple-300 disabled:opacity-50 disabled:pointer-events-none"
             href="#"
           >
-            Simpan No.Rumah
+          Tambah Warga
           </button>
         </div>
         <div
@@ -374,7 +374,6 @@ export default {
 
     async addWarga() {
       const url = BASE_URL + "warga/add/warga";
-      this.formValuesRumah.id_blok = parseInt(this.idBlok);
       this.formValuesRumah.nama = this.$refs.nama.value;
       this.formValuesRumah.id_kk = parseInt(this.idKK);
       this.formValuesRumah.no_hp = this.$refs.no_hp.value;
@@ -398,10 +397,14 @@ export default {
           },
         })
         .then((response) => {
-          this.tambahKK = response.data.result;
+          this.tambahKK = response.data;
+          this.showToast = true;
+          this.toastMessage = this.tambahKK.message;
           console.log(response.data);
         })
         .catch((error) => {
+          this.showToast=true;
+          this.toastMessage=this.tambahKK.message;
           console.log(error);
         });
     },
@@ -465,6 +468,8 @@ export default {
         .then((response) => {
           this.hasilWargaPerKK = response.data.result;
           console.log(" Hasil warga per KK", this.hasilWargaPerKK);
+          console.log("id_kk",this.hasilWargaPerKK[0].kk.id)
+          this.idKK = this.hasilWargaPerKK[0].kk.id;
         })
         .catch((error) => {
           console.log(error);

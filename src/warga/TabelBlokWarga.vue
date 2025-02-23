@@ -177,25 +177,26 @@
                         </td>
 
                         <!-- Tombol Aksi -->
-                        <td class="p-4 text-end text-sm font-medium">
+                        <td class="p-2 text-end text-sm font-medium">
                           <RouterLink :to="`/warga/tambah/warga/${user.warga[0].uuid}/${user.uuid}`"
                             type="button"
                             class="text-blue-600 hover:text-blue-800"
                           >
                             + Keluarga
                           </RouterLink>
-                          <RouterLink :to="`/warga/tambah/warga/${user.warga[0].uuid}/${user.uuid}`"
+                          <RouterLink :to="`/warga/edit/warga/${user.warga[0].uuid}/${user.uuid}`"
                             type="button"
                             class="ml-4 text-blue-600 hover:text-blue-800"
                           >
                             Edit Wg
                           </RouterLink>
-                          <RouterLink :to="`/warga/tambah/warga/${user.warga[0].uuid}/${user.uuid}`"
+                          <RouterLink :to="`/warga/edit/kk/${user.warga[0].uuid}/${user.uuid}`"
                             type="button"
                             class="ml-4 text-blue-600 hover:text-blue-800"
                           >
                             Edit KK
                           </RouterLink>
+                          <RouterLink :to="`/warga/del/kk/${user.warga[0].uuid}/${user.uuid}`"><span class="material-icons text-blue-600 p-4">delete</span></RouterLink>
                         </td>
                       </tr>
                     </tbody>

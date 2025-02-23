@@ -396,6 +396,7 @@ export default {
     },
     tutupToast() {
       this.showToast = false;
+      this.$router.push("/dashboard");
     },
 
     async getStatusWarga() {
@@ -451,9 +452,15 @@ export default {
         })
         .then((response) => {
           this.tambahKK = response.data.result;
+          this.showToast=true;
+          this.toastMessage="Data Kepala Keluarga Berhasil Ditambahkan";
+          this.$router.push('/warga/input/blok');
           console.log(response.data);
         })
         .catch((error) => {
+          this.showToast=true;
+          this.toastMessage="Data Kepala Keluarga Gagal Ditambahkan";
+          
           console.log(error);
         });
     },

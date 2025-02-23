@@ -97,6 +97,21 @@ const router = createRouter({
           name:  'tambah_warga',
           component: () => import('../warga/TambahWarga.vue'),
         },
+        {
+          path: 'edit/warga/:nik/:kk',
+          name:  'edit_warga',
+          component: () => import('../warga/EditWarga.vue'),
+        },
+        {
+          path: 'edit/kk/:nik/:kk',
+          name:  'edit_rumah',
+          component: () => import('../warga/EditRumahKk.vue'),
+        },
+        {
+          path: 'del/kk/:nik/:kk',
+          name:  'del_rumah',
+          component: () => import('../warga/DelRumahWarga.vue'),
+        },
       ],
     },
     {
