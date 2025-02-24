@@ -40,7 +40,7 @@
                             <label for="checkbox-all-search" class="sr-only">checkbox</label>
                         </div>
                     </th>
-                    <th scope="col" class="text-left py-3 px-4 text-xs font-normal">Nama Lengkap</th>
+                    <th scope="col" class="py-3 px-4 text-xs font-normal">Nama Lengkap</th>
                     <th scope="col" class="py-3 px-4 text-xs font-normal">NIK/Paspor</th>
                     <th scope="col" class="py-3 px-4 text-xs font-normal">Status Warga Negara</th>
                     <th scope="col" class="py-3 px-4 text-xs font-normal">Keterangan</th>
@@ -59,7 +59,7 @@
                     <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                         <img class="w-10 h-10 rounded-full" :src="user.image" :alt="user.name">
                         <div class="ps-3">
-                            <div class="text-base font-semibold">{{ user.name }}</div>
+                            <div class=" text-left text-base font-semibold">{{ user.name }}</div>
                             <div class="font-normal text-gray-500">{{ user.email }}</div>
                         </div>  
                     </th>
@@ -67,7 +67,7 @@
                     <td class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200">{{ user.swn }}</td>
                     <td class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200">{{ user.keterangan }}</td>
                     <td class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200">
-                        <div class="flex items-center">
+                        <div class="flex items-center text-center">
                             <div :class="{'h-2.5 w-2.5 rounded-full bg-green-500 me-2': user.status === 'Online', 'h-2.5 w-2.5 rounded-full bg-red-500 me-2': user.status === 'Offline'}"></div> {{ user.status }}
                         </div>
                     </td>
@@ -82,15 +82,16 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import cowok1 from '../assets/cowok1.jpg';
 
 const isDropdownOpen = ref(false);
 const searchQuery = ref('');
 const users = ref([
-    { id: 1, name: 'Neil Sims', email: 'neil.sims@gmail.com', nik: '3216019138120', swn: 'Warga Negeri Indonesia', keterangan: 'Pindahan', status: 'Online', image: '@/assets/cowok1.jpg'},
-    { id: 2, name: 'Bonnie Green', email: 'bonnie@gmail.com', nik: '1267498784769', swn: 'Warga Negeri Indonesia', keterangan: 'Pindahan', status: 'Online', image: '@/assets/cowok1.jpg' },
-    { id: 3, name: 'Jese Leos', email: 'jese@gmail.com', nik: '1268648612821', swn: 'Warga Negeri Indonesia', keterangan: 'Pindahan', status: 'Online', image: '@/assets/cowok1.jpg' },
-    { id: 4, name: 'Thomas Lean', email: 'thomas@gmail.com', nik: '1472397719711', swn: 'Warga Negeri Asing', keterangan: 'Pindahan', status: 'Online', image: '@/assets/cowok1.jpg' },
-    { id: 5, name: 'Leslie Livingston', email: 'leslie@gmail.com', nik: '1236126398612', swn: 'Warga Negeri Indonesia', keterangan: 'Pindahan', status: 'Offline', image: '@/assets/cowok1.jpg' },
+    { id: 1, name: 'Neil Sims', email: 'neil.sims@gmail.com', nik: '3216019138120', swn: 'Warga Negeri Indonesia', keterangan: 'Pindahan', status: 'Online', image: cowok1},
+    { id: 2, name: 'Bonnie Green', email: 'bonnie@gmail.com', nik: '1267498784769', swn: 'Warga Negeri Indonesia', keterangan: 'Pindahan', status: 'Online', image: cowok1},
+    { id: 3, name: 'Jese Leos', email: 'jese@gmail.com', nik: '1268648612821', swn: 'Warga Negeri Indonesia', keterangan: 'Pindahan', status: 'Online', image: cowok1 },
+    { id: 4, name: 'Thomas Lean', email: 'thomas@gmail.com', nik: '1472397719711', swn: 'Warga Negeri Asing', keterangan: 'Kososng', status: 'Online', image: cowok1 },
+    { id: 5, name: 'Leslie Livingston', email: 'leslie@gmail.com', nik: '1236126398612', swn: 'Warga Negeri Indonesia', keterangan: 'Pindahan', status: 'Offline', image: cowok1},
 ]);
 
 const filteredUsers = computed(() => {
@@ -112,7 +113,13 @@ function toggleDropdown() {
 document.addEventListener('click', (event) => {
     const dropdown = document.querySelector('.relative .z-10');
     const button = event.target.closest('button');
-    if (dropdown && !dropdown.contains(event.target) && !button) {
+    const searchInput = document.getElementById('table-search-users');
+    
+    if (
+        dropdown && !dropdown.contains(event.target) && 
+        !button && 
+        !searchInput.contains(event.target)
+    ) {
         isDropdownOpen.value = false;
     }
 });
