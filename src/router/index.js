@@ -170,6 +170,18 @@ const router = createRouter({
       name: "daftarkk",
       component: () => import("../components/DaftarKK.vue"),
     },
+
+    {
+      path: "/daftarkk/update",
+      name: "updatekk",
+      component: () => import("../components/UpdateTabelKK.vue"),
+    },
+    {
+      path: "/status",
+      name: "status",
+      component: () => import("../warga/TabelStatusWarga.vue"),
+    }
+
   ],
 });
 
