@@ -112,6 +112,7 @@ const router = createRouter({
           name:  'del_rumah',
           component: () => import('../warga/DelRumahWarga.vue'),
         },
+        
       ],
     },
     {
