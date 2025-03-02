@@ -297,14 +297,14 @@ function bukaModal(id,pekerjaan) {
 
 function tutupModalInput() {
   showModalInputCard.value = false;
-  router.push('/warga/input/pekerjaan')
+  router.push('/warga/input/pekerjaan');
 }
 
 async function updatePekerjaan() {
   
   const url = `${BASE_URL}warga/update/pekerjaan`;
   formValues.value.nama = pekerjaanValue.value;
-  formValues.value.id = parseInt(formValues.value.id)
+  formValues.value.id = parseInt(formValues.value.id);
   console.log(formValues.value);
   try {
     const updatePekerjaan = await axios.post(url, formValues.value, {
@@ -314,7 +314,7 @@ async function updatePekerjaan() {
     });
     showToast.value = true;
     toastMessage.value = updatePekerjaan.data.message;
-    router.push('warga/input/pekerjaan')
+    showModalInputCard.value = false;
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;

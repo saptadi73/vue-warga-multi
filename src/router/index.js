@@ -147,6 +147,11 @@ const router = createRouter({
           name: "input_jenis_iuran",
           component: () => import("../iuran/IsiJenisIuran.vue"),
         },
+        {
+          path: "edit/jenis",
+          name: "edit_jenis_iuran",
+          component: () => import("../iuran/EditJenisIuran.vue"),
+        },
       ],
     },
 

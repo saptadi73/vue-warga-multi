@@ -119,8 +119,8 @@ export default {
               path: "/warga/input/status",
             },
             {
-              name: "Registrasi Warga Baru",
-              path: "/warga/input/warga",
+              name: "Registrasi Jenis Warga",
+              path: "/warga/input/type",
             },
           ],
           open: false,
