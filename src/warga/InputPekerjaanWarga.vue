@@ -120,6 +120,8 @@
                             </div>
                           </th>
                           <th class="py-3 px-4 text-xs font-normal">Nama</th>
+                          <th class="py-3 px-4 text-xs font-normal">Edit</th>
+                          <th class="py-3 px-4 text-xs font-normal">Delete</th>
                         </tr>
                       </thead>
                       <tbody
@@ -149,6 +151,8 @@
                           >
                             {{ user.nama }}
                           </td>
+                          <td class="text-blue-600 font-semibold"><button @click="bukaModalInput(`${user.id}`,`${user.nama}`)">Edit</button></td>
+                          <td class="text-blue-600 font-semibold"><button @click="bukaModal(`${user.id}`,`${user.nama}`)">Delete</button></td> 
                         </tr>
                       </tbody>
                     </table>
@@ -202,14 +206,22 @@
       v-on:dismissToast="tutupToast"
     />
     <ModalInputCard
-      v-if="showModal"
-      :title="ModalTitle"
-      :message_modal="ModalMessage"
-      :modelValue="blokValue"
-      v-on:cancelButton="tutupModal"
-      v-on:closeButton="tutupModal"
-      v-on:okeButton="updateBlok"
-      v-model:modelValue="blokValue"
+      v-if="showModalInputCard"
+      :title="ModalInputTitle"
+      :message_modal="ModalInputMessage"
+      :modelValue="pekerjaanValue"
+      v-on:cancelButton="tutupModalInput"
+      v-on:closeButton="tutupModalInput"
+      v-on:okeButton="updatePekerjaan"
+      v-model:modelValue="pekerjaanValue"
+    />
+    <ModalCard
+    v-if="showModal"
+    :title="ModalTitle"
+    :message_modal="ModalMessage"
+    v-on:okeButton="deletePekerjaan"
+    v-on:cancelButton="tutupModal"
+    v-on:closeButton="tutupModal"
     />
   </div>
 </template>
@@ -221,18 +233,23 @@ import { onMounted, computed } from "vue";
 import { ref } from "vue";
 import { BASE_URL } from "../base.url.utils";
 import ModalInputCard from "../components/ModalInputCard.vue";
+import ModalCard from "../components/ModalCard.vue";
 import router from "../router";
 
 const searchQuery = ref("");
 
 const hasilPekerjaan = ref([]);
 const formValues = ref({});
-const blokValue = ref({});
+const pekerjaanValue = ref("");
 const showToast = ref(false);
 const toastMessage = ref("");
 const showModal = ref(false);
+const showModalInputCard = ref(false);
+const ModalInputTitle = ref("");
+const ModalInputMessage = ref("");
 const ModalTitle = ref("");
 const ModalMessage = ref("");
+const Idku = ref("");
 
 async function getJenisPekerjaan() {
   const url = `${BASE_URL}warga/list/pekerjaan`;
@@ -271,6 +288,68 @@ function tutupModal() {
   router.push('/warga/input/pekerjaan');
 }
 
+function bukaModal(id,pekerjaan) {
+  showModal.value = true;
+  ModalTitle.value = 'Delete Pekerjaan';
+  ModalMessage.value = 'Anda yakin ingin menghapus pekerjaan ' + pekerjaan + ' ini?';
+  formValues.value.id = id;
+}
+
+function tutupModalInput() {
+  showModalInputCard.value = false;
+  router.push('/warga/input/pekerjaan')
+}
+
+async function updatePekerjaan() {
+  
+  const url = `${BASE_URL}warga/update/pekerjaan`;
+  formValues.value.nama = pekerjaanValue.value;
+  formValues.value.id = parseInt(formValues.value.id)
+  console.log(formValues.value);
+  try {
+    const updatePekerjaan = await axios.post(url, formValues.value, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    showToast.value = true;
+    toastMessage.value = updatePekerjaan.data.message;
+    router.push('warga/input/pekerjaan')
+  } catch (error) {
+    showToast.value = true;
+    toastMessage.value = error;
+  }
+
+
+}
+async function deletePekerjaan() {
+  const url = `${BASE_URL}warga/hapus/pekerjaan`;
+  formValues.value.id = parseInt(formValues.value.id);
+  console.log(url);
+
+  try {
+    const hapusPekerjaan = await axios.post(url, formValues.value, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    showModal.value = false;
+    showToast.value = true;
+    toastMessage.value = hapusPekerjaan.data.message;
+  } catch (error) {
+    showModal.value = false;
+    showToast.value = true;
+    toastMessage.value = error;
+  }
+  
+}
+
+function bukaModalInput(id,pekerjaan) {
+  showModalInputCard.value = true;
+  ModalInputMessage.value = 'Silakan isi perubahan nama pekerjaan ' + pekerjaan +' yang sudah ada';
+  ModalInputTitle.value = 'Update Pekerjaan';
+  formValues.value = { id: id };
+}
 onMounted(() => {
   getJenisPekerjaan();
 });

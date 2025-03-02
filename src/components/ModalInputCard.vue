@@ -48,8 +48,8 @@
               </p>
             </div>
             <div class="flex items-center mb-2">
-              <span class="ml-16 border bg-slate-300 p-2 font-Roboto font-bold">Blok</span>
-                <input type="text" :value="modelValue" placeholder="isi blok baru" @input="$emit('update:modelValue',$event.target.value)" class="w-52 rounded-r-md focus:border-blue-600 focus:border-l-2 focus:shadow-md">
+              <span class="ml-16 border bg-slate-300 p-2 font-Roboto font-bold">Update</span>
+                <input type="text" :value="modelValue" placeholder="isian baru" @input="$emit('update:modelValue',$event.target.value)" class="w-52 rounded-r-md focus:border-blue-600 focus:border-l-2 focus:shadow-md">
             </div>
             <div
               class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700"

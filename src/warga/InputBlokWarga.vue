@@ -469,10 +469,10 @@ export default {
       this.showModal=false;
     },
 
-    bukaModal(idku) {
+    bukaModal(idku,blok) {
       this.showModal=true;
       this.ModalTitle='Update Blok';
-      this.ModalMessage='Anda yakin untuk mengganti alamat Blok yang telah terisi? Isikan blok baru di bawah ini dan klik OK jika sudah yakin. Atau klik close atau cancel jika ragu.';
+      this.ModalMessage='Anda yakin untuk mengganti alamat Blok ' + blok +  ' yang telah terisi ini? Isikan blok baru di bawah ini dan klik OK jika sudah yakin. Atau klik close atau cancel jika ragu.';
       this.formValuesRumah.id=parseInt(idku);
     },
 
