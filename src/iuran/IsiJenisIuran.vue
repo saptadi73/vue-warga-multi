@@ -381,10 +381,8 @@ async function deletePekerjaan() {
 }
 
 function bukaModalInput(id,pekerjaan) {
-  showModalInputCard.value = true;
-  ModalInputMessage.value = 'Silakan isi perubahan nama pekerjaan ' + pekerjaan +' yang sudah ada';
-  ModalInputTitle.value = 'Update Pekerjaan';
-  formValues.value = { id: id };
+  const url_id = '/iuran/edit/jenis/' + id;
+  router.push(url_id);
 }
 onMounted(() => {
   getJenisPekerjaan();

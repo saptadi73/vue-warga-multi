@@ -7,14 +7,14 @@
         <div id="card1" class="">
           <div class="p-4 md:p-5">
             <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-              Edit Jenis Iuran Warga
+              Pengisian Jenis Iuran Warga
             </h3>
             <div>
               <div>
                 <div class="sm:flex rounded-lg shadow-sm">
                   <span
                     class="py-3 px-4 inline-flex items-center min-w-fit w-full border border-gray-200 bg-gray-50 text-sm text-gray-500 -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:w-auto sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg dark:bg-neutral-700 dark:border-neutral-700 dark:text-neutral-400"
-                    >Edit Jenis Iuran Warga</span
+                    >Isi Jenis Iuran Warga</span
                   >
                   <input
                     id="nama"
@@ -50,7 +50,7 @@
               class="mt-5 bg-purple-500 text-base font-semibold rounded-lg text-white decoration-2 hover:text-purple-200 hover:underline focus:underline focus:outline-none p-2 focus:text-purple-300 disabled:opacity-50 disabled:pointer-events-none"
               @click="addPekerjaan"
             >
-              Ubah
+              Simpan
             </button>
           </div>
           <div
@@ -269,10 +269,8 @@
   import ModalInputCard from "../components/ModalInputCard.vue";
   import ModalCard from "../components/ModalCard.vue";
   import router from "../router";
-  import { useRoute } from 'vue-router';
   
   const searchQuery = ref("");
-  const route = useRoute();
   
   const hasilPekerjaan = ref([]);
   const formValues = ref({});
@@ -295,12 +293,11 @@
   }
   
   async function addPekerjaan() {
-    const idIuran = parseInt(route.params.id);
-    const url = `${BASE_URL}bayar/edit/iuran`;
+    const url = `${BASE_URL}bayar/create/iuran`;
     const nama_pekerjaan = document.getElementById("nama").value;
     const iuran = parseInt(document.getElementById("iuran").value);
     const keterangan = document.getElementById("keterangan").value;
-    formValues.value = { nama: nama_pekerjaan, iuran: iuran, keterangan: keterangan, id: idIuran };
+    formValues.value = { nama: nama_pekerjaan, iuran: iuran, keterangan: keterangan };
     try {
       const tambahKerjaan = await axios.post(url, formValues.value, {
         headers: {
@@ -339,10 +336,11 @@
     router.push('/iuran/input/jenis');
   }
   
-  async function cariIuran() {
-    const idIuran = route.params.id;
-    const url = `${BASE_URL}bayar/find/iuran`;
-    formValues.value.id = parseInt(idIuran);
+  async function updatePekerjaan() {
+    
+    const url = `${BASE_URL}bayar/create/pekerjaan`;
+    formValues.value.nama = pekerjaanValue.value;
+    formValues.value.id = parseInt(formValues.value.id);
     console.log(formValues.value);
     try {
       const updatePekerjaan = await axios.post(url, formValues.value, {
@@ -350,12 +348,12 @@
           "Content-Type": "application/json",
         },
       });
-      console.log(updatePekerjaan.data);
-      document.getElementById('nama').value = updatePekerjaan.data.result.nama;
-      document.getElementById('iuran').value = parseInt(updatePekerjaan.data.result.iuran);
-      document.getElementById('keterangan').value = updatePekerjaan.data.result.keterangan;
+      showToast.value = true;
+      toastMessage.value = updatePekerjaan.data.message;
+      showModalInputCard.value = false;
     } catch (error) {
-      console.log(error);
+      showToast.value = true;
+      toastMessage.value = error;
     }
   
   
@@ -383,14 +381,11 @@
   }
   
   function bukaModalInput(id,pekerjaan) {
-    showModalInputCard.value = true;
-    ModalInputMessage.value = 'Silakan isi perubahan nama pekerjaan ' + pekerjaan +' yang sudah ada';
-    ModalInputTitle.value = 'Update Pekerjaan';
-    formValues.value = { id: id };
+    const url_id = '/iuran/edit/jenis/' + id;
+    router.push(url_id);
   }
   onMounted(() => {
     getJenisPekerjaan();
-    cariIuran();
   });
   
   const filteredPekerjaan = computed(() => {

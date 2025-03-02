@@ -148,7 +148,7 @@ const router = createRouter({
           component: () => import("../iuran/IsiJenisIuran.vue"),
         },
         {
-          path: "edit/jenis",
+          path: "edit/jenis/:id",
           name: "edit_jenis_iuran",
           component: () => import("../iuran/EditJenisIuran.vue"),
         },
