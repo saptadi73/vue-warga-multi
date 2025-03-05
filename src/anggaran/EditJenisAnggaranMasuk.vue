@@ -287,10 +287,11 @@
   }
   
   async function addPekerjaan() {
-    const url = `${BASE_URL}bayar/add/jenis/anggaran`;
+    const idJenisAnggaran = parseInt(route.params.id);
+    const url = `${BASE_URL}bayar/update/jenis/anggaran`;
     const nama_pekerjaan = document.getElementById("nama").value;
     const keterangan = document.getElementById("keterangan").value;
-    formValues.value = { nama: nama_pekerjaan, id_type_anggaran: 1, keterangan: keterangan };
+    formValues.value = { nama: nama_pekerjaan, id_type_anggaran: 1, keterangan: keterangan, id: idJenisAnggaran };
     try {
       const tambahKerjaan = await axios.post(url, formValues.value, {
         headers: {
@@ -329,11 +330,10 @@
     router.push({path: route.path, force: true});
   }
   
-  async function updatePekerjaan() {
-    
-    const url = `${BASE_URL}bayar/create/pekerjaan`;
-    formValues.value.nama = pekerjaanValue.value;
-    formValues.value.id = parseInt(formValues.value.id);
+  async function cariJenisAnggaran() {
+    const idJenisAnggaran = parseInt(route.params.id);
+    const url = `${BASE_URL}bayar/find/jenis/anggaran`;
+    formValues.value.id = parseInt(idJenisAnggaran);
     console.log(formValues.value);
     try {
       const updatePekerjaan = await axios.post(url, formValues.value, {
@@ -341,12 +341,12 @@
           "Content-Type": "application/json",
         },
       });
-      showToast.value = true;
-      toastMessage.value = updatePekerjaan.data.message;
-      showModalInputCard.value = false;
+      const hasilJenisAnggaran = updatePekerjaan.data.result;
+      document.getElementById('nama').value = hasilJenisAnggaran.nama;
+      document.getElementById('keterangan').value = hasilJenisAnggaran.keterangan;
+      console.log(updatePekerjaan.data.result)
     } catch (error) {
-      showToast.value = true;
-      toastMessage.value = error;
+      console.log(error)
     }
   
   
@@ -379,6 +379,7 @@
   }
   onMounted(() => {
     getJenisAnggaranMasuk();
+    cariJenisAnggaran();
   });
   
   const filteredPekerjaan = computed(() => {

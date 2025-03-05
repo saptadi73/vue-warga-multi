@@ -7,14 +7,14 @@
         <div id="card1" class="">
           <div class="p-4 md:p-5">
             <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-              Pengisian Jenis Pemasukan
+              Pengisian Jenis Pengeluaran
             </h3>
             <div>
               <div>
                 <div class="sm:flex rounded-lg shadow-sm">
                   <span
                     class="py-3 px-4 inline-flex items-center min-w-fit w-full border border-gray-200 bg-gray-50 text-sm text-gray-500 -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:w-auto sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg dark:bg-neutral-700 dark:border-neutral-700 dark:text-neutral-400"
-                    >Isi Jenis Pemasukan</span
+                    >Isi Jenis Pengeluaran</span
                   >
                   <input
                     id="nama"
@@ -46,7 +46,7 @@
             class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
           >
             <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-              Hasil Pengisian dan Daftar Jenis Pemasukan yang sudah ada tertera di table
+              Hasil Pengisian dan Daftar Jenis Pengeluaran yang sudah ada tertera di table
               bawah
             </p>
           </div>
@@ -59,7 +59,7 @@
         >
           <div class="p-4 md:p-5">
             <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-              Daftar Jenis Pemasukan Terdaftar
+              Daftar Jenis Pengeluaran Terdaftar
             </h3>
             <div>
               <div id="hs-datatable-filter" class="flex flex-col">
@@ -182,7 +182,7 @@
                     class="text-xs text-gray-500 ms-auto dark:text-neutral-400"
                   >
                     Terhitung <span>{{ filteredPekerjaan.length }}</span> Jenis
-                    Pemasukan
+                    Pengeluaran
                   </div>
                 </div>
               </div>
@@ -272,7 +272,7 @@
   
   async function getJenisAnggaranMasuk() {
     const url = `${BASE_URL}bayar/list/jenis/anggaran`;
-    formValues.value.id_type_anggaran =1;
+    formValues.value.id_type_anggaran =2;
     try {
       const listJenisAnggaranMAsuk = await axios.post(url, formValues.value, {
         headers: {
@@ -290,7 +290,7 @@
     const url = `${BASE_URL}bayar/add/jenis/anggaran`;
     const nama_pekerjaan = document.getElementById("nama").value;
     const keterangan = document.getElementById("keterangan").value;
-    formValues.value = { nama: nama_pekerjaan, id_type_anggaran: 1, keterangan: keterangan };
+    formValues.value = { nama: nama_pekerjaan, id_type_anggaran: 2, keterangan: keterangan };
     try {
       const tambahKerjaan = await axios.post(url, formValues.value, {
         headers: {
@@ -374,7 +374,7 @@
   }
   
   function bukaModalInput(id,pekerjaan) {
-    const url_id = '/anggaran/edit/jenis/anggaran/masuk/' + id;
+    const url_id = '/anggaran/edit/jenis/anggaran/keluar/' + id;
     router.push(url_id);
   }
   onMounted(() => {

@@ -130,6 +130,26 @@ const router = createRouter({
           name: "input_anggaran",
           component: () => import("../anggaran/InputAnggaranWarga.vue"),
         },
+        {
+          path: "input/jenis/anggaran/masuk",
+          name: "input_jenis_anggaran_masuk",
+          component: () => import("../anggaran/IsiJenisAnggaranMasuk.vue"),
+        },
+        {
+          path: "edit/jenis/anggaran/masuk/:id",
+          name: "edit_jenis_anggaran_masuk",
+          component: () => import("../anggaran/EditJenisAnggaranMasuk.vue"),
+        },
+        {
+          path: "input/jenis/anggaran/keluar",
+          name: "input_jenis_anggaran_keluar",
+          component: () => import("../anggaran/IsiJenisAnggaranKeluar.vue"),
+        },
+        {
+          path: "edit/jenis/anggaran/keluar/:id",
+          name: "edit_jenis_anggaran_keluar",
+          component: () => import("../anggaran/EditJenisAnggaranKeluar.vue"),
+        }
       ],
     },
     {
@@ -151,6 +171,16 @@ const router = createRouter({
           path: "edit/jenis/:id",
           name: "edit_jenis_iuran",
           component: () => import("../iuran/EditJenisIuran.vue"),
+        },
+        {
+          path: "bayar/iuran",
+          name: "bayar_iuran",
+          component: () => import("../warga/TableKKBayarIuran.vue"),
+        },
+        {
+          path: "bayar/kk/:id/:nama",
+          name: "bayar_iuran_kk",
+          component: () => import("../iuran/BayarIuranKK.vue"),
         },
       ],
     },

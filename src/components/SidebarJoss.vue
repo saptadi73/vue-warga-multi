@@ -151,15 +151,15 @@ export default {
           icon: "account_balance",
           submenu: [
             {
-              name: "Isi Jenis Anggaran",
-              path: "/anggaran/input/type",
+              name: "Isi Jenis Pemasukan",
+              path: "/anggaran/input/jenis/anggaran/masuk",
             },
             {
-              name: "Isi Anggaran",
-              path: "/anggaran/input/anggaran",
+              name: "Isi Jenis Pengeluaran",
+              path: "/anggaran/input/jenis/anggaran/keluar",
             },
             {
-              name: "Laporan Anggaran",
+              name: "Isi Arus Anggaran",
               path: "/anggaran/laporan",
             },
           ],
