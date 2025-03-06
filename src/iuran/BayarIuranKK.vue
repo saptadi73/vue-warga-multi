@@ -106,7 +106,7 @@
       >
         <div class="p-4 md:p-5">
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-            Daftar Jenis Iuran Terdaftar
+            Laporan Iuran yang telah dibayarkan
           </h3>
           <div>
             <div id="hs-datatable-filter" class="flex flex-col">
@@ -178,11 +178,13 @@
                             </div>
                           </th>
                           <th class="py-3 px-4 text-xs font-normal">Nama</th>
-                          <th class="py-3 px-4 text-xs font-normal">Nominal</th>
+                          <th class="py-3 px-4 text-xs font-normal">Blok</th>
                           <th class="py-3 px-4 text-xs font-normal">
-                            Keterangan
+                            No.
                           </th>
-                          <th class="py-3 px-4 text-xs font-normal">Edit</th>
+                          <th class="py-3 px-4 text-xs font-normal">Jenis</th>
+                          <th class="py-3 px-4 text-xs font-normal">Nominal</th>
+                          <th class="py-3 px-4 text-xs font-normal">Tanggal</th>
                           <th class="py-3 px-4 text-xs font-normal">Delete</th>
                         </tr>
                       </thead>
@@ -211,30 +213,37 @@
                           <td
                             class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200"
                           >
-                            {{ user.nama }}
+                            {{ user.kk.warga[0].nama }}
                           </td>
                           <td
                             class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200"
                           >
-                            {{ user.iuran }}
+                            {{ user.kk.blok.blok }}
                           </td>
                           <td
                             class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200"
                           >
-                            {{ user.keterangan }}
+                            {{ user.kk.no_rumah }}
                           </td>
+                          <td
+                            class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200"
+                          >
+                            {{ user.iuran.nama }}
+                          </td>
+                          <td
+                            class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200"
+                          >
+                            {{ formatRupiah(user.nilai) }}
+                          </td>
+                          <td
+                            class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200"
+                          >
+                            {{ formatTanggal(user.tanggal) }}
+                          </td>
+                          
                           <td class="text-blue-600 font-semibold">
                             <button
-                              @click="
-                                bukaModalInput(`${user.id}`, `${user.nama}`)
-                              "
-                            >
-                              Edit
-                            </button>
-                          </td>
-                          <td class="text-blue-600 font-semibold">
-                            <button
-                              @click="bukaModal(`${user.id}`, `${user.nama}`)"
+                              @click="bukaModal(`${user.id}`,`${user.iuran.nama}`, `${user.tanggal}`)"
                             >
                               Delete
                             </button>
@@ -250,7 +259,7 @@
                 <div
                   class="text-xs text-gray-500 ms-auto dark:text-neutral-400"
                 >
-                  Terhitung <span>{{ filteredPekerjaan.length }}</span> Jenis
+                  Terhitung <span>{{ filteredPekerjaan.length }}</span> Setor
                   Iuran
                 </div>
               </div>
@@ -281,7 +290,7 @@
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
         >
           <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-            Pengisian Jenis Iuran Warga untuk pendataan
+            Pengisian Setoran Iuran Warga untuk pendataan
           </p>
         </div>
       </div>
@@ -305,7 +314,7 @@
       v-if="showModal"
       :title="ModalTitle"
       :message_modal="ModalMessage"
-      v-on:okeButton="deletePekerjaan"
+      v-on:okeButton="deleteIuranKK"
       v-on:cancelButton="tutupModal"
       v-on:closeButton="tutupModal"
     />
@@ -329,6 +338,7 @@ const nama_kk = ref("");
 
 const hasilPekerjaan = ref([]);
 const hasilIuran = ref([]);
+const hasilIuranKK = ref([]);
 const formValues = ref({});
 const pekerjaanValue = ref("");
 const showToast = ref(false);
@@ -360,6 +370,19 @@ async function getIuran() {
     console.log(error);
   }
 }
+
+async function getIuranKK() {
+  try {
+    const idKK = parseInt(route.params.id);
+    const listIuranKK = await axios.get(`${BASE_URL}bayar/setor/kk/${idKK}`);
+    hasilIuranKK.value = listIuranKK.data.result;
+    console.log('Laporan Iuran : ',hasilIuranKK.value);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
 
 async function addPekerjaan() {
   const idKK = parseInt(route.params.id);
@@ -394,19 +417,19 @@ async function addPekerjaan() {
 
 function tutupToast() {
   showToast.value = false;
-  router.push("/iuran/input/jenis");
+  router.push("/iuran/bayar/iuran");
 }
 
 function tutupModal() {
   showModal.value = false;
-  router.push("/iuran/input/jenis");
+  router.push("/iuran/bayar/iuran");
 }
 
-function bukaModal(id, pekerjaan) {
+function bukaModal(id, iuran, tanggal) {
   showModal.value = true;
-  ModalTitle.value = "Delete Pekerjaan";
+  ModalTitle.value = "Delete Setoran";
   ModalMessage.value =
-    "Anda yakin ingin menghapus iuran " + pekerjaan + " ini?";
+    "Anda yakin ingin menghapus dan mengganti " + iuran +" tanggal " + formatTanggal(tanggal) + " ini?";
   formValues.value.id = id;
 }
 
@@ -434,10 +457,10 @@ async function updatePekerjaan() {
     toastMessage.value = error;
   }
 }
-async function deletePekerjaan() {
-  const url = `${BASE_URL}bayar/delete/iuran`;
+async function deleteIuranKK() {
+  const url = `${BASE_URL}bayar/delete/setor`;
   formValues.value.id = parseInt(formValues.value.id);
-  console.log(url);
+  console.log(formValues.value);
 
   try {
     const hapusPekerjaan = await axios.post(url, formValues.value, {
@@ -462,14 +485,17 @@ function bukaModalInput(id, pekerjaan) {
 onMounted(() => {
   getJenisPekerjaan();
   getIuran();
+  getIuranKK();
 });
 
 const filteredPekerjaan = computed(() => {
   if (!searchQuery.value) {
-    return hasilPekerjaan.value;
+    return hasilIuranKK.value;
   }
-  return hasilPekerjaan.value.filter((pekerjaan) =>
-    pekerjaan.nama.toLowerCase().includes(searchQuery.value.toLowerCase())
+  return hasilIuranKK.value.filter((pekerjaan) =>
+    pekerjaan.kk.warga[0].nama.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    formatTanggal(pekerjaan.tanggal).toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    formatRupiah(pekerjaan.nilai).toLowerCase().includes(searchQuery.value.toLowerCase())
   );
 });
 
@@ -477,6 +503,29 @@ function handleSearch() {
   // This function is called on input event to filter users.
   // It's already handled by the computed property `filteredUsers`.
 }
+
+
+function formatRupiah(number) {
+  const amount = number;
+
+  // Format as Indonesian Rupiah (IDR)
+  const formattedIDR = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0, // Rupiah usually doesn't show decimals
+    maximumFractionDigits: 0,
+  }).format(amount);
+
+  return formattedIDR;
+}
+
+function formatTanggal(dateString) {
+  const tanggal = new Date(dateString);
+  const localeDate = tanggal.toLocaleDateString("en-GB");
+
+  return localeDate;
+}
+
 </script>
 
 <style lang="css">

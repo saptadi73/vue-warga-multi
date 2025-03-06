@@ -12,29 +12,36 @@
           <div class="mt-10">
             <div class="relative">
               <select
-                id="jenis_anggaran"
+                id="type"
+                :onchange="listJenisAnggaran"
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
-                <option selected="">Pilih Jenis Anggaram</option>
-                <option>Pemasukan</option>
-                <option>Pengeluaran</option>
+                <option selected="">Pilih Jenis Anggaran</option>
+                <option value="1">Pemasukan</option>
+                <option value="2">Pengeluaran</option>
               </select>
               <label
                 for="jenis_anggaran"
                 class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-gray-500 dark:peer-focus:text-neutral-500 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500"
-                >Type Anggaran Anggaran</label
+                >Jenis Anggaran</label
               >
             </div>
           </div>
           <div class="mt-10">
             <div class="relative">
               <select
-                id="type_anggaran"
+                id="jenis_anggaran"
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
-                <option selected="">Pilih Type Anggaran</option>
-                <option>BUK</option>
-                <option>PAmdu</option>
+                <option selected="">Pilih Jenis Anggaran</option>
+                <option
+                  v-if="hasilJenisAnggaran"
+                  v-for="resultku in hasilJenisAnggaran"
+                  :key="resultku.id"
+                  :value="resultku.id"
+                >
+                  {{ resultku.nama }}
+                </option>
               </select>
               <label
                 for="jenis_anggaran"
@@ -50,11 +57,19 @@
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
                 <option selected="">Pilih Warga</option>
-                <option>Agus</option>
-                <option>Badrul</option>
+                <option
+                  v-if="hasilWarga"
+                  v-for="resultku in hasilWarga"
+                  :key="resultku.id"
+                  :value="resultku.id"
+                >
+                  {{ resultku.nama }} [{{ resultku.kk.blok.blok }}/{{
+                    resultku.kk.no_rumah
+                  }}]
+                </option>
               </select>
               <label
-              for="jenis_anggaran"
+                for="jenis_anggaran"
                 class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-gray-500 dark:peer-focus:text-neutral-500 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500"
                 >Nama Penaggung Jawab</label
               >
@@ -67,6 +82,7 @@
                 >tanggal</span
               >
               <input
+                id="tanggal"
                 type="date"
                 class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
               />
@@ -79,14 +95,28 @@
                 >Nominal</span
               >
               <input
+                id="nominal"
                 type="number"
+                class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+              />
+            </div>
+          </div>
+          <div class="mt-3">
+            <div class="flex rounded-lg shadow-sm">
+              <span
+                class="inline-flex px-4 items-center min-w-fit rounded-s-md boder border-e-0 border-gray-600 text-sm text-gray-500 bg-slate-200"
+                >Keterangan</span
+              >
+              <input
+                id="keterangan"
+                type="text"
                 class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
               />
             </div>
           </div>
           <button
             class="mt-5 bg-purple-500 text-base font-semibold rounded-lg text-white decoration-2 hover:text-purple-200 hover:underline focus:underline focus:outline-none p-2 focus:text-purple-300 disabled:opacity-50 disabled:pointer-events-none"
-            href="#"
+            @click="addSetorAnggaran"
           >
             Simpan
           </button>
@@ -95,7 +125,7 @@
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
         >
           <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-            Last updated 5 mins ago
+            Hasil Penambahan bisa dilihat dalam table di bawah
           </p>
         </div>
       </div>
@@ -107,1165 +137,247 @@
       >
         <div class="p-4 md:p-5">
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-            Card title
+            Table Laporan Pemasukan/Pengeluaran
           </h3>
-          <div>
-            <div
-              id="hs-datatable-filter"
-              class="flex flex-col --prevent-on-load-init"
-              data-hs-datatable='{
-                    "pagingOptions": {
-                      "pageBtnClasses": "min-w-[40px] flex justify-center items-center text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 py-2.5 text-sm rounded-full disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:focus:bg-neutral-700 dark:hover:bg-neutral-700"
-                    },
-                    "selecting": true,
-                    "rowSelectingOptions": {
-                      "selectAllSelector": "#hs-datatable-select-all-rows",
-                      "individualSelector": ".hs-datatable-select-row"
-                    },
-                    "language": {
-                      "zeroRecords": "<div class=\"p-5 h-full flex flex-col justify-center items-center text-center\"><svg class=\"w-48 mx-auto mb-4\" width=\"178\" height=\"90\" viewBox=\"0 0 178 90\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"27\" y=\"50.5\" width=\"124\" height=\"39\" rx=\"7.5\" fill=\"currentColor\" class=\"fill-white dark:fill-neutral-800\"/><rect x=\"27\" y=\"50.5\" width=\"124\" height=\"39\" rx=\"7.5\" stroke=\"currentColor\" class=\"stroke-gray-50 dark:stroke-neutral-700/10\"/><rect x=\"34.5\" y=\"58\" width=\"24\" height=\"24\" rx=\"4\" fill=\"currentColor\" class=\"fill-gray-50 dark:fill-neutral-700/30\"/><rect x=\"66.5\" y=\"61\" width=\"60\" height=\"6\" rx=\"3\" fill=\"currentColor\" class=\"fill-gray-50 dark:fill-neutral-700/30\"/><rect x=\"66.5\" y=\"73\" width=\"77\" height=\"6\" rx=\"3\" fill=\"currentColor\" class=\"fill-gray-50 dark:fill-neutral-700/30\"/><rect x=\"19.5\" y=\"28.5\" width=\"139\" height=\"39\" rx=\"7.5\" fill=\"currentColor\" class=\"fill-white dark:fill-neutral-800\"/><rect x=\"19.5\" y=\"28.5\" width=\"139\" height=\"39\" rx=\"7.5\" stroke=\"currentColor\" class=\"stroke-gray-100 dark:stroke-neutral-700/30\"/><rect x=\"27\" y=\"36\" width=\"24\" height=\"24\" rx=\"4\" fill=\"currentColor\" class=\"fill-gray-100 dark:fill-neutral-700/70\"/><rect x=\"59\" y=\"39\" width=\"60\" height=\"6\" rx=\"3\" fill=\"currentColor\" class=\"fill-gray-100 dark:fill-neutral-700/70\"/><rect x=\"59\" y=\"51\" width=\"92\" height=\"6\" rx=\"3\" fill=\"currentColor\" class=\"fill-gray-100 dark:fill-neutral-700/70\"/><g filter=\"url(#@@id)\"><rect x=\"12\" y=\"6\" width=\"154\" height=\"40\" rx=\"8\" fill=\"currentColor\" class=\"fill-white dark:fill-neutral-800\" shape-rendering=\"crispEdges\"/><rect x=\"12.5\" y=\"6.5\" width=\"153\" height=\"39\" rx=\"7.5\" stroke=\"currentColor\" class=\"stroke-gray-100 dark:stroke-neutral-700/60\" shape-rendering=\"crispEdges\"/><rect x=\"20\" y=\"14\" width=\"24\" height=\"24\" rx=\"4\" fill=\"currentColor\" class=\"fill-gray-200 dark:fill-neutral-700 \"/><rect x=\"52\" y=\"17\" width=\"60\" height=\"6\" rx=\"3\" fill=\"currentColor\" class=\"fill-gray-200 dark:fill-neutral-700\"/><rect x=\"52\" y=\"29\" width=\"106\" height=\"6\" rx=\"3\" fill=\"currentColor\" class=\"fill-gray-200 dark:fill-neutral-700\"/></g><defs><filter id=\"@@id\" x=\"0\" y=\"0\" width=\"178\" height=\"64\" filterUnits=\"userSpaceOnUse\" color-interpolation-filters=\"sRGB\"><feFlood flood-opacity=\"0\" result=\"BackgroundImageFix\"/><feColorMatrix in=\"SourceAlpha\" type=\"matrix\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0\" result=\"hardAlpha\"/><feOffset dy=\"6\"/><feGaussianBlur stdDeviation=\"6\"/><feComposite in2=\"hardAlpha\" operator=\"out\"/><feColorMatrix type=\"matrix\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.03 0\"/><feBlend mode=\"normal\" in2=\"BackgroundImageFix\" result=\"effect1_dropShadow_1187_14810\"/><feBlend mode=\"normal\" in=\"SourceGraphic\" in2=\"effect1_dropShadow_1187_14810\" result=\"shape\"/></filter></defs></svg><div class=\"max-w-sm mx-auto\"><p class=\"mt-2 text-sm text-gray-600 dark:text-neutral-400\">No data</p></div></div>"
-                    }
-                  }'
-            >
-              <div class="flex items-center space-x-2 mb-4">
-                <div class="flex-0">
-                  <div class="relative max-w-xs">
-                    <label for="hs-table-filter-search" class="sr-only"
-                      >Search</label
-                    >
-                    <input
-                      type="text"
-                      name="hs-table-filter-search"
-                      id="hs-table-filter-search"
-                      class="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                      placeholder="Search for items"
-                      data-hs-datatable-search=""
-                    />
-                    <div
-                      class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3"
-                    >
-                      <svg
-                        class="size-4 text-gray-400 dark:text-neutral-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+          <div class="mt-3">
+            <div class="relative">
+              <select
+                id="type_cari"
+                :onchange="listJenisAnggaranCari"
+                class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
+              >
+                <option selected="">Pilih Jenis Anggaran</option>
+                <option value="1">Pemasukan</option>
+                <option value="2">Pengeluaran</option>
+              </select>
+              <label
+                for="jenis_anggaran_cari"
+                class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-gray-500 dark:peer-focus:text-neutral-500 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500"
+                >Jenis Anggaran</label
+              >
+            </div>
+          </div>
+          <div class="mt-3">
+            <div class="relative">
+              <select
+                id="jenis_anggaran_cari"
+                class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
+              >
+                <option selected="">Pilih Jenis Anggaran</option>
+                <option
+                  v-if="hasilJenisAnggaranCari"
+                  v-for="resultku in hasilJenisAnggaranCari"
+                  :key="resultku.id"
+                  :value="resultku.id"
+                >
+                  {{ resultku.nama }}
+                </option>
+                <option value="9999">Semua</option>
+              </select>
+              <label
+                for="jenis_anggaran_cari"
+                class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-gray-500 dark:peer-focus:text-neutral-500 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500"
+                >Type Anggaran</label
+              >
+            </div>
+          </div>
+          <div class="mt-3">
+            <div class="flex rounded-lg shadow-sm">
+              <span
+                class="inline-flex px-4 items-center min-w-fit rounded-s-md boder border-e-0 border-gray-600 text-sm text-gray-500 bg-slate-200"
+                >tanggal awal</span
+              >
+              <input
+                id="tanggal_awal"
+                type="date"
+                class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+              />
+            </div>
+          </div>
+          <div class="mt-1">
+            <div class="flex rounded-lg shadow-sm">
+              <span
+                class="inline-flex px-4 items-center min-w-fit rounded-s-md boder border-e-0 border-gray-600 text-sm text-gray-500 bg-slate-200"
+                >tanggal akhir</span
+              >
+              <input
+                id="tanggal_akhir"
+                type="date"
+                class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+              />
+            </div>
+          </div>
+          <button
+            class="mt-3 p-2 bg-slate-600 text-white rounded-md w-36"
+            @click="listSetoranAnggaran"
+          >
+            Cari
+          </button>
+          <div class="mt-5">
+            <div>
+              <div id="hs-datatable-filter" class="flex flex-col">
+                <div class="flex items-center space-x-2 mb-4">
+                  <div class="flex-0">
+                    <div class="relative max-w-xs">
+                      <label for="hs-table-filter-search" class="sr-only"
+                        >Search</label
                       >
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.3-4.3"></path>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="flex-1 flex items-center justify-end space-x-2">
-                  <!-- Select -->
-                  <select
-                    class="hidden"
-                    data-hs-select='{
-                          "toggleTag": "<button type=\"button\" aria-expanded=\"false\"><span data-title></span></button>",
-                          "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2 px-3 pe-9 flex text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 before:absolute before:inset-0 before:z-[1] dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800",
-                          "dropdownClasses": "mt-2 z-50 w-20 max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700",
-                          "optionClasses": "py-2 px-3 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-md focus:outline-none focus:bg-gray-100 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-200 dark:focus:bg-neutral-800",
-                          "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-3.5 text-blue-600 dark:text-blue-500\" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"/></svg></span></div>",
-                          "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-neutral-500\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
-                        }'
-                    data-hs-datatable-page-entities=""
-                  >
-                    <option value="10" selected="">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                  </select>
-                  <!-- End Select -->
-
-                  <div
-                    class="hs-dropdown [--auto-close:inside] [--placement:bottom-right] relative sm:inline-flex z-20"
-                  >
-                    <button
-                      id="hs-dropdown-filter"
-                      type="button"
-                      class="hs-dropdown-toggle py-2 px-3 inline-flex items-center gap-x-2 text-sm rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                    >
-                      Filter
-                      <svg
-                        class="hs-dropdown-open:rotate-180 size-2.5"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <input
+                        type="search"
+                        v-model="searchQuery"
+                        @input="handleSearch"
+                        id="hs-table-filter-search"
+                        class="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400"
+                        placeholder="Search for items"
+                      />
+                      <div
+                        class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3"
                       >
-                        <path
-                          d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5"
+                        <svg
+                          class="size-4 text-gray-400 dark:text-neutral-500"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
                           stroke="currentColor"
                           stroke-width="2"
                           stroke-linecap="round"
-                        ></path>
-                      </svg>
-                    </button>
-
-                    <div
-                      class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden bg-white border border-gray-200 shadow-md rounded-lg p-2 mt-2 dark:bg-neutral-900 dark:border dark:border-neutral-700"
-                      aria-labelledby="hs-dropdown-filter"
-                    >
-                      <div class="max-w-sm flex gap-x-2">
-                        <input
-                          id="hs-input-number-min-age"
-                          type="number"
-                          class="py-1 px-2.5 block w-20 border-gray-200 rounded-md text-[13px] focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                          placeholder="Min age"
-                        />
-                        <input
-                          id="hs-input-number-max-age"
-                          type="number"
-                          class="py-1 px-2.5 block w-20 border-gray-200 rounded-md text-[13px] focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                          placeholder="Max age"
-                        />
+                          stroke-linejoin="round"
+                        >
+                          <circle cx="11" cy="11" r="8"></circle>
+                          <path d="m21 21-4.3-4.3"></path>
+                        </svg>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
 
-              <div class="overflow-x-auto min-h-[521px]">
-                <div class="min-w-full inline-block align-middle">
-                  <div class="overflow-hidden">
-                    <table class="min-w-full">
-                      <thead
-                        class="border-y border-gray-200 dark:border-neutral-700"
-                      >
-                        <tr>
-                          <th
-                            scope="col"
-                            class="py-1 ps-3 --exclude-from-ordering"
-                          >
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-datatable-select-all-rows"
-                                type="checkbox"
-                                class="border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                              />
-                              <label class="sr-only">Checkbox</label>
-                            </div>
-                          </th>
-
-                          <th
-                            scope="col"
-                            class="py-1 group text-start font-normal focus:outline-none"
-                          >
-                            <div
-                              class="py-1 px-2.5 inline-flex items-center border border-transparent text-sm text-gray-500 rounded-md hover:border-gray-200 dark:text-neutral-500 dark:hover:border-neutral-700"
-                            >
-                              Name
-                              <svg
-                                class="size-3.5 ms-1 -me-0.5 text-gray-400 dark:text-neutral-500"
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              >
-                                <path
-                                  class="hs-datatable-ordering-desc:text-blue-600 dark:hs-datatable-ordering-desc:text-blue-500"
-                                  d="m7 15 5 5 5-5"
-                                ></path>
-                                <path
-                                  class="hs-datatable-ordering-asc:text-blue-600 dark:hs-datatable-ordering-asc:text-blue-500"
-                                  d="m7 9 5-5 5 5"
-                                ></path>
-                              </svg>
-                            </div>
-                          </th>
-
-                          <th
-                            scope="col"
-                            class="py-1 group text-start font-normal focus:outline-none"
-                          >
-                            <div
-                              class="py-1 px-2.5 inline-flex items-center border border-transparent text-sm text-gray-500 rounded-md hover:border-gray-200 dark:text-neutral-500 dark:hover:border-neutral-700"
-                            >
-                              Age
-                              <svg
-                                class="size-3.5 ms-1 -me-0.5 text-gray-400 dark:text-neutral-500"
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              >
-                                <path
-                                  class="hs-datatable-ordering-desc:text-blue-600 dark:hs-datatable-ordering-desc:text-blue-500"
-                                  d="m7 15 5 5 5-5"
-                                ></path>
-                                <path
-                                  class="hs-datatable-ordering-asc:text-blue-600 dark:hs-datatable-ordering-asc:text-blue-500"
-                                  d="m7 9 5-5 5 5"
-                                ></path>
-                              </svg>
-                            </div>
-                          </th>
-
-                          <th
-                            scope="col"
-                            class="py-1 group text-start font-normal focus:outline-none"
-                          >
-                            <div
-                              class="py-1 px-2.5 inline-flex items-center border border-transparent text-sm text-gray-500 rounded-md hover:border-gray-200 dark:text-neutral-500 dark:hover:border-neutral-700"
-                            >
-                              Address
-                              <svg
-                                class="size-3.5 ms-1 -me-0.5 text-gray-400 dark:text-neutral-500"
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              >
-                                <path
-                                  class="hs-datatable-ordering-desc:text-blue-600 dark:hs-datatable-ordering-desc:text-blue-500"
-                                  d="m7 15 5 5 5-5"
-                                ></path>
-                                <path
-                                  class="hs-datatable-ordering-asc:text-blue-600 dark:hs-datatable-ordering-asc:text-blue-500"
-                                  d="m7 9 5-5 5 5"
-                                ></path>
-                              </svg>
-                            </div>
-                          </th>
-
-                          <th
-                            scope="col"
-                            class="py-2 px-3 text-end font-normal text-sm text-gray-500 --exclude-from-ordering dark:text-neutral-500"
-                          >
-                            Action
-                          </th>
-                        </tr>
-                      </thead>
-
-                      <tbody
-                        class="divide-y divide-gray-200 dark:divide-neutral-700"
-                      >
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-1"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-1"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Christina Bersh
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            45
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            4222 River Rd, Columbus
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-2"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-2"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            David Harrison
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            2952 S Peoria Ave, Tulsa
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-3"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-3"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Anne Richard
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            31
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            255 Dock Ln, New Tazewell
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-4"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-4"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Samia Kartoon
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            45
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            4970 Park Ave W, Ohio
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-5"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-5"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            David Harrison
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            4222 River Rd, Columbus
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-6"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-6"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Brian Halligan
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            31
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            2952 S Peoria Ave, Tulsa
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-7"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-7"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Andy Clerk
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            45
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            1818 H St NW, Washington
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-8"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-8"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Bart Simpson
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            3 Grace Dr, New Mexico
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-9"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-9"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Camila Welters
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            45
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            4531 W Saile Dr, North Dakota
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-10"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-10"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Oliver Schevich
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            2126 N Eagle, Meridian, Illinois
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-11"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-11"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Inna Ivy
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            31
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            3817 Beryl Rd, Nebraska
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-12"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-12"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Jessica Williams
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            4807 3rd Ave, New Hampshire
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-13"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-13"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            James Collins
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            31
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            Melbourne No. 1 Lake Park
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-14"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-14"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Costa Quinn
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            New York No. 1 Lake Park
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-15"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-15"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Jim Green
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            LA No. 1 Lake Park
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-16"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-16"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Joe Black
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            31
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            Sidney No. 1 Lake Park
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-17"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-17"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Isabella Cherry
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            4222 River Rd, Columbus
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-18"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-18"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Alex Tacker
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            31
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            2952 S Peoria Ave, Tulsa
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-19"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-19"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Endy Ruiz
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            45
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            1818 H St NW, Washington
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td class="py-3 ps-3">
-                            <div class="flex items-center h-5">
-                              <input
-                                id="hs-table-filter-checkbox-20"
-                                type="checkbox"
-                                class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                data-hs-datatable-row-selecting-individual=""
-                              />
-                              <label
-                                for="hs-table-filter-checkbox-20"
-                                class="sr-only"
-                                >Checkbox</label
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Jack Li
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            3 Grace Dr, New Mexico
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                  <div class="flex-1 flex items-center justify-end space-x-2">
+                    <!-- Select -->
+                    <select class="hidden">
+                      <option value="10" selected="">10</option>
+                      <option value="15">15</option>
+                      <option value="20">20</option>
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                    </select>
+                    <!-- End Select -->
                   </div>
                 </div>
-              </div>
 
-              <div class="flex items-center mt-4">
-                <div
-                  class="flex items-center space-x-1"
-                  data-hs-datatable-paging=""
-                >
-                  <button
-                    type="button"
-                    class="p-2.5 min-w-[40px] inline-flex justify-center items-center gap-x-2 text-sm rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-                    data-hs-datatable-paging-prev=""
-                  >
-                    <span aria-hidden="true">«</span>
-                    <span class="sr-only">Previous</span>
-                  </button>
-                  <div
-                    class="flex items-center space-x-1 [&>.active]:bg-gray-100 dark:[&>.active]:bg-neutral-700"
-                    data-hs-datatable-paging-pages=""
-                  ></div>
-                  <button
-                    type="button"
-                    class="p-2.5 min-w-[40px] inline-flex justify-center items-center gap-x-2 text-sm rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-                    data-hs-datatable-paging-next=""
-                  >
-                    <span class="sr-only">Next</span>
-                    <span aria-hidden="true">»</span>
-                  </button>
+                <div class="overflow-x-auto min-h-[521px]">
+                  <div class="min-w-full inline-block align-middle">
+                    <div class="overflow-hidden">
+                      <table class="">
+                        <thead
+                          class="border-y border-gray-200 dark:border-neutral-700"
+                        >
+                          <tr>
+                            <th class="py-1 ps-3">
+                              <div class="flex items-center h-5">
+                                <input
+                                  id="hs-datatable-select-all-rows"
+                                  type="checkbox"
+                                  class="border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500"
+                                />
+                                <label class="sr-only">Checkbox</label>
+                              </div>
+                            </th>
+                            <th class="py-3 px-4 text-xs font-normal">Nama</th>
+                            <th class="py-3 px-4 text-xs font-normal">Blok</th>
+                            <th class="py-3 px-4 text-xs font-normal">No.</th>
+                            <th class="py-3 px-4 text-xs font-normal">Jenis</th>
+                            <th class="py-3 px-4 text-xs font-normal">
+                              Nominal
+                            </th>
+                            <th class="py-3 px-4 text-xs font-normal">
+                              Tanggal
+                            </th>
+                            <th class="py-3 px-4 text-xs font-normal">
+                              Delete
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody
+                          class="divide-y divide-gray-200 dark:divide-neutral-700"
+                        >
+                          <tr v-for="user in filteredPekerjaan" :key="user.id">
+                            <!-- Checkbox -->
+                            <td class="py-4 ps-4">
+                              <div class="flex items-center h-5">
+                                <input
+                                  :id="'hs-table-filter-checkbox-' + user.id"
+                                  type="checkbox"
+                                  class="hs-datatable-select-row border-gray-300 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:checked:bg-blue-500 dark:checked:border-blue-500"
+                                />
+                                <label
+                                  :for="'hs-table-filter-checkbox-' + user.id"
+                                  class="sr-only"
+                                >
+                                  Checkbox
+                                </label>
+                              </div>
+                            </td>
+
+                            <!-- Data Warga -->
+                            <td
+                              class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200"
+                            >
+                              {{ user.warga.nama }}
+                            </td>
+                            <td
+                              class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200"
+                            >
+                              {{ user.warga.kk.blok.blok }}
+                            </td>
+                            <td
+                              class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200"
+                            >
+                              {{ user.warga.kk.no_rumah }}
+                            </td>
+                            <td
+                              class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200"
+                            >
+                              {{ user.jenis_anggaran.nama }}
+                            </td>
+                            <td
+                              class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200"
+                            >
+                              {{ formatRupiah(user.nilai) }}
+                            </td>
+                            <td
+                              class="p-4 text-xs font-medium text-gray-800 dark:text-neutral-200"
+                            >
+                              {{ formatTanggal(user.tanggal) }}
+                            </td>
+
+                            <td class="text-blue-600 font-semibold">
+                              <button
+                                @click="
+                                  bukaModal(
+                                    `${user.id}`,
+                                    `${user.warga.nama}`,
+                                    `${formatTanggal(user.tanggal)}`
+                                  )
+                                "
+                              >
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
-                <div
-                  class="text-xs text-gray-500 ms-auto dark:text-neutral-400"
-                  data-hs-datatable-info=""
-                >
-                  Showing
-                  <span data-hs-datatable-info-from=""></span>
-                  to
-                  <span data-hs-datatable-info-to=""></span>
-                  of
-                  <span data-hs-datatable-info-length=""></span>
-                  users
+
+                <div class="flex items-center mt-4">
+                  <div
+                    class="text-xs text-gray-500 ms-auto dark:text-neutral-400"
+                  >
+                    Terhitung <span>{{ filteredPekerjaan.length }}</span> Setor
+                    Iuran
+                  </div>
                 </div>
               </div>
             </div>
@@ -1300,10 +412,243 @@
         </div>
       </div>
     </div>
+    <ToastCard
+      v-if="showToast"
+      :message_toast="toastMessage"
+      v-on:dismissToast="tutupToast"
+    />
+    <ModalCard
+      v-if="showModal"
+      :title="ModalTitle"
+      :message_modal="ModalMessage"
+      v-on:okeButton="delSetoranAnggaran"
+      v-on:cancelButton="tutupModal"
+      v-on:closeButton="tutupModal"
+    />
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import ToastCard from "../components/ToastCard.vue";
+import axios from "axios";
+import { onMounted, computed } from "vue";
+import { ref } from "vue";
+import { BASE_URL } from "../base.url.utils";
+import ModalCard from "../components/ModalCard.vue";
+import router from "../router";
+import { useRoute } from "vue-router";
+
+const searchQuery = ref("");
+const route = useRoute();
+
+const hasilWarga = ref([]);
+const hasilJenisAnggaran = ref([]);
+const hasilJenisAnggaranCari = ref([]);
+const hasilTambahAnggaran = ref([]);
+const hasilListSetorAnggaran = ref([]);
+const hasilHapusSetorAnggaran = ref([]);
+
+const formValues = ref({});
+const showToast = ref(false);
+const toastMessage = ref("");
+const showModal = ref(false);
+const ModalTitle = ref("");
+const ModalMessage = ref("");
+const Idku = ref("");
+
+
+function tutupModal() {
+  showModal.value = false;
+  router.push('anggaran/input/anggaran');
+}
+function bukaModal(id, nama, tanggal) {
+  showModal.value = true;
+  ModalTitle.value = "Delete Data Setoran";
+  ModalMessage.value =
+    "Apakah anda yakin akan menghapus data setoran pemasukan/pengeluaran dengan penanggung jawab  " +
+    nama +
+    " pada tanggal " +
+    tanggal +
+    "?";
+  formValues.value = { id: parseInt(id) };
+}
+function tutupToast() {
+  showToast.value = false;
+  router.push("/anggaran/input/anggaran");
+}
+
+async function listJenisAnggaran() {
+  try {
+    const type = document.getElementById("type").value;
+    const url = `${BASE_URL}bayar/list/jenis/anggaran`;
+    formValues.value.id_type_anggaran = parseInt(type);
+    const daftarJenisAnggaran = await axios.post(url, formValues.value, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    hasilJenisAnggaran.value = daftarJenisAnggaran.data.result;
+    console.log(hasilJenisAnggaran.value);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function listJenisAnggaranCari() {
+  try {
+    const type = document.getElementById("type_cari").value;
+    const url = `${BASE_URL}bayar/list/jenis/anggaran`;
+    formValues.value.id_type_anggaran = parseInt(type);
+    const daftarJenisAnggaran = await axios.post(url, formValues.value, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    hasilJenisAnggaranCari.value = daftarJenisAnggaran.data.result;
+    console.log(hasilJenisAnggaranCari.value);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function listWarga() {
+  try {
+    const url = `${BASE_URL}warga/list/all`;
+    const listWarga = await axios.get(url);
+    hasilWarga.value = listWarga.data.result;
+    console.log("Hasil Warga : ", hasilWarga.value);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function listSetoranAnggaran() {
+  try {
+    const url = `${BASE_URL}bayar/list/anggaran`;
+    const id_type_anggaran = document.getElementById("type_cari").value;
+    const id_jenis_anggaran = document.getElementById(
+      "jenis_anggaran_cari"
+    ).value;
+    const tanggal_awal = document.getElementById("tanggal_awal").value;
+    const tanggal_akhir = document.getElementById("tanggal_akhir").value;
+
+    formValues.value = {
+      id_type_anggaran: parseInt(id_type_anggaran),
+      id_jenis_anggaran: parseInt(id_jenis_anggaran),
+      tanggal_akhir: tanggal_akhir,
+      tanggal_awal: tanggal_awal,
+    };
+    const listSetorAnggaran = await axios.post(url, formValues.value, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    hasilListSetorAnggaran.value = listSetorAnggaran.data.result;
+    console.log(
+      " Hasil Laporan Setoran Anggaran : ",
+      hasilListSetorAnggaran.value
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function addSetorAnggaran() {
+  try {
+    const id_warga = document.getElementById("warga").value;
+    const id_type_anggaran = document.getElementById("type").value;
+    const id_jenis_anggaran = document.getElementById("jenis_anggaran").value;
+    const keterangan = document.getElementById("keterangan").value;
+    const nilai = document.getElementById("nominal").value;
+    const tanggal = document.getElementById("tanggal").value;
+    const url = `${BASE_URL}bayar/add/anggaran`;
+    formValues.value = {
+      id_warga: parseInt(id_warga),
+      id_type_anggaran: parseInt(id_type_anggaran),
+      id_jenis_anggaran: parseInt(id_jenis_anggaran),
+      keterangan: keterangan,
+      nilai: parseInt(nilai),
+      tanggal: tanggal,
+    };
+    const addAnggaran = await axios.post(url, formValues.value, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    hasilTambahAnggaran.value = addAnggaran.data.result;
+    console.log("hasil Tambah Anggaran :", hasilJenisAnggaran.value);
+    showToast.value = true;
+    toastMessage.value = addAnggaran.data.message;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function delSetoranAnggaran() {
+  const url = `${BASE_URL}bayar/del/setor/anggaran`;
+  try {
+    const delAnggaran = await axios.post(url, formValues.value, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    hasilHapusSetorAnggaran.value = delAnggaran.data.result;
+    showModal.value = false;
+    showToast.value = true;
+    toastMessage.value = delAnggaran.data.message;
+    console.log(hasilHapusSetorAnggaran.value);
+  } catch (error) {
+    console.log(error);
+  }
+}
+function formatRupiah(number) {
+  const amount = number;
+
+  // Format as Indonesian Rupiah (IDR)
+  const formattedIDR = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0, // Rupiah usually doesn't show decimals
+    maximumFractionDigits: 0,
+  }).format(amount);
+
+  return formattedIDR;
+}
+
+function formatTanggal(dateString) {
+  const tanggal = new Date(dateString);
+  const localeDate = tanggal.toLocaleDateString("en-GB");
+
+  return localeDate;
+}
+
+const filteredPekerjaan = computed(() => {
+  if (!searchQuery.value) {
+    return hasilListSetorAnggaran.value;
+  }
+  return hasilListSetorAnggaran.value.filter(
+    (pekerjaan) =>
+      pekerjaan.warga.nama
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
+      formatTanggal(pekerjaan.tanggal)
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
+      formatRupiah(pekerjaan.nilai)
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase())
+  );
+});
+
+function handleSearch() {
+  // This function is called on input event to filter users.
+  // It's already handled by the computed property `filteredUsers`.
+}
+
+onMounted(() => {
+  listWarga();
+});
+</script>
 
 <style lang="css">
 .dt-layout-row:has(.dt-search),
