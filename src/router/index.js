@@ -149,6 +149,11 @@ const router = createRouter({
           path: "edit/jenis/anggaran/keluar/:id",
           name: "edit_jenis_anggaran_keluar",
           component: () => import("../anggaran/EditJenisAnggaranKeluar.vue"),
+        },
+        {
+          path: "upload/bukti/:id",
+          name: "upload_bukti_anggaran",
+          component: () => import("../anggaran/InputFileBuktiSetor.vue"),
         }
       ],
     },

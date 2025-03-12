@@ -296,6 +296,9 @@
                             <th class="py-3 px-4 text-xs font-normal">
                               Delete
                             </th>
+                            <th class="py-3 px-4 text-xs font-normal">
+                              Bukti
+                            </th>
                           </tr>
                         </thead>
                         <tbody
@@ -364,6 +367,16 @@
                                 Delete
                               </button>
                             </td>
+                            <td v-if="user.bukti[0]" class="text-blue-600 font-semibold">
+                              <button @click="bukaModalGambar(`${user.id}`)">
+                                View
+                              </button>
+                            </td>
+                            <td v-else class="text-blue-600 font-semibold">
+                              <button @click="uploadBukti(`${user.id}`)">
+                                Upload {{ user.bukti[0] }}
+                              </button>
+                            </td>
                           </tr>
                         </tbody>
                       </table>
@@ -421,9 +434,18 @@
       v-if="showModal"
       :title="ModalTitle"
       :message_modal="ModalMessage"
+      
       v-on:okeButton="delSetoranAnggaran"
       v-on:cancelButton="tutupModal"
       v-on:closeButton="tutupModal"
+    />
+    <ModalViewGambar
+      v-if="showModalGambar"
+      :title="ModalTitleGambar"
+      :imageSource="viewGambarku"
+      v-on:okeButton="delGambar"
+      v-on:cancelButton="tutupModalGambar"
+      v-on:closeButton="tutupModalGambar"
     />
   </div>
 </template>
@@ -437,6 +459,7 @@ import { BASE_URL } from "../base.url.utils";
 import ModalCard from "../components/ModalCard.vue";
 import router from "../router";
 import { useRoute } from "vue-router";
+import ModalViewGambar from "../components/ModalViewGambar.vue";
 
 const searchQuery = ref("");
 const route = useRoute();
@@ -454,13 +477,19 @@ const toastMessage = ref("");
 const showModal = ref(false);
 const ModalTitle = ref("");
 const ModalMessage = ref("");
+const showModalGambar = ref(false);
+const ModalTitleGambar = ref("");
+const viewGambarku = ref("");
 const Idku = ref("");
-
 
 function tutupModal() {
   showModal.value = false;
-  router.push('anggaran/input/anggaran');
+  router.push("anggaran/input/anggaran");
 }
+function tutupModalGambar() {}
+function delGambar() {}
+function bukaModalGambar() {}
+
 function bukaModal(id, nama, tanggal) {
   showModal.value = true;
   ModalTitle.value = "Delete Data Setoran";
@@ -471,6 +500,11 @@ function bukaModal(id, nama, tanggal) {
     tanggal +
     "?";
   formValues.value = { id: parseInt(id) };
+}
+
+function uploadBukti(id) {
+  const url = "/anggaran/upload/bukti/" + id;
+  router.push(url);
 }
 function tutupToast() {
   showToast.value = false;
@@ -511,6 +545,54 @@ async function listJenisAnggaranCari() {
   }
 }
 
+async function sekarangTable() {
+  const currentDate = new Date();
+  const dateMinus3Months = new Date();
+  dateMinus3Months.setMonth(currentDate.getMonth() - 3);
+
+  const year = dateMinus3Months.getFullYear();
+  const month = String(dateMinus3Months.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+  const day = String(dateMinus3Months.getDate()).padStart(2, "0");
+
+  const formattedDate3Month = `${year}-${month}-${day}`;
+
+  const dateNow = new Date();
+
+  const yearNow = dateNow.getFullYear();
+const monthNow = String(dateNow.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+const dayNow = String(dateNow.getDate()).padStart(2, '0');
+
+const formattedDateNow = `${yearNow}-${monthNow}-${dayNow}`;
+
+  try {
+    const url = `${BASE_URL}bayar/list/anggaran`;
+    const id_type_anggaran = "1";
+    const id_jenis_anggaran = "9999";
+    const tanggal_awal = formattedDate3Month;
+    const tanggal_akhir = formattedDateNow;
+
+    formValues.value = {
+      id_type_anggaran: parseInt(id_type_anggaran),
+      id_jenis_anggaran: parseInt(id_jenis_anggaran),
+      tanggal_akhir: tanggal_akhir,
+      tanggal_awal: tanggal_awal,
+    };
+    console.log("isi FormValues :", formValues.value);
+    const listSetorAnggaran = await axios.post(url, formValues.value, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    hasilListSetorAnggaran.value = listSetorAnggaran.data.result;
+    console.log(
+      " Hasil Laporan Setoran Anggaran Sekarang : ",
+      hasilListSetorAnggaran.value
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function listWarga() {
   try {
     const url = `${BASE_URL}warga/list/all`;
@@ -538,6 +620,7 @@ async function listSetoranAnggaran() {
       tanggal_akhir: tanggal_akhir,
       tanggal_awal: tanggal_awal,
     };
+    console.log("hasil formvalue yang benar :", formValues.value);
     const listSetorAnggaran = await axios.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
@@ -647,6 +730,7 @@ function handleSearch() {
 
 onMounted(() => {
   listWarga();
+  sekarangTable();
 });
 </script>
 

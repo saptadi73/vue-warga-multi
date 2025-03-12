@@ -93,8 +93,7 @@
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
         >
           <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-            Hasil Pengisian dan Daftar Jenis Iuran yang sudah ada tertera di
-            table bawah
+            Jika ada kesalahan dalam pengisian, untuk mempermudah tidak perlu melakukan update, tetapi dengan melakukan penghapusan dan diganti pengisian baru.
           </p>
         </div>
       </div>
@@ -267,9 +266,9 @@
           </div>
           <a
             class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-600 dark:focus:text-blue-600"
-            href="#"
+            href="/dashboard"
           >
-            Card link
+            Dashboard
             <svg
               class="shrink-0 size-4"
               xmlns="http://www.w3.org/2000/svg"

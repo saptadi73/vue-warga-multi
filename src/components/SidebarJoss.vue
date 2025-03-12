@@ -131,6 +131,10 @@ export default {
           icon: "savings",
           submenu: [
             {
+              path: "/iuran/bayar/iuran",
+              name: "Bayar Iuran Warga",
+            },
+            {
               name: "Tambah Jenis iuran",
               path: "/iuran/input/jenis",
             },
@@ -151,6 +155,10 @@ export default {
           icon: "account_balance",
           submenu: [
             {
+              name: "Isi Arus Anggaran",
+              path: "/anggaran/input/anggaran",
+            },
+            {
               name: "Isi Jenis Pemasukan",
               path: "/anggaran/input/jenis/anggaran/masuk",
             },
@@ -158,10 +166,7 @@ export default {
               name: "Isi Jenis Pengeluaran",
               path: "/anggaran/input/jenis/anggaran/keluar",
             },
-            {
-              name: "Isi Arus Anggaran",
-              path: "/anggaran/laporan",
-            },
+            
           ],
         },
       ],
