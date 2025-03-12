@@ -488,7 +488,11 @@ function tutupModal() {
 }
 function tutupModalGambar() {}
 function delGambar() {}
-function bukaModalGambar() {}
+function bukaModalGambar(id) {
+  showModalGambar.value = true;
+  ModalTitleGambar.value = "View Image File";
+  viewGambarku.value = `${BASE_URL}images/1737242021681-880483274-guntoro.jpg` ;
+}
 
 function bukaModal(id, nama, tanggal) {
   showModal.value = true;

@@ -183,6 +183,14 @@
       :message_toast="message_toastku"
       v-on:dismissToast="tutupToast"
     />
+    <ModalCard
+      v-if="showModal"
+      :title="ModalTitle"
+      :message_modal="ModalMessage"
+      v-on:okeButton="tutupModal"
+      v-on:cancelButton="tutupModal"
+      v-on:closeButton="tutupModal"
+    />
   </div>
 </template>
 
@@ -191,10 +199,13 @@ import { BASE_URL } from "../base.url.utils";
 import axios from "axios";
 import ToastCard from "../components/ToastCard.vue";
 import { ref } from "vue";
+import ModalCard from "../components/ModalCard.vue";
+import { error } from "jquery";
 
 export default {
   components: {
     ToastCard,
+    ModalCard,
   },
   data() {
     return {
@@ -209,6 +220,10 @@ export default {
       kode_desa: null,
       formValues: {},
       isiProfile: null,
+      hasilCariProfile: null,
+      showModal: false,
+      ModalTitle: null,
+      ModalMessage: null,
     };
   },
   methods: {
@@ -218,6 +233,10 @@ export default {
         this.provinsi = response.data;
         console.log(this.provinsi);
       });
+    },
+
+    tutupModal() {
+      this.showModal = false;
     },
 
     async getKabupaten() {
@@ -317,6 +336,47 @@ export default {
           });
       } else {
         console.log("payah");
+        this.showToast = true;
+        this.message_toastku = error;
+      }
+    },
+
+    async getProfile() {
+      try {
+        const url = BASE_URL + "profile/create";
+
+        await axios
+          .get(url)
+          .then((response) => {
+            this.hasilCariProfile = response.data.result;
+            console.log(this.hasilCariProfile);
+            this.showModal = true;
+            this.message_modal =
+              "Profile telah terisi, untuk mengganti data silakan clear data profile terlebih dahulu";
+          })
+          .error((error) => {
+            console.log(error);
+            (this.showToast = true), (this.message_toastku = error);
+          });
+      } catch (error) {}
+    },
+
+    async clearProfile() {
+      try {
+        const url = BASE_URL + "profile/hapus";
+        await axios
+          .get(url)
+          .then((response) => {
+            this.showToast = true;
+            this.message_toastku = response.data.message;
+          })
+          .error((error) => {
+            this.showToast = true;
+            this.message_toastku = error;
+          });
+      } catch (error) {
+        this.showToast = true;
+        this.message_toastku = error;
       }
     },
 
