@@ -11,9 +11,17 @@
       <!-- start Card  -->
       <div id="card1" class="md:w-[40vw] w-full">
         <div class="p-4 md:p-5">
+          <button
+            v-if="hasilCekProfile"
+            class="p-2 bg-slate-700 text-white rounded-md shadow-sm"
+            @click="BukaClear"
+          >
+            Clear Profile
+          </button>
           <div class="mt-10">
             <div class="relative">
               <select
+              v-if="tombolPilih"
                 :onclick="getKabupaten"
                 id="provinsi"
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
@@ -187,7 +195,7 @@
       v-if="showModal"
       :title="ModalTitle"
       :message_modal="ModalMessage"
-      v-on:okeButton="tutupModal"
+      v-on:okeButton="clearProfile"
       v-on:cancelButton="tutupModal"
       v-on:closeButton="tutupModal"
     />
@@ -224,6 +232,8 @@ export default {
       showModal: false,
       ModalTitle: null,
       ModalMessage: null,
+      hasilCekProfile: false,
+      tombolPilih: true,
     };
   },
   methods: {
@@ -343,16 +353,22 @@ export default {
 
     async getProfile() {
       try {
-        const url = BASE_URL + "profile/create";
+        const url = BASE_URL + "profile/cari";
 
         await axios
           .get(url)
           .then((response) => {
             this.hasilCariProfile = response.data.result;
-            console.log(this.hasilCariProfile);
-            this.showModal = true;
-            this.message_modal =
-              "Profile telah terisi, untuk mengganti data silakan clear data profile terlebih dahulu";
+            console.log("hasilCek Profile: ", this.hasilCariProfile);
+
+            if (this.hasilCariProfile) {
+              this.showToast = true;
+              this.message_toastku =
+                "Profile telah terisi, untuk mengganti data silakan clear data profile terlebih dahulu";
+              this.hasilCekProfile = true;
+              this.tombolPilih = false;
+              
+            }
           })
           .error((error) => {
             console.log(error);
@@ -363,12 +379,16 @@ export default {
 
     async clearProfile() {
       try {
+        
         const url = BASE_URL + "profile/hapus";
         await axios
           .get(url)
           .then((response) => {
+            this.showModal = false;
             this.showToast = true;
             this.message_toastku = response.data.message;
+            this.tombolPilih = true;
+            
           })
           .error((error) => {
             this.showToast = true;
@@ -386,10 +406,17 @@ export default {
         this.$router.push("/dashboard");
       }
     },
+
+    BukaClear() {
+      this.showModal = true;
+      this.ModalMessage = "Anda yakin akan menghapus data profile?";
+      this.ModalTitle = "hapus Data Profile";
+    }
   },
 
   created() {
     this.getProvinsi();
+    this.getProfile();
   },
   setup() {
     const showToast = ref(false);

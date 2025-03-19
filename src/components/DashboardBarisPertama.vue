@@ -144,7 +144,7 @@ export default {
   },
   methods: {
     async getEntity() {
-      const url = BASE_URL + "profile/cek";
+      const url = BASE_URL + "profile/cari";
       await axios
         .get(url)
         .then((response) => {
@@ -157,7 +157,7 @@ export default {
           this.rw = this.hasilEntity.rw;
           this.rt = this.hasilEntity.rt;
           this.kode_wilayah = this.hasilEntity.kode_wilayah;
-          console.log(this.hasilEntity);
+          console.log("hasil cek Profile: ",this.hasilEntity);
         })
         .catch((error) => {
           console.log(error);
