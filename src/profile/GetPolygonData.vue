@@ -70,6 +70,9 @@
         this.map.fitBounds(this.polygonku.getBounds());
       },
     },
+    created() {
+      this.createPolygon();
+    },
   };
   </script>
   
