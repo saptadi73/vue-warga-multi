@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="grid w-[80vw] p-5  bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70"
+      class="grid w-[80vw] p-5 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70"
     >
       <!-- start Card  -->
       <div id="card1" class="">
@@ -15,11 +15,11 @@
                 <div class="flex rounded-lg shadow-sm">
                   <span
                     class="px-4 inline-flex items-center min-w-fit rounded-s-md border border-e-0 border-gray-200 bg-gray-50 text-sm text-gray-500 dark:bg-neutral-700 dark:border-neutral-700 dark:text-neutral-400"
-                    >User</span
+                    >Email</span
                   >
                   <input
-                    id="user"
-                    type="text"
+                    id="email"
+                    type="email"
                     class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-purple-500 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                   />
                 </div>
@@ -51,20 +51,22 @@
                     class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-purple-500 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                   />
                 </div>
+                <span class="text-xs text-red-500 font-Poppins">{{
+                  notifikasi
+                }}</span>
               </div>
               <div class="mt-5">
                 <div class="relative">
                   <select
-                    id="level"
+                    id="id_level"
                     class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
                   >
-                    <option selected="">Level Akses</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
+                    <option selected>Level Akses</option>
+                    <option value="1">Admin</option>
+                    <option value="2">User</option>
                   </select>
                   <label
-                    for="level"
+                    for="id_level"
                     class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-gray-500 dark:peer-focus:text-neutral-500 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500"
                     >Level Akses</label
                   >
@@ -74,7 +76,7 @@
           </div>
           <button
             class="mt-5 bg-purple-500 text-base font-semibold rounded-lg text-white decoration-2 hover:text-purple-200 hover:underline focus:underline focus:outline-none p-2 focus:text-purple-300 disabled:opacity-50 disabled:pointer-events-none"
-            href="#"
+            :onclick="registerUser"
           >
             Register
           </button>
@@ -94,7 +96,7 @@
       >
         <div class="p-4 md:p-5">
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-            Table Sample
+            Daftar User
           </h3>
           <div>
             <div
@@ -467,7 +469,38 @@
                             <div
                               class="py-1 px-2.5 inline-flex items-center border border-transparent text-sm text-gray-500 rounded-md hover:border-gray-200 dark:text-neutral-500 dark:hover:border-neutral-700"
                             >
-                              Name
+                              No
+                              <svg
+                                class="size-3.5 ms-1 -me-0.5 text-gray-400 dark:text-neutral-500"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              >
+                                <path
+                                  class="hs-datatable-ordering-desc:text-blue-600 dark:hs-datatable-ordering-desc:text-blue-500"
+                                  d="m7 15 5 5 5-5"
+                                ></path>
+                                <path
+                                  class="hs-datatable-ordering-asc:text-blue-600 dark:hs-datatable-ordering-asc:text-blue-500"
+                                  d="m7 9 5-5 5 5"
+                                ></path>
+                              </svg>
+                            </div>
+                          </th>
+                          <th
+                            scope="col"
+                            class="py-1 group text-start font-normal focus:outline-none"
+                          >
+                            <div
+                              class="py-1 px-2.5 inline-flex items-center border border-transparent text-sm text-gray-500 rounded-md hover:border-gray-200 dark:text-neutral-500 dark:hover:border-neutral-700"
+                            >
+                              Email
                               <svg
                                 class="size-3.5 ms-1 -me-0.5 text-gray-400 dark:text-neutral-500"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -499,7 +532,7 @@
                             <div
                               class="py-1 px-2.5 inline-flex items-center border border-transparent text-sm text-gray-500 rounded-md hover:border-gray-200 dark:text-neutral-500 dark:hover:border-neutral-700"
                             >
-                              Age
+                              Level
                               <svg
                                 class="size-3.5 ms-1 -me-0.5 text-gray-400 dark:text-neutral-500"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -531,7 +564,7 @@
                             <div
                               class="py-1 px-2.5 inline-flex items-center border border-transparent text-sm text-gray-500 rounded-md hover:border-gray-200 dark:text-neutral-500 dark:hover:border-neutral-700"
                             >
-                              Address
+                              Status
                               <svg
                                 class="size-3.5 ms-1 -me-0.5 text-gray-400 dark:text-neutral-500"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -568,560 +601,39 @@
                       <tbody
                         class="divide-y divide-gray-200 dark:divide-neutral-700"
                       >
-                        <tr>
+                        <tr
+                          v-for="(user, index) in daftarUserKu"
+                          :key="user.id"
+                        >
                           <td
                             class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
                           >
-                            Christina Bersh
+                            {{ index + 1 }}
                           </td>
                           <td
                             class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
                           >
-                            45
+                            {{ user.email }}
                           </td>
                           <td
                             class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
                           >
-                            4222 River Rd, Columbus
+                            {{ user.id_level == 1 ? "Admin" : "User" }}
+                          </td>
+                          <td
+                            class="p-3 whitespace-nowrap text-sm text-gray-800"
+                          >
+                            {{ user.status == true ? "AKtif" : "Belum Aktif" }}
                           </td>
                           <td
                             class="p-3 whitespace-nowrap text-end text-sm font-medium"
                           >
                             <button
                               type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            David Harrison
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            2952 S Peoria Ave, Tulsa
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Anne Richard
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            31
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            255 Dock Ln, New Tazewell
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Samia Kartoon
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            45
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            4970 Park Ave W, Ohio
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            David Harrison
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            4222 River Rd, Columbus
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Brian Halligan
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            31
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            2952 S Peoria Ave, Tulsa
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Andy Clerk
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            45
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            1818 H St NW, Washington
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Bart Simpson
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            3 Grace Dr, New Mexico
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Camila Welters
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            45
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            4531 W Saile Dr, North Dakota
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Oliver Schevich
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            2126 N Eagle, Meridian, Illinois
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Inna Ivy
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            31
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            3817 Beryl Rd, Nebraska
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Jessica Williams
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            4807 3rd Ave, New Hampshire
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            James Collins
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            31
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            Melbourne No. 1 Lake Park
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Costa Quinn
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            New York No. 1 Lake Park
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Jim Green
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            LA No. 1 Lake Park
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Joe Black
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            31
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            Sidney No. 1 Lake Park
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Isabella Cherry
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            4222 River Rd, Columbus
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Alex Tacker
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            31
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            2952 S Peoria Ave, Tulsa
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Endy Ruiz
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            45
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            1818 H St NW, Washington
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
-                          >
-                            Jack Li
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            27
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
-                          >
-                            3 Grace Dr, New Mexico
-                          </td>
-                          <td
-                            class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                          >
-                            <button
-                              type="button"
-                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
+                              @click="
+                                bukaModal(`${user.uuid}`, `${user.email}`)
+                              "
+                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800"
                             >
                               Delete
                             </button>
@@ -1185,14 +697,133 @@
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
         >
           <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-            User hanya bisa digunakan setelah selesai diaktivasi melalui URL yang dikirimkan melalui email yang terdaftar
+            User hanya bisa digunakan setelah selesai diaktivasi melalui URL
+            yang dikirimkan melalui email yang terdaftar
           </p>
         </div>
       </div>
     </div>
+    <ToastCard
+      v-if="showToast"
+      :message_toast="toastMessage"
+      v-on:dismissToast="tutupToast"
+    />
+    <ModalCard
+      v-if="showModal"
+      :title="ModalTitle"
+      :message_modal="ModalMessage"
+      v-on:okeButton="deleteUser"
+      v-on:cancelButton="tutupModal"
+      v-on:closeButton="tutupModal"
+    />
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import axios from "axios";
+import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import ToastCard from "../components/ToastCard.vue";
+import router from "../router";
+import { BASE_URL } from "../base.url.utils";
+import ModalCard from "../components/ModalCard.vue";
+
+const showToast = ref(false);
+const toastMessage = ref("");
+const route = useRoute();
+const notifikasi = ref("");
+const daftarUserKu = ref([]);
+const showModal = ref(false);
+const ModalTitle = ref("");
+const ModalMessage = ref("");
+const uuidku = ref({});
+
+onMounted(async () => {
+  await getUserList();
+});
+
+async function registerUser() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password1").value;
+  const confirmPassword = document.getElementById("password2").value;
+  const id_level = document.getElementById("id_level").value;
+
+  if (password !== confirmPassword) {
+    notifikasi.value = "Password tidak sama";
+  } else {
+    const data = {
+      email: email,
+      password: password,
+      id_level: id_level,
+    };
+    const Url = BASE_URL + "auth/signup";
+    const regUser = await axios.post(Url, data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (regUser.data.access_token !== "") {
+      localStorage.setItem("access_token", regUser.data.access_token);
+    } else if (regUser.data.refresh_token !== "") {
+      localStorage.setItem("refresh_token", regUser.data.refresh_token);
+    } else {
+      showToast.value = true;
+      toastMessage.value = "Gagal mendaftar, coba lagi";
+    }
+  }
+}
+
+function tutupToast() {
+  showToast.value = false;
+  router.push("/register");
+}
+
+async function getUserList() {
+  try {
+    const Url = BASE_URL + "user/list/user";
+    const daftarUser = await axios.get(Url);
+    daftarUserKu.value = daftarUser.data.result;
+    console.log(daftarUserKu.value);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function deleteUser() {
+  try {
+    const Url = BASE_URL + "user/delete/user";
+    const delUser = await axios.post(Url, uuidku.value, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (delUser.data.status == "ok") {
+      showToast.value = true;
+      toastMessage.value = "User berhasil dihapus";
+      showModal.value = false;
+    } else {
+      showToast.value = true;
+      toastMessage.value = "Gagal menghapus user";
+      showModal.value = false;
+    }
+  } catch (error) {
+    showToast.value = true;
+    toastMessage.value = error;
+  }
+}
+
+function tutupModal() {
+    showModal.value = false;
+    router.push("/register");
+  }
+
+  function bukaModal(uuid, email) {
+    showModal.value = true;
+    ModalTitle.value = "Delete Data User";
+    ModalMessage.value = "Apakah anda yakin akan menghapus data user  " + email;
+    uuidku.value = { uuid: uuid };
+  }
+</script>
 
 <style lang="scss" scoped></style>

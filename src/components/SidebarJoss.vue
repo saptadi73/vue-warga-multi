@@ -4,7 +4,7 @@
     <div
       :class="{
         'w-14': !isiSidebar,
-        'w-64': isiSidebar,
+        'w-60': isiSidebar,
       }"
       class="z-10 bg-gradient-to-r font-Poppins from-purple-200 to-slate-100 pl-3 h-[100vh] w-14 transition-transform duration-500 relative"
     >

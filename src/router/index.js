@@ -112,7 +112,39 @@ const router = createRouter({
           name:  'del_rumah',
           component: () => import('../warga/DelRumahWarga.vue'),
         },
-        
+        {
+          path: 'upload/fotokk/:id',
+          name: 'upload_fotokk',
+          component: () =>import('../warga/UploadFotoKK.vue'),
+        },
+        {
+          path: 'upload/fotoktp/:id',
+          name: 'upload_fotoktp',
+          component: () =>import('../warga/UploadFotoKTP.vue'),
+        },
+      ],
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../user/loginUser.vue')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('../profile/RegisterUser.vue')
+    },
+    {
+      path: '/auth',
+      name: 'auth',
+      component: () => import('../views/MainAuthPageView.vue'),
+      children:
+      [
+        {
+          path: 'logout',
+          name: 'logout',
+          component: () => import('../user/LogoutUser.vue')
+        }
       ],
     },
     {
@@ -199,6 +231,7 @@ const router = createRouter({
       path: "/dashboard",
       name: "dashboard",
       component: () => import("../views/MainDashboard.vue"),
+      meta: { requiresAuth: true }
     },
     {
       path: "/polygon",
@@ -223,6 +256,6 @@ const router = createRouter({
     }
 
   ],
-});
+})
 
 export default router;
