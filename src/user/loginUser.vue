@@ -7,13 +7,11 @@
         href="#"
         class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
       >
-        <img
-          class="w-8 h-8 mr-2"
-          src="../assets/logo_rukun.png"
-          alt="logo"
-        />
+        <img class="w-8 h-8 mr-2" src="../assets/logo_rukun.png" alt="logo" />
         <span class="font-bold text-[#ca13c5] font-Poppins">IURAN</span
-          >&nbsp;<span class="font-semibold text-[#2b94f1] font-Roboto">WARGA</span>
+        >&nbsp;<span class="font-semibold text-[#2b94f1] font-Roboto"
+          >WARGA</span
+        >
       </a>
       <div
         class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
@@ -22,14 +20,14 @@
           <h1
             class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
           >
-            Sign in to your account
+            Sign in
           </h1>
-          <form class="space-y-4 md:space-y-6" action="#">
+          <form class="space-y-4 md:space-y-6" @submit.prevent="login">
             <div>
               <label
                 for="email"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Your email</label
+                >Email</label
               >
               <input
                 type="email"
@@ -56,49 +54,53 @@
               />
             </div>
             <button
-            :onclick="login"
+              type="submit"
               class="w-full text-white bg-blue-800 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
               Sign in
             </button>
-        
           </form>
         </div>
       </div>
       <ToastCard
-      v-if="showToast"
-      :message_toast="toastMessage"
-      v-on:dismissToast="tutupToast"
-    />
+        v-if="showToast"
+        :message_toast="toastMessage"
+        v-on:dismissToast="tutupToast"
+      />
     </div>
   </section>
 </template>
 
 <script setup>
-import api from './axios';
-import { ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
-import router from '../router';
+import api from "./axios";
+import { ref, watch } from "vue";
+import { useRouter } from "vue-router";
+import router from "../router";
+import ToastCard from "../components/ToastCard.vue";
+
 const showToast = ref(false);
 const toastMessage = ref("");
 
 async function login() {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  const dataLogin = {email: email, password: password};
-  const response = await api.post('auth/signin', dataLogin, 
-  {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const dataLogin = { email: email, password: password };
+  const response = await api.post("auth/signin", dataLogin, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-    if (response.data.status == 'ok'){
-      router.push('/dashboard');
-    }else{
-      showToast.value = true;
-      toastMessage.value = response.data.message;
-    }
+  // console.log(response.data.data.level.nama);
+  localStorage.setItem('level', response.data.data.level.nama);
+
+  if (response.data.status == 'ok'){
+    router.push('/dashboard');
+
+  }else{
+    showToast.value = true;
+    toastMessage.value = response.data.message;
+  }
 }
 
 function tutupToast() {

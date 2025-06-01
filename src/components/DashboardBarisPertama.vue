@@ -164,6 +164,13 @@ export default {
         });
     },
 
+    async getLocalStorage() {
+      const data = localStorage.getItem('access_token');
+      const level = localStorage.getItem('level');
+      console.log('access_token :',data);
+      console.log('level :', level);
+    },
+
     async getDataPolygon() {
       try {
         const url = BASE_URL + "profile/polygon";
@@ -223,6 +230,7 @@ export default {
   created() {
     this.getEntity();
     this.getDataPolygon();
+    this.getLocalStorage();
   },
 
   setup() {

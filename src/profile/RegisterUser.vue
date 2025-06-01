@@ -58,12 +58,15 @@
               <div class="mt-5">
                 <div class="relative">
                   <select
+                  
                     id="id_level"
                     class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
                   >
                     <option selected>Level Akses</option>
-                    <option value="1">Admin</option>
-                    <option value="2">User</option>
+                    <div v-for="level in daftarUserLevelku" :key="level.id">
+                      <option :value="`${level.id}`">{{level.nama}}</option>
+                    </div>
+                    
                   </select>
                   <label
                     for="id_level"
@@ -733,6 +736,7 @@ const toastMessage = ref("");
 const route = useRoute();
 const notifikasi = ref("");
 const daftarUserKu = ref([]);
+const daftarUserLevelku = ref([])
 const showModal = ref(false);
 const ModalTitle = ref("");
 const ModalMessage = ref("");
@@ -740,7 +744,14 @@ const uuidku = ref({});
 
 onMounted(async () => {
   await getUserList();
+  await getUserLevel();
+  getDataLocal();
 });
+
+function getDataLocal() {
+  const levelnya = localStorage.getItem("level");
+  console.log(levelnya);
+}
 
 async function registerUser() {
   const email = document.getElementById("email").value;
@@ -776,7 +787,7 @@ async function registerUser() {
 
 function tutupToast() {
   showToast.value = false;
-  router.push("/register");
+  router.push("profile/register/user");
 }
 
 async function getUserList() {
@@ -785,6 +796,17 @@ async function getUserList() {
     const daftarUser = await axios.get(Url);
     daftarUserKu.value = daftarUser.data.result;
     console.log(daftarUserKu.value);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getUserLevel() {
+  try {
+    const Url = BASE_URL + "user/daftar/level/user";
+    const daftarUserLevel = await axios.get(Url);
+    daftarUserLevelku.value = daftarUserLevel.data.result;
+    console.log(daftarUserLevelku);
   } catch (error) {
     console.log(error);
   }
@@ -815,7 +837,7 @@ async function deleteUser() {
 
 function tutupModal() {
     showModal.value = false;
-    router.push("/register");
+    router.push("profile/register/user");
   }
 
   function bukaModal(uuid, email) {

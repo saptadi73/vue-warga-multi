@@ -1,28 +1,49 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
       name: "home",
-      component: () => import("../warga/InputBlokWarga.vue"),
+      component: () => import("../views/MainDashboard.vue"),
     },
     {
-        path: "/main",
-        name: "main",
-        component: () => import("../views/MainLayoutView.vue"),
+      path: "/main",
+      name: "main",
+      component: () => import("../views/MainLayoutView.vue"),
     },
     {
       path: "/menu",
       name: "menu",
-      component: () => import("../views/MainPageLayout.vue"),  
+      component: () => import("../views/MainPageLayout.vue"),
     },
     {
       path: "/form",
       name: "form",
       component: () => import("../views/MainFormSample.vue"),
+    },
+    {
+      path: "/error",
+      name: "error",
+      component: () => import("../views/MainPageErrorView.vue"),
+      children: [
+        {
+          name: "unauthorized",
+          path: "unauthorized",
+          component: () => import("../user/UnauthPage.vue"),
+        },
+        {
+          name: "notfound",
+          path: "notfound",
+          component: () => import("../user/PageNotFaound.vue")
+        },
+        {
+          path: "logout",
+          name: "logout",
+          component: () => import("../user/LogoutUser.vue"),
+        },
+      ],
     },
     {
       path: "/profile",
@@ -43,8 +64,11 @@ const router = createRouter({
           path: "register/user",
           name: "register_user",
           component: () => import("../profile/RegisterUser.vue"),
+          meta: {
+            requiresAuth: true,
+            allowedRoles: ["admin"],
+          },
         },
-        
       ],
     },
     {
@@ -83,69 +107,51 @@ const router = createRouter({
           component: () => import("../components/ToastCard.vue"),
         },
         {
-          path: 'daftar/kk',
-          name: 'daftar_kk',
-          component: () => import('../warga/DaftarKkWarga.vue'),
+          path: "daftar/kk",
+          name: "daftar_kk",
+          component: () => import("../warga/DaftarKkWarga.vue"),
         },
         {
-          path: 'daftar/table',
-          name: 'daftar_table',
-          component: () => import('../warga/TabelBlokWarga.vue'),
+          path: "daftar/table",
+          name: "daftar_table",
+          component: () => import("../warga/TabelBlokWarga.vue"),
         },
         {
-          path: 'tambah/warga/:nik/:kk',
-          name:  'tambah_warga',
-          component: () => import('../warga/TambahWarga.vue'),
+          path: "tambah/warga/:nik/:kk",
+          name: "tambah_warga",
+          component: () => import("../warga/TambahWarga.vue"),
         },
         {
-          path: 'edit/warga/:nik/:kk',
-          name:  'edit_warga',
-          component: () => import('../warga/EditWarga.vue'),
+          path: "edit/warga/:nik/:kk",
+          name: "edit_warga",
+          component: () => import("../warga/EditWarga.vue"),
         },
         {
-          path: 'edit/kk/:nik/:kk',
-          name:  'edit_rumah',
-          component: () => import('../warga/EditRumahKk.vue'),
+          path: "edit/kk/:nik/:kk",
+          name: "edit_rumah",
+          component: () => import("../warga/EditRumahKk.vue"),
         },
         {
-          path: 'del/kk/:nik/:kk',
-          name:  'del_rumah',
-          component: () => import('../warga/DelRumahWarga.vue'),
+          path: "del/kk/:nik/:kk",
+          name: "del_rumah",
+          component: () => import("../warga/DelRumahWarga.vue"),
         },
         {
-          path: 'upload/fotokk/:id',
-          name: 'upload_fotokk',
-          component: () =>import('../warga/UploadFotoKK.vue'),
+          path: "upload/fotokk/:id",
+          name: "upload_fotokk",
+          component: () => import("../warga/UploadFotoKK.vue"),
         },
         {
-          path: 'upload/fotoktp/:id',
-          name: 'upload_fotoktp',
-          component: () =>import('../warga/UploadFotoKTP.vue'),
+          path: "upload/fotoktp/:id",
+          name: "upload_fotoktp",
+          component: () => import("../warga/UploadFotoKTP.vue"),
         },
       ],
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('../user/loginUser.vue')
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: () => import('../profile/RegisterUser.vue')
-    },
-    {
-      path: '/auth',
-      name: 'auth',
-      component: () => import('../views/MainAuthPageView.vue'),
-      children:
-      [
-        {
-          path: 'logout',
-          name: 'logout',
-          component: () => import('../user/LogoutUser.vue')
-        }
-      ],
+      path: "/login",
+      name: "login",
+      component: () => import("../user/loginUser.vue"),
     },
     {
       path: "/anggaran",
@@ -186,7 +192,7 @@ const router = createRouter({
           path: "upload/bukti/:id",
           name: "upload_bukti_anggaran",
           component: () => import("../anggaran/InputFileBuktiSetor.vue"),
-        }
+        },
       ],
     },
     {
@@ -231,7 +237,7 @@ const router = createRouter({
       path: "/dashboard",
       name: "dashboard",
       component: () => import("../views/MainDashboard.vue"),
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true },
     },
     {
       path: "/polygon",
@@ -253,9 +259,25 @@ const router = createRouter({
       path: "/status",
       name: "status",
       component: () => import("../warga/TabelStatusWarga.vue"),
+    },
+  ],
+});
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = !!localStorage.getItem("access_token");
+  const userRole = localStorage.getItem("level"); // misalnya: "admin"
+
+  if (to.meta.requiresAuth) {
+    if (!isAuthenticated) {
+      return next("/login");
     }
 
-  ],
-})
+    if (to.meta.allowedRoles && !to.meta.allowedRoles.includes(userRole)) {
+      return next("/unauthorized"); // atau tampilkan pesan akses ditolak
+    }
+  }
+
+  return next(); // lanjutkan ke route yang dituju
+});
 
 export default router;
