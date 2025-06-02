@@ -598,6 +598,7 @@
                           >
                             Action
                           </th>
+                          
                         </tr>
                       </thead>
 
@@ -626,7 +627,16 @@
                           <td
                             class="p-3 whitespace-nowrap text-sm text-gray-800"
                           >
-                            {{ user.status == true ? "AKtif" : "Belum Aktif" }}
+                            {{ user.status == true ? "Aktif" : "" }}
+                            <button v-if="!user.status"
+                              type="button"
+                              @click="
+                                aktivasi(BASE_URL2 + 'error/aktivasi/' + user.uuid)
+                              "
+                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800"
+                            >
+                              Copy Link Aktivasi
+                            </button>
                           </td>
                           <td
                             class="p-3 whitespace-nowrap text-end text-sm font-medium"
@@ -729,6 +739,7 @@ import { useRoute, useRouter } from "vue-router";
 import ToastCard from "../components/ToastCard.vue";
 import router from "../router";
 import { BASE_URL } from "../base.url.utils";
+import { BASE_URL2 } from "../base.url2.utils";
 import ModalCard from "../components/ModalCard.vue";
 
 const showToast = ref(false);
@@ -787,7 +798,6 @@ async function registerUser() {
 
 function tutupToast() {
   showToast.value = false;
-  router.push("profile/register/user");
 }
 
 async function getUserList() {
@@ -845,6 +855,17 @@ function tutupModal() {
     ModalTitle.value = "Delete Data User";
     ModalMessage.value = "Apakah anda yakin akan menghapus data user  " + email;
     uuidku.value = { uuid: uuid };
+  }
+
+  async function aktivasi(link) {
+    try {
+    await navigator.clipboard.writeText(link);
+    showToast.value = true
+    toastMessage.value = "Link berhasil di copy dan segera paste melalui Whatsap/Email secara pribadi ke User";
+  } catch (err) {
+    showToast.value = true
+    toastMessage.value = "Link gagal di copy, refresh Halaman dan ulangi kembali";
+  }
   }
 </script>
 

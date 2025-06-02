@@ -114,6 +114,10 @@
 
 <script>
 import authService from "./auth.service";
+import router from "../router";
+import { ref } from "vue";
+import { BASE_URL } from "../base.url.utils";
+
 export default {
   data() {
     return {
@@ -128,11 +132,12 @@ export default {
     RegisterUser() {
       if (this.user.password == this.password2) {
         return authService.register(this.user);
-        
       }else{
         return alert(this.password2);
       }
     },
+
+  
   },
 };
 </script>
