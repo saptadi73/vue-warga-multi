@@ -70,12 +70,13 @@
                       </div>
                     </th>
                     <th class="py-1 text-start font-normal">No</th>
-                    <th class="py-1 text-start font-normal">Kepala Keluarga</th>
-                    <th class="py-1 text-start font-normal">Blok</th>
-                    <th class="py-1 text-start font-normal">No.Rumah</th>
-                    <th class="py-1 text-start font-normal">No.KK</th>
+                    <th class="py-1 text-start font-normal">Nama</th>
+                    <th class="py-1 text-start font-normal">NIK</th>
+                    <th class="py-1 text-start font-normal">Type</th>
+                    <th class="py-1 text-start font-normal">HP</th>
+                    <th class="py-1 text-start font-normal">JK</th>
                     <th class="py-1 text-start font-normal">Tempat Lahir</th>
-
+                    <th class="py-1 text-start font-normal">Tanggal Lahir</th>
                     <th class="py-2 px-3 text-end font-normal">Action</th>
                   </tr>
                 </thead>
@@ -103,27 +104,37 @@
                     <td
                       class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
                     >
-                      {{ user.warga[0].nama }}
+                      {{ user.nama }}
                     </td>
                     <td
                       class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
                     >
-                      {{ user.blok.blok }}
+                      {{ user.nik }}
                     </td>
                     <td
                       class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
                     >
-                      {{ user.no_rumah }}
+                      {{ user.type.nama }}
                     </td>
                     <td
                       class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
                     >
-                      {{ user.no_kk }}
+                      {{ user.no_hp }}
                     </td>
                     <td
                       class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
                     >
-                      {{ user.warga[0].tempat_lahir }}
+                      {{ jenis_kelamin(user.jenis_kelamin) }}
+                    </td>
+                    <td
+                      class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
+                    >
+                      {{ user.tempat_lahir }}
+                    </td>
+                    <td
+                      class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
+                    >
+                      {{ formatTanggal(user.tanggal_lahir) }}
                     </td>
                     <td
                       class="p-3 whitespace-nowrap text-end text-sm font-medium"
@@ -156,13 +167,19 @@
 import { ref, computed, onMounted } from "vue";
 import axios from "axios";
 import { BASE_URL } from "../base.url.utils";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+
 
 const searchQuery = ref("");
-const url = BASE_URL + "warga/list/kk";
+
 const users = ref([]);
 
 onMounted(async () => {
   try {
+    const uuid = route.params.id;
+    const url = BASE_URL + "warga/list/warga/" + uuid;
     const response = await axios.get(url);
     users.value = response.data.result;
     console.log("hasil list KK", users.value);
@@ -178,15 +195,33 @@ const filteredUsers = computed(() => {
   return users.value.filter(
     (user) =>
       user.nama.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      user.no_kk.toString().includes(searchQuery.value) ||
-      user.blok.blok.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      user.no_rumah.toLowerCase().includes(searchQuery.value.toLowerCase())
+      user.no_hp.toString().includes(searchQuery.value) ||
+      user.nik.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      user.tempat_lahir.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      formatTanggal(user.tanggal_lahir).toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      jenis_kelamin(user.jenis_kelamin).toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      user.type.nama.toLowerCase().includes(searchQuery.value.toLowerCase())
   );
 });
 
 function handleSearch() {
   // This function is called on input event to filter users.
   // It's already handled by the computed property `filteredUsers`.
+}
+
+function formatTanggal(dateString) {
+  const tanggal = new Date(dateString);
+  const localeDate = tanggal.toLocaleDateString("en-GB");
+
+  return localeDate;
+}
+
+function jenis_kelamin(jenis_kelamin) {
+    if (jenis_kelamin == true) {
+        return "Pria";
+    }else{
+        return "Wanita";
+    }
 }
 </script>
 

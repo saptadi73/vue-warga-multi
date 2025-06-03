@@ -179,6 +179,15 @@ const router = createRouter({
           },
         },
         {
+          path: "list/kk",
+          name: "tambah_warga",
+          component: () => import("../warga/TableKkWarga.vue"),
+           meta: {
+            requiresAuth: true,
+            allowedRoles: ["admin"],
+          },
+        },
+        {
           path: "edit/warga/:nik/:kk",
           name: "edit_warga",
           component: () => import("../warga/EditWarga.vue"),
