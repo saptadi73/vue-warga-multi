@@ -23,6 +23,7 @@ import { BASE_URL } from "../base.url.utils";
 import ModalCard from "../components/ModalCard.vue";
 import ToastCard from "../components/ToastCard.vue";
 import { error } from "jquery";
+import trailku from "../Trail/trail";
 
 export default {
   components: {
@@ -68,23 +69,28 @@ export default {
         .then((response) => {
           this.hasilDelKK = response.data;
 
-          axios.get(url).then((response) => {
-            this.hasilDelWargaKK = response.data;
-            console.log('hasil Del All Warga KK',this.hasilDelWargaKK)
-            this.showToast = true;
-            this.toastMessage = this.hasilDelKK.message + this.hasilDelWargaKK;
-            this.$router.push("/dashboard");
-          })
-          .catch((error) => {
-            console.log(error);
-            this.showToast = true;
-            this.toastMessage = error;
-          });
+          axios
+            .get(url)
+            .then((response) => {
+              this.hasilDelWargaKK = response.data;
+              console.log("hasil Del All Warga KK", this.hasilDelWargaKK);
+              this.showToast = true;
+              this.toastMessage =
+                this.hasilDelKK.message + this.hasilDelWargaKK;
+              const trail = trailku(this.toastMessage);
+              console.log(trail);
+              this.$router.push("/dashboard");
+            })
+            .catch((error) => {
+              console.log(error);
+              this.showToast = true;
+              this.toastMessage = error;
+            });
         })
         .catch((error) => {
-            console.log(error);
-            this.showToast = true;
-            this.toastMessage = error;
+          console.log(error);
+          this.showToast = true;
+          this.toastMessage = error;
         });
     },
 
@@ -95,7 +101,7 @@ export default {
 
     tutupToast() {
       this.showToast = false;
-      this.$router.push("/dashboard");
+      window.location.reload();
     },
     async findKK() {
       const uuidkk = this.$route.params.kk;

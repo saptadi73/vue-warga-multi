@@ -206,7 +206,7 @@ const router = createRouter({
           },
         },
         {
-          path: "upload/fotokk/:id",
+          path: "upload/fotokk/:id/:nama",
           name: "upload_fotokk",
           component: () => import("../warga/UploadFotoKK.vue"),
            meta: {

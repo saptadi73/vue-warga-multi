@@ -92,12 +92,12 @@ async function login() {
   });
 
   // console.log(response.data.data.level.nama);
-  localStorage.setItem('level', response.data.data.level.nama);
+  localStorage.setItem("level", response.data.data.level.nama);
+  localStorage.setItem("email", email);
 
-  if (response.data.status == 'ok'){
-    router.push('/dashboard');
-
-  }else{
+  if (response.data.status == "ok") {
+    router.push("/dashboard");
+  } else {
     showToast.value = true;
     toastMessage.value = response.data.message;
   }
@@ -105,7 +105,7 @@ async function login() {
 
 function tutupToast() {
   showToast.value = false;
-  router.push("/login");
+  window.location.reload();
 }
 </script>
 

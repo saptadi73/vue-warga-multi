@@ -73,7 +73,7 @@
               />
             </div>
           </div>
-          
+
           <div class="mt-3">
             <div class="flex rounded-lg shadow-sm">
               <span
@@ -88,7 +88,7 @@
               />
             </div>
           </div>
-          
+
           <button
             :onclick="addWarga"
             class="mt-5 bg-purple-500 text-base font-semibold rounded-lg text-white decoration-2 hover:text-purple-200 hover:underline focus:underline focus:outline-none p-2 focus:text-purple-300 disabled:opacity-50 disabled:pointer-events-none"
@@ -156,6 +156,7 @@ import DaftarKkWarga from "./DaftarKkWarga.vue";
 import TableKkWarga from "./TableKkWarga.vue";
 import TabelBlokWarga from "./TabelBlokWarga.vue";
 import ModalInputCard from "../components/ModalInputCard.vue";
+import trailku from "../Trail/trail";
 
 export default {
   components: {
@@ -211,6 +212,8 @@ export default {
           this.tambahBlok = response.data.result;
           this.showToast = true;
           this.toastMessage = "Blok Berhasil Ditambahkan";
+          const trail = trailku(this.toastMessage);
+          console.log(trail);
           console.log("Tambah Blok Rumah:", this.tambahBlok);
           this.daftarBlok();
         })
@@ -236,6 +239,7 @@ export default {
     },
     tutupToast() {
       this.showToast = false;
+      window.location.reload();
     },
 
     async getStatusWarga() {
@@ -291,6 +295,8 @@ export default {
         })
         .then((response) => {
           this.tambahKK = response.data.result;
+          const trail = trailku(response.data.message);
+          console.log(trail);
           console.log(response.data);
         })
         .catch((error) => {
@@ -325,6 +331,8 @@ export default {
           .then((response) => {
             this.showToast = true;
             this.toastMessage = response.data.message;
+            const trail = trailku(this.toastMessage);
+            console.log(trail);
           })
           .catch((error) => {
             this.showToast = true;
@@ -342,17 +350,15 @@ export default {
         .get(url)
         .then((response) => {
           this.hasilFindKK = response.data.result;
-          console.log('Hasil Find KK: ',this.hasilFindKK);
+          console.log("Hasil Find KK: ", this.hasilFindKK);
           this.$refs.nama.value = this.hasilFindKK.warga[0].nama;
           this.$refs.list_blok.value = this.hasilFindKK.blok.id;
           this.$refs.no_rumah.value = this.hasilFindKK.no_rumah;
           this.$refs.id_kk.value = this.hasilFindKK.no_kk;
           this.$refs.no_hp.value = this.hasilFindKK.warga[0].no_hp;
-          
         })
         .catch((error) => {
           console.log(error);
-         
         });
     },
   },

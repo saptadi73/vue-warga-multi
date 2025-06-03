@@ -14,7 +14,7 @@
               <div class="sm:flex rounded-lg shadow-sm">
                 <span
                   class="py-3 px-4 inline-flex items-center min-w-fit w-full border border-gray-200 bg-gray-50 text-sm text-gray-500 -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:w-auto sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg dark:bg-neutral-700 dark:border-neutral-700 dark:text-neutral-400"
-                  >Isi Blok/No.Blok</span
+                  >Isi Blok</span
                 >
                 <input
                   id="blok"
@@ -33,7 +33,9 @@
             Simpan
           </button>
         </div>
-        <table class="border-separate border-spacing-1 border border-slate-500 w-[30vw] mt-10">
+        <table
+          class="border-separate border-spacing-1 border border-slate-500 w-[30vw] mt-10"
+        >
           <thead>
             <tr class="bg-slate-200">
               <th class="text-start">No</th>
@@ -42,18 +44,31 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(blok, index) in hasilBlok" :key="blok.id" class="even:bg-slate-100">
+            <tr
+              v-for="(blok, index) in hasilBlok"
+              :key="blok.id"
+              class="even:bg-slate-100"
+            >
               <td class="justify-start">{{ index + 1 }}</td>
-              <td>{{blok.blok}}</td>
-              <td><button @click="bukaModal(`${blok.id}`,`${blok.blok}`)" class="text-blue-600">Edit</button></td>
+              <td>{{ blok.blok }}</td>
+              <td>
+                <button
+                  @click="bukaModal(`${blok.id}`, `${blok.blok}`)"
+                  class="text-blue-600"
+                >
+                  Edit
+                </button>
+              </td>
             </tr>
           </tbody>
-          </table>
+        </table>
         <div
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
         >
           <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-            Lakukan perubahan Update pada Blok jika terjadi kesalahan. Untuk daerah perkampungan/dusun, blok bisa diganti dengan nama dusun atau kampung.
+            Lakukan perubahan Update pada Blok jika terjadi kesalahan. Untuk
+            daerah perkampungan/dusun, blok bisa diganti dengan nama dusun atau
+            kampung.
           </p>
         </div>
       </div>
@@ -67,7 +82,7 @@
           <div class="mt-1">
             <div class="relative">
               <select
-              id="list_blok"
+                id="list_blok"
                 ref="list_blok"
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
@@ -143,7 +158,7 @@
           <div class="mt-1">
             <div class="relative">
               <select
-              id="jk"
+                id="jk"
                 ref="jk"
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
@@ -187,7 +202,7 @@
           <div class="mt-1">
             <div class="relative">
               <select
-              id="pekerjaan"
+                id="pekerjaan"
                 ref="pekerjaan"
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
@@ -224,7 +239,7 @@
           <div class="mt-1">
             <div class="relative">
               <select
-              id="status_warga"
+                id="status_warga"
                 ref="status_warga"
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
@@ -257,7 +272,9 @@
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
         >
           <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-            Setiap KK mewakili 1 nomor rumah yang berarti mewakili 1 keluarga. Sehingga pengisian No. Rumah sekaligus diharuskan mengisi data Kepala Keluarga
+            Setiap KK mewakili 1 nomor rumah yang berarti mewakili 1 keluarga.
+            Sehingga pengisian No. Rumah sekaligus diharuskan mengisi data
+            Kepala Keluarga
           </p>
         </div>
       </div>
@@ -272,19 +289,15 @@
             Card title
           </h3>
           <div>
-            <TabelBlokWarga/>
+            <TabelBlokWarga />
           </div>
           <div
             class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
-          >
-            
-          </div>
+          ></div>
         </div>
         <div
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
-        >
-          
-        </div>
+        ></div>
       </div>
     </div>
     <ToastCard
@@ -293,14 +306,14 @@
       v-on:dismissToast="tutupToast"
     />
     <ModalInputCard
-    v-if="showModal"
-    :title="ModalTitle"
-    :message_modal="ModalMessage"
-    :modelValue="blokValue"
-    v-on:cancelButton="tutupModal"
-    v-on:closeButton="tutupModal"
-    v-on:okeButton="updateBlok"
-    v-model:modelValue="blokValue"
+      v-if="showModal"
+      :title="ModalTitle"
+      :message_modal="ModalMessage"
+      :modelValue="blokValue"
+      v-on:cancelButton="tutupModal"
+      v-on:closeButton="tutupModal"
+      v-on:okeButton="updateBlok"
+      v-model:modelValue="blokValue"
     />
   </div>
 </template>
@@ -316,6 +329,7 @@ import DaftarKkWarga from "./DaftarKkWarga.vue";
 import TableKkWarga from "./TableKkWarga.vue";
 import TabelBlokWarga from "./TabelBlokWarga.vue";
 import ModalInputCard from "../components/ModalInputCard.vue";
+import trailku from "../Trail/trail";
 
 export default {
   components: {
@@ -323,7 +337,7 @@ export default {
     DaftarKkWarga,
     TableKkWarga,
     TabelBlokWarga,
-    ModalInputCard
+    ModalInputCard,
   },
   data() {
     return {
@@ -344,8 +358,9 @@ export default {
     const toastMessage = ref("");
     const ModalMessage = ref("");
     const ModalTitle = ref("");
-    const blokValue=ref("");
-    const noBlok=ref(null);
+    const blokValue = ref("");
+    const noBlok = ref(null);
+    
     return {
       showToast,
       toastMessage,
@@ -353,7 +368,7 @@ export default {
       ModalMessage,
       ModalTitle,
       blokValue,
-      noBlok
+      noBlok,
     };
   },
 
@@ -371,6 +386,8 @@ export default {
           this.tambahBlok = response.data.result;
           this.showToast = true;
           this.toastMessage = "Blok Berhasil Ditambahkan";
+          const trail = trailku(this.toastMessage);
+          console.log(trail);
           console.log("Tambah Blok Rumah:", this.tambahBlok);
           this.daftarBlok();
         })
@@ -396,7 +413,7 @@ export default {
     },
     tutupToast() {
       this.showToast = false;
-      this.$router.push("/dashboard");
+      window.location.reload();
     },
 
     async getStatusWarga() {
@@ -442,7 +459,7 @@ export default {
         this.$refs.tanggal_lahir.value + " 00:00:00";
       this.formValuesRumah.tempat_lahir = this.$refs.tempat_lahir.value;
 
-      // console.log("Form Data",this.formValuesRumah);
+      console.log("Form Data",this.formValuesRumah);
 
       await axios
         .post(url, this.formValuesRumah, {
@@ -452,64 +469,67 @@ export default {
         })
         .then((response) => {
           this.tambahKK = response.data.result;
-          this.showToast=true;
-          this.toastMessage="Data Kepala Keluarga Berhasil Ditambahkan";
-          this.$router.push('/warga/input/blok');
-          console.log(response.data);
+          this.showToast = true;
+          this.toastMessage = response.data.message;
+          const trail = trailku(this.toastMessage);
+          console.log(trail);
+          
+          console.log('Data Respon Tambah Warga',response.data);
         })
         .catch((error) => {
-          this.showToast=true;
-          this.toastMessage="Data Kepala Keluarga Gagal Ditambahkan";
-          
-          console.log(error);
+          this.showToast = true;
+          this.toastMessage = "Data Kepala Keluarga Gagal Ditambahkan";
+
+          console.log('Error gagal tambah warga',error);
         });
     },
 
     tutupModal() {
-      this.showModal=false;
+      this.showModal = false;
     },
 
-    bukaModal(idku,blok) {
-      this.showModal=true;
-      this.ModalTitle='Update Blok';
-      this.ModalMessage='Anda yakin untuk mengganti alamat Blok ' + blok +  ' yang telah terisi ini? Isikan blok baru di bawah ini dan klik OK jika sudah yakin. Atau klik close atau cancel jika ragu.';
-      this.formValuesRumah.id=parseInt(idku);
+    bukaModal(idku, blok) {
+      this.showModal = true;
+      this.ModalTitle = "Update Blok";
+      this.ModalMessage =
+        "Anda yakin untuk mengganti alamat Blok " +
+        blok +
+        " yang telah terisi ini? Isikan blok baru di bawah ini dan klik OK jika sudah yakin. Atau klik close atau cancel jika ragu.";
+      this.formValuesRumah.id = parseInt(idku);
     },
 
     async updateBlok() {
-      const url = BASE_URL + 'warga/edit/blok';
+      const url = BASE_URL + "warga/edit/blok";
       this.formValuesRumah.blok = this.blokValue;
-      console.log('hasil FormValuesRumah: ',this.formValuesRumah);
+      console.log("hasil FormValuesRumah: ", this.formValuesRumah);
 
-      if (this.blokValue){
-        await axios.post(url, this.formValuesRumah, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response) => {
-          this.showToast=true;
-          this.toastMessage = response.data.message;
-        })
-        .catch((error) => {
-          this.showToast=true;
-          this.toastMessage = error;
-        });
-        this.showModal =false;
+      if (this.blokValue) {
+        await axios
+          .post(url, this.formValuesRumah, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((response) => {
+            this.showToast = true;
+            this.toastMessage = response.data.message;
+            const trail = trailku(this.toastMessage);
+            console.log(trail);
+          })
+          .catch((error) => {
+            this.showToast = true;
+            this.toastMessage = error;
+          });
+        this.showModal = false;
       }
-
-      
-
-        
-
     },
-    
   },
   created() {
     this.daftarBlok();
     this.getStatusWarga();
     this.getPekerjaan();
   },
+  
 };
 </script>
 

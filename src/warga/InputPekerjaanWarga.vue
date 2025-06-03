@@ -36,7 +36,7 @@
         >
           <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
             Hasil Pengisian dan Daftar Pekerjaan yang sudah ada tertera di table
-            bawah
+            bawah, Lakukan Refresh Halaman Jika Belum terupdate Otomatis
           </p>
         </div>
       </div>
@@ -235,6 +235,7 @@ import { BASE_URL } from "../base.url.utils";
 import ModalInputCard from "../components/ModalInputCard.vue";
 import ModalCard from "../components/ModalCard.vue";
 import router from "../router";
+import trailku from "../Trail/trail";
 
 const searchQuery = ref("");
 
@@ -270,6 +271,8 @@ async function addPekerjaan() {
     });
     showToast.value = true;
     toastMessage.value = tambahKerjaan.data.message;
+    const trail = await trailku(toastMessage.value);
+    console.log('Trail Log',trail);
     router.push('/warga/input/pekerjaan');
     console.log(tambahKerjaan);
   } catch (error) {
@@ -280,12 +283,11 @@ async function addPekerjaan() {
 
 function tutupToast() {
   showToast.value =false;
-  router.push('/warga/input/pekerjaan');
+  window.location.reload();
 }
 
 function tutupModal() {
   showModal.value =false;
-  router.push('/warga/input/pekerjaan');
 }
 
 function bukaModal(id,pekerjaan) {
@@ -314,6 +316,8 @@ async function updatePekerjaan() {
     });
     showToast.value = true;
     toastMessage.value = updatePekerjaan.data.message;
+    const trail = await trailku(toastMessage.value);
+    console.log(trail);
     showModalInputCard.value = false;
   } catch (error) {
     showToast.value = true;
@@ -336,6 +340,8 @@ async function deletePekerjaan() {
     showModal.value = false;
     showToast.value = true;
     toastMessage.value = hapusPekerjaan.data.message;
+    const trail = await trailku(toastMessage.value);
+    console.log(trail);
   } catch (error) {
     showModal.value = false;
     showToast.value = true;

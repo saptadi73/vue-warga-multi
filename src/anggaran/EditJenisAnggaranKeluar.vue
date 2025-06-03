@@ -253,6 +253,7 @@
   import ModalCard from "../components/ModalCard.vue";
   import router from "../router";
   import { useRoute } from 'vue-router';
+  import { trailku } from '../Trail/trail'
   
   const searchQuery = ref("");
   
@@ -302,6 +303,8 @@
       toastMessage.value = tambahKerjaan.data.message;
       router.push({path: router.path, force: true});
       console.log(tambahKerjaan);
+      const trail = await trailku('add pekerjaan');
+      console.log(trail);
     } catch (error) {
       showToast.value = true;
       toastMessage.value = error;
@@ -310,7 +313,7 @@
   
   function tutupToast() {
     showToast.value =false;
-    router.push({path: route.path, force: true});
+    window.location.reload();
   }
   
   function tutupModal() {
@@ -365,6 +368,8 @@
       showModal.value = false;
       showToast.value = true;
       toastMessage.value = hapusPekerjaan.data.message;
+      const trail = await trailku(hapusPekerjaan.data.message);
+      console.log(trail);
     } catch (error) {
       showModal.value = false;
       showToast.value = true;

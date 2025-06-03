@@ -87,9 +87,7 @@
                           Nama Kepala Keluarga
                         </th>
                         <th class="py-3 px-4 text-xs font-normal">NIK</th>
-                        <th class="py-3 px-4 text-xs font-normal">
-                          JK
-                        </th>
+                        <th class="py-3 px-4 text-xs font-normal">JK</th>
                         <th class="py-3 px-4 text-xs font-normal">
                           Tempat Lahir
                         </th>
@@ -178,25 +176,48 @@
 
                         <!-- Tombol Aksi -->
                         <td class="p-2 text-end text-sm font-medium">
-                          <RouterLink :to="`/warga/tambah/warga/${user.warga[0].uuid}/${user.uuid}`"
+                          <RouterLink
+                            :to="`/warga/tambah/warga/${user.warga[0].uuid}/${user.uuid}`"
                             type="button"
                             class="text-blue-600 hover:text-blue-800"
                           >
-                            + Keluarga
+                            +
+                            <span class="material-icons text-blue-700"
+                              >diversity_1</span
+                            >
                           </RouterLink>
-                          <RouterLink :to="`/warga/edit/warga/${user.warga[0].uuid}/${user.uuid}`"
+                          <RouterLink
+                            :to="`/warga/edit/warga/${user.warga[0].uuid}/${user.uuid}`"
                             type="button"
                             class="ml-4 text-blue-600 hover:text-blue-800"
                           >
-                            Edit Wg
+                            <span class="material-icons text-blue-700"
+                              >person</span
+                            >
                           </RouterLink>
-                          <RouterLink :to="`/warga/edit/kk/${user.warga[0].uuid}/${user.uuid}`"
+                          <RouterLink
+                            :to="`/warga/edit/kk/${user.warga[0].uuid}/${user.uuid}`"
                             type="button"
                             class="ml-4 text-blue-600 hover:text-blue-800"
                           >
-                            Edit KK
+                            <span class="material-icons text-blue-700"
+                              >doorbell</span
+                            >
                           </RouterLink>
-                          <RouterLink :to="`/warga/del/kk/${user.warga[0].uuid}/${user.uuid}`"><span class="material-icons text-blue-600 p-4">delete</span></RouterLink>
+                          <RouterLink
+                            :to="`/warga/upload/fotokk/${
+                              user.id
+                            }/${encodeURIComponent(user.warga[0].nama)}`"
+                            ><span class="material-icons text-blue-700"
+                              >upload_file</span
+                            ></RouterLink
+                          >
+                          <RouterLink
+                            :to="`/warga/del/kk/${user.warga[0].uuid}/${user.uuid}`"
+                            ><span class="material-icons text-blue-600 p-4"
+                              >delete</span
+                            ></RouterLink
+                          >
                         </td>
                       </tr>
                     </tbody>
@@ -221,7 +242,6 @@
         </div>
       </div>
     </div>
-    
   </div>
 </template>
 
@@ -230,7 +250,7 @@ import { ref, computed, onMounted } from "vue";
 import axios from "axios";
 import { BASE_URL } from "../base.url.utils";
 import { RouterLink } from "vue-router";
-
+import trailku from "../Trail/trail";
 
 const searchQuery = ref("");
 const url = BASE_URL + "warga/list/kk";
@@ -252,14 +272,26 @@ const filteredUsers = computed(() => {
   }
   return users.value.filter(
     (user) =>
-      user.warga[0].nama.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      user.warga[0].nama
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
       user.no_kk.toString().includes(searchQuery.value) ||
       user.blok.blok.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      user.warga[0].nik.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      user.warga[0].tempat_lahir.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      formatTanggal(user.warga[0].tanggal_lahir).toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      user.warga[0].pekerjaan.nama.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      jk(user.warga[0].jenis_kelamin).toLowerCase().includes(searchQuery.value.toLowerCase())
+      user.warga[0].nik
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
+      user.warga[0].tempat_lahir
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
+      formatTanggal(user.warga[0].tanggal_lahir)
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
+      user.warga[0].pekerjaan.nama
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
+      jk(user.warga[0].jenis_kelamin)
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase())
   );
 });
 
@@ -290,9 +322,9 @@ function formatTanggal(dateString) {
 }
 
 function jk(gender) {
-  if (gender==true) {
+  if (gender == true) {
     return "L";
-  }else{
+  } else {
     return "P";
   }
 }

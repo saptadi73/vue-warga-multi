@@ -357,6 +357,7 @@
   import ModalCard from "../components/ModalCard.vue";
   import router from "../router";
   import { useRoute } from 'vue-router';
+  import trailku from "../Trail/trail";
   
   const searchQuery = ref("");
   const route = useRoute();
@@ -433,6 +434,8 @@
       });
       showToast.value = true;
       toastMessage.value = tambahKerjaan.data.message;
+      const trail = await trailku(tambahKerjaan.data.message);
+      console.log(trail);
       router.push("/iuran/bayar/iuran");
       console.log(tambahKerjaan);
     } catch (error) {
@@ -443,7 +446,7 @@
   
   function tutupToast() {
     showToast.value = false;
-    router.push("/iuran/bayar/iuran");
+    window.location.reload();
   }
   
   function tutupModal() {
@@ -497,6 +500,8 @@
       showModal.value = false;
       showToast.value = true;
       toastMessage.value = hapusPekerjaan.data.message;
+      const trail = await trailku(hapusPekerjaan.data.message);
+    console.log(trail);
     } catch (error) {
       showModal.value = false;
       showToast.value = true;

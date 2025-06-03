@@ -97,6 +97,7 @@ import { BASE_URL } from "../base.url.utils";
 import router from "../router";
 import { useRoute } from "vue-router";
 import ToastCard from "../components/ToastCard.vue";
+import trailku from "../Trail/trail";
 
 const hasilUpload = ref([]);
 const formValues = ref({});
@@ -135,6 +136,8 @@ async function uploadFile() {
     hasilUpload.value = uploadBukti.data.result;
     showToast.value = true;
     toastMessage.value = uploadBukti.data.message;
+    const trail = await trailku(toastMessage.value)
+    console.log(trail);
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;
@@ -149,7 +152,7 @@ function sekarangTable() {
 }
 function tutupToast() {
   showToast.value = false;
-  router.push("/anggaran/input/anggaran");
+  window.location.reload();
 }
 </script>
 

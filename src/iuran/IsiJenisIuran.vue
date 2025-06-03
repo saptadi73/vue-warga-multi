@@ -269,6 +269,7 @@ import { BASE_URL } from "../base.url.utils";
 import ModalInputCard from "../components/ModalInputCard.vue";
 import ModalCard from "../components/ModalCard.vue";
 import router from "../router";
+import trailku from "../Trail/trail";
 
 const searchQuery = ref("");
 
@@ -316,12 +317,12 @@ async function addPekerjaan() {
 
 function tutupToast() {
   showToast.value =false;
-  router.push('/iuran/input/jenis');
+  window.location.reload();
 }
 
 function tutupModal() {
   showModal.value =false;
-  router.push('/iuran/input/jenis');
+  window.location.reload();
 }
 
 function bukaModal(id,pekerjaan) {
@@ -372,6 +373,8 @@ async function deletePekerjaan() {
     showModal.value = false;
     showToast.value = true;
     toastMessage.value = hapusPekerjaan.data.message;
+    const trail = await trailku(toastMessage.value);
+    console.log(trail);
   } catch (error) {
     showModal.value = false;
     showToast.value = true;

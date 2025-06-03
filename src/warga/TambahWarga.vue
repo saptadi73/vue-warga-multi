@@ -173,7 +173,7 @@
             class="mt-5 bg-purple-500 text-base font-semibold rounded-lg text-white decoration-2 hover:text-purple-200 hover:underline focus:underline focus:outline-none p-2 focus:text-purple-300 disabled:opacity-50 disabled:pointer-events-none"
             href="#"
           >
-          Tambah Warga
+            Tambah Warga
           </button>
         </div>
         <div
@@ -235,9 +235,10 @@
                       {{ formatTanggal(resultku.tanggal_lahir) }}
                     </td>
                     <td class="px-6 py-4">{{ resultku.pekerjaan.nama }}</td>
-                    <td class="px-6 py-4">{{ resultku.status_warga.status }}</td>
+                    <td class="px-6 py-4">
+                      {{ resultku.status_warga.status }}
+                    </td>
                   </tr>
-                  
                 </tbody>
               </table>
             </div>
@@ -279,6 +280,7 @@ import TableKkWarga from "./TableKkWarga.vue";
 import TabelBlokWarga from "./TabelBlokWarga.vue";
 import ModalInputCard from "../components/ModalInputCard.vue";
 import { error } from "jquery";
+import trailku from "../Trail/trail";
 
 export default {
   components: {
@@ -329,6 +331,7 @@ export default {
   methods: {
     tutupToast() {
       this.showToast = false;
+      window.location.reload();
     },
 
     formatTanggal(dateString) {
@@ -400,11 +403,13 @@ export default {
           this.tambahKK = response.data;
           this.showToast = true;
           this.toastMessage = this.tambahKK.message;
+          const trail = trailku(this.toastMessage);
+          console.log(trail);
           console.log(response.data);
         })
         .catch((error) => {
-          this.showToast=true;
-          this.toastMessage=this.tambahKK.message;
+          this.showToast = true;
+          this.toastMessage = this.tambahKK.message;
           console.log(error);
         });
     },
@@ -468,7 +473,7 @@ export default {
         .then((response) => {
           this.hasilWargaPerKK = response.data.result;
           console.log(" Hasil warga per KK", this.hasilWargaPerKK);
-          console.log("id_kk",this.hasilWargaPerKK[0].kk.id)
+          console.log("id_kk", this.hasilWargaPerKK[0].kk.id);
           this.idKK = this.hasilWargaPerKK[0].kk.id;
         })
         .catch((error) => {

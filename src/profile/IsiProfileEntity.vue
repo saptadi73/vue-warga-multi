@@ -21,7 +21,7 @@
           <div class="mt-10">
             <div class="relative">
               <select
-              v-if="tombolPilih"
+                v-if="tombolPilih"
                 :onclick="getKabupaten"
                 id="provinsi"
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
@@ -209,6 +209,7 @@ import ToastCard from "../components/ToastCard.vue";
 import { ref } from "vue";
 import ModalCard from "../components/ModalCard.vue";
 import { error } from "jquery";
+import trailku from "../Trail/trail";
 
 export default {
   components: {
@@ -338,6 +339,8 @@ export default {
             console.log(this.isiProfile);
             this.showToast = true;
             this.message_toastku = this.isiProfile.message;
+            const trail = trailku(this.message_toastku);
+            console.log(trail);
           })
           .catch((error) => {
             console.log(error);
@@ -367,7 +370,6 @@ export default {
                 "Profile telah terisi, untuk mengganti data silakan clear data profile terlebih dahulu";
               this.hasilCekProfile = true;
               this.tombolPilih = false;
-              
             }
           })
           .error((error) => {
@@ -379,7 +381,6 @@ export default {
 
     async clearProfile() {
       try {
-        
         const url = BASE_URL + "profile/hapus";
         await axios
           .get(url)
@@ -387,8 +388,9 @@ export default {
             this.showModal = false;
             this.showToast = true;
             this.message_toastku = response.data.message;
+            const trail = trailku(this.message_toastku);
+            console.log(trail);
             this.tombolPilih = true;
-            
           })
           .error((error) => {
             this.showToast = true;
@@ -411,7 +413,7 @@ export default {
       this.showModal = true;
       this.ModalMessage = "Anda yakin akan menghapus data profile?";
       this.ModalTitle = "hapus Data Profile";
-    }
+    },
   },
 
   created() {

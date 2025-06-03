@@ -296,9 +296,7 @@
                             <th class="py-3 px-4 text-xs font-normal">
                               Delete
                             </th>
-                            <th class="py-3 px-4 text-xs font-normal">
-                              Bukti
-                            </th>
+                            <th class="py-3 px-4 text-xs font-normal">Bukti</th>
                           </tr>
                         </thead>
                         <tbody
@@ -367,7 +365,10 @@
                                 Delete
                               </button>
                             </td>
-                            <td v-if="user.bukti[0]" class="text-blue-600 font-semibold">
+                            <td
+                              v-if="user.bukti[0]"
+                              class="text-blue-600 font-semibold"
+                            >
                               <button @click="bukaModalGambar(`${user.id}`)">
                                 View
                               </button>
@@ -434,7 +435,6 @@
       v-if="showModal"
       :title="ModalTitle"
       :message_modal="ModalMessage"
-      
       v-on:okeButton="delSetoranAnggaran"
       v-on:cancelButton="tutupModal"
       v-on:closeButton="tutupModal"
@@ -460,6 +460,7 @@ import ModalCard from "../components/ModalCard.vue";
 import router from "../router";
 import { useRoute } from "vue-router";
 import ModalViewGambar from "../components/ModalViewGambar.vue";
+import trailku from "../Trail/trail";
 
 const searchQuery = ref("");
 const route = useRoute();
@@ -491,7 +492,7 @@ function delGambar() {}
 function bukaModalGambar(id) {
   showModalGambar.value = true;
   ModalTitleGambar.value = "View Image File";
-  viewGambarku.value = `${BASE_URL}images/1737242021681-880483274-guntoro.jpg` ;
+  viewGambarku.value = `${BASE_URL}images/1737242021681-880483274-guntoro.jpg`;
 }
 
 function bukaModal(id, nama, tanggal) {
@@ -512,7 +513,7 @@ function uploadBukti(id) {
 }
 function tutupToast() {
   showToast.value = false;
-  router.push("/anggaran/input/anggaran");
+  window.location.reload();
 }
 
 async function listJenisAnggaran() {
@@ -563,10 +564,10 @@ async function sekarangTable() {
   const dateNow = new Date();
 
   const yearNow = dateNow.getFullYear();
-const monthNow = String(dateNow.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-const dayNow = String(dateNow.getDate()).padStart(2, '0');
+  const monthNow = String(dateNow.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+  const dayNow = String(dateNow.getDate()).padStart(2, "0");
 
-const formattedDateNow = `${yearNow}-${monthNow}-${dayNow}`;
+  const formattedDateNow = `${yearNow}-${monthNow}-${dayNow}`;
 
   try {
     const url = `${BASE_URL}bayar/list/anggaran`;
@@ -663,6 +664,8 @@ async function addSetorAnggaran() {
       },
     });
     hasilTambahAnggaran.value = addAnggaran.data.result;
+    const trail = await trailku(addAnggaran.data.message);
+    console.log(trail);
     console.log("hasil Tambah Anggaran :", hasilJenisAnggaran.value);
     showToast.value = true;
     toastMessage.value = addAnggaran.data.message;
@@ -680,6 +683,8 @@ async function delSetoranAnggaran() {
       },
     });
     hasilHapusSetorAnggaran.value = delAnggaran.data.result;
+    const trail = await trailku(delAnggaran.data.message);
+    console.log(trail);
     showModal.value = false;
     showToast.value = true;
     toastMessage.value = delAnggaran.data.message;

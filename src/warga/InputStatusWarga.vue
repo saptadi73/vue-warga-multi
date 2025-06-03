@@ -35,8 +35,8 @@
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
         >
           <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-            Hasil Pengisian dan Daftar Status Warga yang sudah ada tertera di table
-            bawah
+            Hasil Pengisian dan Daftar Status Warga yang sudah ada tertera di
+            table bawah, Jika belum terupdate silakan refresh halamannya
           </p>
         </div>
       </div>
@@ -151,8 +151,22 @@
                           >
                             {{ user.status }}
                           </td>
-                          <td class="text-blue-600 font-semibold"><button @click="bukaModalInput(`${user.id}`,`${user.status}`)">Edit</button></td>
-                          <td class="text-blue-600 font-semibold"><button @click="bukaModal(`${user.id}`,`${user.status}`)">Delete</button></td> 
+                          <td class="text-blue-600 font-semibold">
+                            <button
+                              @click="
+                                bukaModalInput(`${user.id}`, `${user.status}`)
+                              "
+                            >
+                              Edit
+                            </button>
+                          </td>
+                          <td class="text-blue-600 font-semibold">
+                            <button
+                              @click="bukaModal(`${user.id}`, `${user.status}`)"
+                            >
+                              Delete
+                            </button>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -164,7 +178,8 @@
                 <div
                   class="text-xs text-gray-500 ms-auto dark:text-neutral-400"
                 >
-                  Terhitung <span>{{ filteredPekerjaan.length }}</span> Status Warga
+                  Terhitung <span>{{ filteredPekerjaan.length }}</span> Status
+                  Warga
                 </div>
               </div>
             </div>
@@ -215,12 +230,12 @@
       v-model:modelValue="pekerjaanValue"
     />
     <ModalCard
-    v-if="showModal"
-    :title="ModalTitle"
-    :message_modal="ModalMessage"
-    v-on:okeButton="deletePekerjaan"
-    v-on:cancelButton="tutupModal"
-    v-on:closeButton="tutupModal"
+      v-if="showModal"
+      :title="ModalTitle"
+      :message_modal="ModalMessage"
+      v-on:okeButton="deletePekerjaan"
+      v-on:cancelButton="tutupModal"
+      v-on:closeButton="tutupModal"
     />
   </div>
 </template>
@@ -234,6 +249,7 @@ import { BASE_URL } from "../base.url.utils";
 import ModalInputCard from "../components/ModalInputCard.vue";
 import ModalCard from "../components/ModalCard.vue";
 import router from "../router";
+import trailku from "../Trail/trail";
 
 const searchQuery = ref("");
 
@@ -269,7 +285,9 @@ async function addPekerjaan() {
     });
     showToast.value = true;
     toastMessage.value = tambahKerjaan.data.message;
-    router.push('/warga/input/status');
+    const trail = await trailku(toastMessage.value);
+    console.log(trail);
+    router.push("/warga/input/status");
     console.log(tambahKerjaan);
   } catch (error) {
     showToast.value = true;
@@ -278,32 +296,32 @@ async function addPekerjaan() {
 }
 
 function tutupToast() {
-  showToast.value =false;
-  router.push('/warga/input/status');
+  showToast.value = false;
+  window.location.reload();
 }
 
 function tutupModal() {
-  showModal.value =false;
-  router.push('/warga/input/status');
+  showModal.value = false;
+  router.push("/warga/input/status");
 }
 
-function bukaModal(id,pekerjaan) {
+function bukaModal(id, pekerjaan) {
   showModal.value = true;
-  ModalTitle.value = 'Delete Status';
-  ModalMessage.value = 'Anda yakin ingin menghapus status ' + pekerjaan + ' ini?';
+  ModalTitle.value = "Delete Status";
+  ModalMessage.value =
+    "Anda yakin ingin menghapus status " + pekerjaan + " ini?";
   formValues.value.id = id;
 }
 
 function tutupModalInput() {
   showModalInputCard.value = false;
-  router.push('/warga/input/status');
+  router.push("/warga/input/status");
 }
 
 async function updatePekerjaan() {
-  
   const url = `${BASE_URL}warga/update/status`;
   formValues.value.status = pekerjaanValue.value;
-  formValues.value.id = parseInt(formValues.value.id)
+  formValues.value.id = parseInt(formValues.value.id);
   console.log(formValues.value);
   try {
     const updatePekerjaan = await axios.post(url, formValues.value, {
@@ -313,13 +331,13 @@ async function updatePekerjaan() {
     });
     showToast.value = true;
     toastMessage.value = updatePekerjaan.data.message;
+    const trail = await trailku(toastMessage.value);
+    console.log(trail);
     showModalInputCard.value = false;
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;
   }
-
-
 }
 async function deletePekerjaan() {
   const url = `${BASE_URL}warga/hapus/status`;
@@ -335,18 +353,20 @@ async function deletePekerjaan() {
     showModal.value = false;
     showToast.value = true;
     toastMessage.value = hapusPekerjaan.data.message;
+    const trail = await trailku(toastMessage.value);
+    console.log('hasil', trail);
   } catch (error) {
     showModal.value = false;
     showToast.value = true;
     toastMessage.value = error;
   }
-  
 }
 
-function bukaModalInput(id,pekerjaan) {
+function bukaModalInput(id, pekerjaan) {
   showModalInputCard.value = true;
-  ModalInputMessage.value = 'Silakan isi perubahan status ' + pekerjaan +' yang sudah ada';
-  ModalInputTitle.value = 'Update Pekerjaan';
+  ModalInputMessage.value =
+    "Silakan isi perubahan status " + pekerjaan + " yang sudah ada";
+  ModalInputTitle.value = "Update Pekerjaan";
   formValues.value = { id: id };
 }
 onMounted(() => {

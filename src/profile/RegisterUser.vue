@@ -58,15 +58,13 @@
               <div class="mt-5">
                 <div class="relative">
                   <select
-                  
                     id="id_level"
                     class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
                   >
                     <option selected>Level Akses</option>
                     <div v-for="level in daftarUserLevelku" :key="level.id">
-                      <option :value="`${level.id}`">{{level.nama}}</option>
+                      <option :value="`${level.id}`">{{ level.nama }}</option>
                     </div>
-                    
                   </select>
                   <label
                     for="id_level"
@@ -598,7 +596,6 @@
                           >
                             Action
                           </th>
-                          
                         </tr>
                       </thead>
 
@@ -628,10 +625,13 @@
                             class="p-3 whitespace-nowrap text-sm text-gray-800"
                           >
                             {{ user.status == true ? "Aktif" : "" }}
-                            <button v-if="!user.status"
+                            <button
+                              v-if="!user.status"
                               type="button"
                               @click="
-                                aktivasi(BASE_URL2 + 'error/aktivasi/' + user.uuid)
+                                aktivasi(
+                                  BASE_URL2 + 'error/aktivasi/' + user.uuid
+                                )
                               "
                               class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800"
                             >
@@ -741,13 +741,14 @@ import router from "../router";
 import { BASE_URL } from "../base.url.utils";
 import { BASE_URL2 } from "../base.url2.utils";
 import ModalCard from "../components/ModalCard.vue";
+import trailku from "../Trail/trail";
 
 const showToast = ref(false);
 const toastMessage = ref("");
 const route = useRoute();
 const notifikasi = ref("");
 const daftarUserKu = ref([]);
-const daftarUserLevelku = ref([])
+const daftarUserLevelku = ref([]);
 const showModal = ref(false);
 const ModalTitle = ref("");
 const ModalMessage = ref("");
@@ -798,6 +799,7 @@ async function registerUser() {
 
 function tutupToast() {
   showToast.value = false;
+  window.location.reload();
 }
 
 async function getUserList() {
@@ -833,6 +835,8 @@ async function deleteUser() {
     if (delUser.data.status == "ok") {
       showToast.value = true;
       toastMessage.value = "User berhasil dihapus";
+      const trail = await trailku(toastMessage.value);
+      console.log(trail);
       showModal.value = false;
     } else {
       showToast.value = true;
@@ -846,27 +850,29 @@ async function deleteUser() {
 }
 
 function tutupModal() {
-    showModal.value = false;
-    router.push("profile/register/user");
-  }
+  showModal.value = false;
+  router.push("profile/register/user");
+}
 
-  function bukaModal(uuid, email) {
-    showModal.value = true;
-    ModalTitle.value = "Delete Data User";
-    ModalMessage.value = "Apakah anda yakin akan menghapus data user  " + email;
-    uuidku.value = { uuid: uuid };
-  }
+function bukaModal(uuid, email) {
+  showModal.value = true;
+  ModalTitle.value = "Delete Data User";
+  ModalMessage.value = "Apakah anda yakin akan menghapus data user  " + email;
+  uuidku.value = { uuid: uuid };
+}
 
-  async function aktivasi(link) {
-    try {
+async function aktivasi(link) {
+  try {
     await navigator.clipboard.writeText(link);
-    showToast.value = true
-    toastMessage.value = "Link berhasil di copy dan segera paste melalui Whatsap/Email secara pribadi ke User";
+    showToast.value = true;
+    toastMessage.value =
+      "Link berhasil di copy dan segera paste melalui Whatsap/Email secara pribadi ke User";
   } catch (err) {
-    showToast.value = true
-    toastMessage.value = "Link gagal di copy, refresh Halaman dan ulangi kembali";
+    showToast.value = true;
+    toastMessage.value =
+      "Link gagal di copy, refresh Halaman dan ulangi kembali";
   }
-  }
+}
 </script>
 
 <style lang="scss" scoped></style>
