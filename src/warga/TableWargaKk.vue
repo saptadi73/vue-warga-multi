@@ -2,9 +2,9 @@
   <div>
     <div class="p-5 w-[90vw]">
       <div class="mt-2 mb-2 ml-10 text-lg font-bold text-slate-500">
-        <span>Daftar Kepala Keluarga</span>
+        <span>Daftar Anggota Keluarga</span>
       </div>
-      
+
       <div id="hs-datatable-filter mt-5" class="flex flex-col">
         <div class="flex items-center space-x-2 mb-4">
           <div class="flex-0">
@@ -81,7 +81,11 @@
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
-                  <tr v-for="(user, index) in filteredUsers" :key="user.id">
+                  <tr
+                    v-for="(user, index) in filteredUsers"
+                    :key="user.id"
+                    class="even:bg-slate-100"
+                  >
                     <td class="py-3 ps-3">
                       <div class="flex items-center h-5">
                         <input
@@ -139,11 +143,27 @@
                     <td
                       class="p-3 whitespace-nowrap text-end text-sm font-medium"
                     >
+                      <RouterLink
+                        :to="`/warga/edit/warga/${user.uuid}/${user.kk.uuid}`"
+                        type="button"
+                        class="ml-4 text-blue-600 hover:text-blue-800"
+                      >
+                        <span class="material-icons text-blue-700">person</span>
+                      </RouterLink>
+                      <RouterLink
+                        :to="`/warga/upload/fotoktp/${
+                          user.id
+                        }/${encodeURIComponent(user.nama)}`"
+                        ><span class="material-icons text-blue-700"
+                          >upload_file</span
+                        ></RouterLink
+                      >
                       <button
                         type="button"
-                        class="text-blue-600 hover:text-blue-800"
+                        @click="bukaModal(user.nama, user.uuid)"
+                        class="ml-4 text-blue-600 hover:text-blue-800"
                       >
-                        Delete
+                        <span class="material-icons text-blue-700">delete</span>
                       </button>
                     </td>
                   </tr>
@@ -160,6 +180,19 @@
         </div>
       </div>
     </div>
+    <ToastCard
+      v-if="showToast"
+      :message_toast="toastMessage"
+      v-on:dismissToast="tutupToast"
+    />
+    <ModalCard
+      v-if="showModal"
+      :title="ModalTitle"
+      :message_modal="ModalMessage"
+      v-on:okeButton="deleteWarga"
+      v-on:cancelButton="tutupModal"
+      v-on:closeButton="tutupModal"
+    />
   </div>
 </template>
 
@@ -168,9 +201,17 @@ import { ref, computed, onMounted } from "vue";
 import axios from "axios";
 import { BASE_URL } from "../base.url.utils";
 import { useRoute } from "vue-router";
+import ToastCard from "../components/ToastCard.vue";
+import ModalCard from "../components/ModalCard.vue";
+import trailku from "../Trail/trail";
 
 const route = useRoute();
-
+const showToast = ref(false);
+const showModal = ref(false);
+const toastMessage = ref("");
+const ModalMessage = ref("");
+const ModalTitle = ref("");
+const UUIDku = ref("");
 
 const searchQuery = ref("");
 
@@ -197,9 +238,15 @@ const filteredUsers = computed(() => {
       user.nama.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
       user.no_hp.toString().includes(searchQuery.value) ||
       user.nik.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      user.tempat_lahir.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      formatTanggal(user.tanggal_lahir).toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      jenis_kelamin(user.jenis_kelamin).toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      user.tempat_lahir
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
+      formatTanggal(user.tanggal_lahir)
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
+      jenis_kelamin(user.jenis_kelamin)
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
       user.type.nama.toLowerCase().includes(searchQuery.value.toLowerCase())
   );
 });
@@ -217,11 +264,53 @@ function formatTanggal(dateString) {
 }
 
 function jenis_kelamin(jenis_kelamin) {
-    if (jenis_kelamin == true) {
-        return "Pria";
-    }else{
-        return "Wanita";
-    }
+  if (jenis_kelamin == true) {
+    return "Pria";
+  } else {
+    return "Wanita";
+  }
+}
+
+function tutupModal() {
+  showModal.value = false;
+  window.location.reload();
+  
+}
+
+function tutupToast() {
+  showToast.value = false;
+  showModal.value = false;
+  window.location.reload();
+}
+
+function bukaModal(nama, uuidwarga) {
+  showModal.value = true;
+  ModalTitle.value = "Delete Warga";
+  ModalMessage.value =
+    "Anda yakin untuk menghapus warga bernama " +
+    nama +
+    " yang telah terisi ini?";
+  UUIDku.value = uuidwarga;
+}
+
+async function deleteWarga() {
+  try {
+    const dataDelete = { uuid: UUIDku.value };
+    const url = BASE_URL + "warga/del/warga";
+    const hapusWargaSatu = await axios.post(url, dataDelete, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(hapusWargaSatu.data);
+    showToast.value = true;
+    toastMessage.value = hapusWargaSatu.data.message;
+    await trailku(toastMessage.value);
+    console.log('datakirim :', dataDelete);
+  } catch (error) {
+    showToast.value = true;
+    toastMessage.value = error;
+  }
 }
 </script>
 

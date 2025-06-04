@@ -180,11 +180,20 @@ const router = createRouter({
         },
         {
           path: "list/kk",
-          name: "tambah_warga",
+          name: "table_kk",
           component: () => import("../warga/TableKkWarga.vue"),
            meta: {
             requiresAuth: true,
-            allowedRoles: ["admin"],
+            allowedRoles: ["admin","officer"],
+          },
+        },
+        {
+          path: "list/warga/kk/:id",
+          name: "table_warga_per_kk",
+          component: () => import("../warga/TableWargaKk.vue"),
+           meta: {
+            requiresAuth: true,
+            allowedRoles: ["admin","officer"],
           },
         },
         {
@@ -224,7 +233,7 @@ const router = createRouter({
           },
         },
         {
-          path: "upload/fotoktp/:id",
+          path: "upload/fotoktp/:id/:nama",
           name: "upload_fotoktp",
           component: () => import("../warga/UploadFotoKTP.vue"),
            meta: {

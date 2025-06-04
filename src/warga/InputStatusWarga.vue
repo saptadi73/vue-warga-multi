@@ -302,7 +302,7 @@ function tutupToast() {
 
 function tutupModal() {
   showModal.value = false;
-  router.push("/warga/input/status");
+  window.location.reload();
 }
 
 function bukaModal(id, pekerjaan) {

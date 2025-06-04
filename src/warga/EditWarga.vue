@@ -7,7 +7,7 @@
       <div id="card2" class="">
         <div class="p-4 md:p-5">
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-            Penambahan Anggota Keluarga
+            <span class="text-red-300">Perubahan</span> Anggota Keluarga
             <span class="text-blue-600">{{ namaKK }}</span> no:{{ idKK }} dengan
             Alamat :
             <span class="text-purple-600">{{ blokKK }} / {{ noRumahKK }}</span>

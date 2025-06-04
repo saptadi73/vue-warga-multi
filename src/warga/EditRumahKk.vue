@@ -7,7 +7,7 @@
       <div id="card2" class="">
         <div class="p-4 md:p-5">
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-            Update/Edit Rumah Keluarga
+            <span class="text-red-400">Perubahan</span> Data Rumah Keluarga
           </h3>
           <div class="mt-1">
             <div class="relative">

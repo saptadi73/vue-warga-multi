@@ -4,7 +4,7 @@
       <div class="mt-2 mb-2 ml-10 text-lg font-bold text-slate-500">
         <span>Daftar Kepala Keluarga</span>
       </div>
-      
+
       <div id="hs-datatable-filter mt-5" class="flex flex-col">
         <div class="flex items-center space-x-2 mb-4">
           <div class="flex-0">
@@ -74,13 +74,17 @@
                     <th class="py-1 text-start font-normal">Blok</th>
                     <th class="py-1 text-start font-normal">No.Rumah</th>
                     <th class="py-1 text-start font-normal">No.KK</th>
-                    <th class="py-1 text-start font-normal">Tempat Lahir</th>
+                    <th class="py-1 text-start font-normal">No. HP</th>
 
                     <th class="py-2 px-3 text-end font-normal">Action</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
-                  <tr v-for="(user, index) in filteredUsers" :key="user.id">
+                  <tr
+                    v-for="(user, index) in filteredUsers"
+                    :key="user.id"
+                    class="even:bg-slate-100"
+                  >
                     <td class="py-3 ps-3">
                       <div class="flex items-center h-5">
                         <input
@@ -123,17 +127,58 @@
                     <td
                       class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
                     >
-                      {{ user.warga[0].tempat_lahir }}
+                      {{ user.warga[0].no_hp }}
                     </td>
-                    <td
-                      class="p-3 whitespace-nowrap text-end text-sm font-medium"
-                    >
-                      <button
+                    <td class="p-2 text-end text-sm font-medium">
+                      <RouterLink
+                        :to="`/warga/tambah/warga/${user.warga[0].uuid}/${user.uuid}`"
                         type="button"
                         class="text-blue-600 hover:text-blue-800"
                       >
-                        Delete
-                      </button>
+                        +
+                        <span class="material-icons text-blue-700"
+                          >diversity_1</span
+                        >
+                      </RouterLink>
+                      <RouterLink
+                        :to="`/warga/edit/warga/${user.warga[0].uuid}/${user.uuid}`"
+                        type="button"
+                        class="ml-4 text-blue-600 hover:text-blue-800"
+                      >
+                        <span class="material-icons text-blue-700">person</span>
+                      </RouterLink>
+                      <RouterLink
+                        :to="`/warga/edit/kk/${user.warga[0].uuid}/${user.uuid}`"
+                        type="button"
+                        class="ml-4 text-blue-600 hover:text-blue-800"
+                      >
+                        <span class="material-icons text-blue-700"
+                          >doorbell</span
+                        >
+                      </RouterLink>
+                      <RouterLink
+                        :to="`/warga/list/warga/kk/${user.uuid}`"
+                        type="button"
+                        class="ml-4 text-blue-600 hover:text-blue-800"
+                      >
+                        <span class="material-icons text-blue-700"
+                          >family_restroom</span
+                        >
+                      </RouterLink>
+                      <RouterLink
+                        :to="`/warga/upload/fotokk/${
+                          user.id
+                        }/${encodeURIComponent(user.warga[0].nama)}`"
+                        ><span class="material-icons text-blue-700"
+                          >upload_file</span
+                        ></RouterLink
+                      >
+                      <RouterLink
+                        :to="`/warga/del/kk/${user.warga[0].uuid}/${user.uuid}`"
+                        ><span class="material-icons text-blue-600 p-4"
+                          >delete</span
+                        ></RouterLink
+                      >
                     </td>
                   </tr>
                 </tbody>
@@ -149,6 +194,21 @@
         </div>
       </div>
     </div>
+    <ToastCard
+      v-if="showToast"
+      :message_toast="toastMessage"
+      v-on:dismissToast="tutupToast"
+    />
+    <ModalInputCard
+      v-if="showModal"
+      :title="ModalTitle"
+      :message_modal="ModalMessage"
+      :modelValue="blokValue"
+      v-on:cancelButton="tutupModal"
+      v-on:closeButton="tutupModal"
+      v-on:okeButton="updateBlok"
+      v-model:modelValue="blokValue"
+    />
   </div>
 </template>
 
@@ -156,6 +216,14 @@
 import { ref, computed, onMounted } from "vue";
 import axios from "axios";
 import { BASE_URL } from "../base.url.utils";
+import ToastCard from "../components/ToastCard.vue";
+import ModalInputCard from "../components/ModalInputCard.vue";
+
+const showToast = ref(false);
+const showModal = ref(false);
+const toastMessage = ref("");
+const ModalMessage = ref("");
+const ModalTitle = ref("");
 
 const searchQuery = ref("");
 const url = BASE_URL + "warga/list/kk";
@@ -187,6 +255,20 @@ const filteredUsers = computed(() => {
 function handleSearch() {
   // This function is called on input event to filter users.
   // It's already handled by the computed property `filteredUsers`.
+}
+
+function tutupModal() {
+  showModal.value = false;
+}
+
+function bukaModal(idku, blok) {
+  showModal.value = true;
+  ModalTitle.value = "Update Blok";
+  ModalMessage.value =
+    "Anda yakin untuk mengganti alamat Blok " +
+    blok +
+    " yang telah terisi ini? Isikan blok baru di bawah ini dan klik OK jika sudah yakin. Atau klik close atau cancel jika ragu.";
+  formValuesRumah.id = parseInt(idku);
 }
 </script>
 

@@ -7,7 +7,7 @@
       <div id="card1" class="w-[40vw]">
         <div class="p-4 md:p-5">
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-            Upload Foto Kartu Keluarga {{ nama_keluarga }}
+            Upload Foto KTP atau Warga {{ nama_keluarga }}
           </h3>
         </div>
         <form v-on:submit.prevent>
@@ -134,7 +134,7 @@ const ModalMessage = ref("");
 
 onMounted(() => {
   nama_keluarga.value = decodeURIComponent(route.params.nama);
-  formValues.value.keterangan = "Foto KK Keluarga " + nama_keluarga.value;
+  formValues.value.keterangan = "Foto KTP Warga " + nama_keluarga.value;
   getImageKeluarga();
 });
 
@@ -154,7 +154,7 @@ async function uploadFile() {
   formDataku.append("file", file.value);
   formDataku.append("id_warga", idAnggaran);
   formDataku.append("keterangan", keterangan);
-  formDataku.append("nama", "bukti foto KK");
+  formDataku.append("nama", "bukti foto KTP");
   console.log(formDataku);
 
   try {
@@ -188,7 +188,7 @@ function tutupToast() {
 async function getImageKeluarga() {
   try {
     const id_kk = route.params.id;
-    const viewPhotoKK = await axios.get(`${BASE_URL}warga/viewktp/${id_kk}`);
+    const viewPhotoKK = await axios.get(`${BASE_URL}warga/find/warga/${id_kk}`);
     imagekita.value = viewPhotoKK.data?.result?.url;
 
     if (imagekita.value) {
@@ -230,9 +230,9 @@ async function unlinkFoto() {
 
 function disableEditFoto() {
   showModal.value = true;
-  ModalTitle.value = "Edit/Ganti File KK";
+  ModalTitle.value = "Edit/Ganti Foto KTP";
   ModalMessage.value =
-    "Apakah anda yakin akan mendelete file sebelum dan mengganti yang baru?";
+    "Apakah anda yakin akan mendelete foto sebelum dan mengganti yang baru?";
 }
 
 function tutupModal() {
