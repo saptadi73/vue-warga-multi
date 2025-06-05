@@ -5,7 +5,7 @@
     >
       <div class="p-4 md:p-5">
         <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-          Card title
+          Daftar Kepala Keluarga
         </h3>
         <div>
           <div id="hs-datatable-filter" class="flex flex-col">
@@ -212,6 +212,9 @@
                               >upload_file</span
                             ></RouterLink
                           >
+                          <button v-if="user.filekeluarga && user.filekeluarga.url" @click="viewGambar(user.filekeluarga.url)" class="ml-2" title="View KK Image">
+                            <span class="material-icons text-blue-600">visibility</span>
+                          </button>
                           <RouterLink
                             :to="`/warga/del/kk/${user.warga[0].uuid}/${user.uuid}`"
                             ><span class="material-icons text-blue-600 p-4"
@@ -242,6 +245,14 @@
         </div>
       </div>
     </div>
+    <ModalViewGambar
+      v-if="showModalGambar"
+      :title="ModalTitleGambar"
+      :imageSource="viewGambarku"
+      v-on:okeButton="delGambar"
+      v-on:cancelButton="tutupModalGambar"
+      v-on:closeButton="tutupModalGambar"
+    />
   </div>
 </template>
 
@@ -251,16 +262,41 @@ import axios from "axios";
 import { BASE_URL } from "../base.url.utils";
 import { RouterLink } from "vue-router";
 import trailku from "../Trail/trail";
+import ModalViewGambar from "../components/ModalViewGambar.vue";
 
 const searchQuery = ref("");
 const url = BASE_URL + "warga/list/kk";
 const users = ref([]);
+const currentUser = ref(null);  // Add reactive reference for current user
+const showModalGambar = ref(false);
+const ModalTitleGambar = ref("");
+const viewGambarku = ref("");
 
 onMounted(async () => {
   try {
     const response = await axios.get(url);
-    users.value = response.data.result;
+    // Make sure the data is properly structured before assigning
+    const result = response.data.result.map(user => ({
+      ...user,
+      filekeluarga: user.filekeluarga || null // Ensure filekeluarga is at least null if missing
+    }));
+    users.value = result;
+    
     console.log("hasil list KK", users.value);
+    // Debug filekeluarga data
+    if (users.value && users.value.length > 0) {
+      currentUser.value = users.value[0];  // Store first user reactively
+      console.log("First user data:", currentUser.value);
+      console.log("File Keluarga type:", typeof currentUser.value.filekeluarga);
+      console.log("File Keluarga value:", currentUser.value.filekeluarga);
+      
+      if (currentUser.value.filekeluarga) {
+        console.log("File Keluarga properties:", Object.keys(currentUser.value.filekeluarga));
+        console.log("Full File Keluarga Object:", JSON.stringify(currentUser.value.filekeluarga, null, 2));
+      } else {
+        console.log("filekeluarga is undefined for first user");
+      }
+    }
   } catch (error) {
     console.error("Error fetching users:", error);
   }
@@ -327,6 +363,30 @@ function jk(gender) {
   } else {
     return "P";
   }
+}
+
+function viewGambar(url) {
+  console.log("View Gambar called with URL:", url);
+  try {
+    if (!url) {
+      throw new Error("URL is undefined");
+    }
+    showModalGambar.value = true;
+    ModalTitleGambar.value = "Foto KK";
+    viewGambarku.value = `${BASE_URL}uploads/${url}`;
+    console.log("Full image URL:", viewGambarku.value);
+  } catch (error) {
+    console.error("Error in viewGambar:", error);
+  }
+}
+
+function tutupModalGambar() {
+  showModalGambar.value = false;
+}
+
+function delGambar() {
+  // This function can be implemented if needed for delete functionality
+  tutupModalGambar();
 }
 </script>
 

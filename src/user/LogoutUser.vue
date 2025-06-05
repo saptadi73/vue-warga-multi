@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-[80vw] text-center">
     <div>
         <span class="font-Montserrat font-bold text-lg text-lime-400"
       >Anda Telah Logout!</span

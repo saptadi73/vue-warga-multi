@@ -130,7 +130,7 @@
                       {{ user.warga[0].no_hp }}
                     </td>
                     <td class="p-2 text-end text-sm font-medium">
-                      <RouterLink
+                      <RouterLink title="Tambah Anggota Keluarga"
                         :to="`/warga/tambah/warga/${user.warga[0].uuid}/${user.uuid}`"
                         type="button"
                         class="text-blue-600 hover:text-blue-800"
@@ -140,14 +140,14 @@
                           >diversity_1</span
                         >
                       </RouterLink>
-                      <RouterLink
+                      <RouterLink title="Edit Warga"
                         :to="`/warga/edit/warga/${user.warga[0].uuid}/${user.uuid}`"
                         type="button"
                         class="ml-4 text-blue-600 hover:text-blue-800"
                       >
                         <span class="material-icons text-blue-700">person</span>
                       </RouterLink>
-                      <RouterLink
+                      <RouterLink title="Edit KK"
                         :to="`/warga/edit/kk/${user.warga[0].uuid}/${user.uuid}`"
                         type="button"
                         class="ml-4 text-blue-600 hover:text-blue-800"
@@ -156,7 +156,7 @@
                           >doorbell</span
                         >
                       </RouterLink>
-                      <RouterLink
+                      <RouterLink title="View List Anggota"
                         :to="`/warga/list/warga/kk/${user.uuid}`"
                         type="button"
                         class="ml-4 text-blue-600 hover:text-blue-800"
@@ -165,7 +165,7 @@
                           >family_restroom</span
                         >
                       </RouterLink>
-                      <RouterLink
+                      <RouterLink  title="Upload KK Image"
                         :to="`/warga/upload/fotokk/${
                           user.id
                         }/${encodeURIComponent(user.warga[0].nama)}`"
@@ -173,8 +173,11 @@
                           >upload_file</span
                         ></RouterLink
                       >
+                      <button v-if="user.filekeluarga && user.filekeluarga.url" @click="viewGambar(user.filekeluarga.url)" class="ml-2" title="View KK Image">
+                            <span class="material-icons text-blue-600">visibility</span>
+                          </button>
                       <RouterLink
-                        :to="`/warga/del/kk/${user.warga[0].uuid}/${user.uuid}`"
+                        :to="`/warga/del/kk/${user.warga[0].uuid}/${user.uuid}`" title="Delete KK"
                         ><span class="material-icons text-blue-600 p-4"
                           >delete</span
                         ></RouterLink
@@ -209,6 +212,14 @@
       v-on:okeButton="updateBlok"
       v-model:modelValue="blokValue"
     />
+    <ModalViewGambar
+      v-if="showModalGambar"
+      :title="ModalTitleGambar"
+      :imageSource="viewGambarku"
+      v-on:okeButton="delGambar"
+      v-on:cancelButton="tutupModalGambar"
+      v-on:closeButton="tutupModalGambar"
+    />
   </div>
 </template>
 
@@ -218,12 +229,17 @@ import axios from "axios";
 import { BASE_URL } from "../base.url.utils";
 import ToastCard from "../components/ToastCard.vue";
 import ModalInputCard from "../components/ModalInputCard.vue";
+import ModalViewGambar from "../components/ModalViewGambar.vue";
 
 const showToast = ref(false);
 const showModal = ref(false);
 const toastMessage = ref("");
 const ModalMessage = ref("");
 const ModalTitle = ref("");
+const showModalGambar = ref(false);
+const ModalTitleGambar = ref("");
+const viewGambarku = ref("");
+
 
 const searchQuery = ref("");
 const url = BASE_URL + "warga/list/kk";
@@ -269,6 +285,30 @@ function bukaModal(idku, blok) {
     blok +
     " yang telah terisi ini? Isikan blok baru di bawah ini dan klik OK jika sudah yakin. Atau klik close atau cancel jika ragu.";
   formValuesRumah.id = parseInt(idku);
+}
+
+function viewGambar(url) {
+  console.log("View Gambar called with URL:", url);
+  try {
+    if (!url) {
+      throw new Error("URL is undefined");
+    }
+    showModalGambar.value = true;
+    ModalTitleGambar.value = "Foto KK";
+    viewGambarku.value = `${BASE_URL}uploads/${url}`;
+    console.log("Full image URL:", viewGambarku.value);
+  } catch (error) {
+    console.error("Error in viewGambar:", error);
+  }
+}
+
+function tutupModalGambar() {
+  showModalGambar.value = false;
+}
+
+function delGambar() {
+  // This function can be implemented if needed for delete functionality
+  tutupModalGambar();
 }
 </script>
 

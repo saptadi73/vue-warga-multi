@@ -43,7 +43,7 @@
             </button>
           </div>
           <div class="p-4 overflow-y-auto">
-            <img :src="imageSource" w-[100vw]>
+            <img :src="imageSource" w-full>
           </div>
           <div
             class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700"

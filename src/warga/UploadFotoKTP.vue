@@ -7,7 +7,7 @@
       <div id="card1" class="w-[40vw]">
         <div class="p-4 md:p-5">
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-            Upload Foto KTP atau Warga {{ nama_keluarga }}
+            Upload Foto Warga {{ nama_keluarga }}
           </h3>
         </div>
         <form v-on:submit.prevent>
@@ -36,7 +36,11 @@
               :disabled="isDisabled"
               :onchange="pickFile"
               type="file"
+              accept="image/jpeg,image/jpg,image/png,image/gif"
             />
+            <p v-if="fileError" class="mt-2 text-sm text-red-600 dark:text-red-400">
+              {{ fileError }}
+            </p>
           </div>
           <button
             type="submit"
@@ -131,21 +135,64 @@ const imagekita = ref(null);
 const showModal = ref(false);
 const ModalTitle = ref("");
 const ModalMessage = ref("");
+const fileError = ref("");
+const maxFileSize = 500 * 1024; // 500KB
+const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
 
 onMounted(() => {
   nama_keluarga.value = decodeURIComponent(route.params.nama);
-  formValues.value.keterangan = "Foto KTP Warga " + nama_keluarga.value;
+  formValues.value.keterangan = "Foto Warga " + nama_keluarga.value;
   getImageKeluarga();
 });
 
 function pickFile(event) {
-  console.log(event.target.files[0]);
-  file.value = event.target.files[0];
-  namaGambar.value = event.target.files[0].name;
-  previewImage.value = URL.createObjectURL(event.target.files[0]);
+  // Clear previous error
+  fileError.value = "";
+  
+  const selectedFile = event.target.files[0];
+  
+  if (!selectedFile) {
+    file.value = null;
+    namaGambar.value = null;
+    previewImage.value = null;
+    return;
+  }
+
+  console.log(selectedFile);
+
+  // Validate file type
+  if (!allowedTypes.includes(selectedFile.type)) {
+    fileError.value = "Tipe file tidak valid. Hanya file JPG, JPEG, PNG, dan GIF yang diperbolehkan.";
+    event.target.value = ""; // Clear the input
+    file.value = null;
+    namaGambar.value = null;
+    previewImage.value = null;
+    return;
+  }
+
+  // Validate file size
+  if (selectedFile.size > maxFileSize) {
+    const maxSizeKB = maxFileSize / 1024;
+    fileError.value = `Ukuran file terlalu besar. Maksimal ${maxSizeKB}KB.`;
+    event.target.value = ""; // Clear the input
+    file.value = null;
+    namaGambar.value = null;
+    previewImage.value = null;
+    return;
+  }
+
+  // If validation passes, set the file
+  file.value = selectedFile;
+  namaGambar.value = selectedFile.name;
+  previewImage.value = URL.createObjectURL(selectedFile);
 }
 
 async function uploadFile() {
+  // Validate if file is selected
+  if (!file.value) {
+    fileError.value = "Silakan pilih file terlebih dahulu";
+    return;
+  }
   const idAnggaran = route.params.id;
   const url = `${BASE_URL}warga/fotoktp`;
   const keterangan = document.getElementById("keterangan").value;
@@ -188,12 +235,13 @@ function tutupToast() {
 async function getImageKeluarga() {
   try {
     const id_kk = route.params.id;
-    const viewPhotoKK = await axios.get(`${BASE_URL}warga/find/warga/${id_kk}`);
+    const viewPhotoKK = await axios.get(`${BASE_URL}warga/viewktp/${id_kk}`);
+    console.log('Hasil Data :',viewPhotoKK.data);
     imagekita.value = viewPhotoKK.data?.result?.url;
 
     if (imagekita.value) {
       ImageMessage.value =
-        "Photo KTP sudah ada jika ingin mengganti silakan untuk tap/klik tombol Edit";
+        "Photo Warga sudah ada jika ingin mengganti silakan untuk tap/klik tombol Edit";
       isDisabled.value = true;
       const url = `${BASE_URL}uploads/${imagekita.value}`;
       previewImage.value = url;
@@ -230,7 +278,7 @@ async function unlinkFoto() {
 
 function disableEditFoto() {
   showModal.value = true;
-  ModalTitle.value = "Edit/Ganti Foto KTP";
+  ModalTitle.value = "Edit/Ganti Foto Warga";
   ModalMessage.value =
     "Apakah anda yakin akan mendelete foto sebelum dan mengganti yang baru?";
 }

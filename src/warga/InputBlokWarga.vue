@@ -286,7 +286,7 @@
       >
         <div class="p-4 md:p-5">
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-            Card title
+            
           </h3>
           <div>
             <TabelBlokWarga />

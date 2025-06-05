@@ -70,6 +70,7 @@
                       </div>
                     </th>
                     <th class="py-1 text-start font-normal">No</th>
+                    <th class="py-1 text-start font-normal">Photo</th>
                     <th class="py-1 text-start font-normal">Nama</th>
                     <th class="py-1 text-start font-normal">NIK</th>
                     <th class="py-1 text-start font-normal">Type</th>
@@ -105,6 +106,12 @@
                     >
                       {{ index + 1 }}
                     </td>
+                    <td
+                      class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
+                    >
+                    <button v-if="user.photo_warga && user.photo_warga?.url" @click="viewGambar(user.photo_warga?.url)"><img :src="`${BASE_URL}uploads/${user.photo_warga?.url}`" alt="photo" class="w-10 h-10 rounded-full"></button>
+                    <img v-else :src="`${BASE_URL}uploads/avatar.jpg`" alt="photo" class="w-10 h-10 rounded-full">
+                  </td>
                     <td
                       class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
                     >
@@ -194,6 +201,14 @@
       v-on:closeButton="tutupModal"
     />
   </div>
+  <ModalViewGambar
+      v-if="showModalGambar"
+      :title="ModalTitleGambar"
+      :imageSource="viewGambarku"
+      v-on:okeButton="delGambar"
+      v-on:cancelButton="tutupModalGambar"
+      v-on:closeButton="tutupModalGambar"
+    />
 </template>
 
 <script setup>
@@ -204,6 +219,7 @@ import { useRoute } from "vue-router";
 import ToastCard from "../components/ToastCard.vue";
 import ModalCard from "../components/ModalCard.vue";
 import trailku from "../Trail/trail";
+import ModalViewGambar from "../components/ModalViewGambar.vue";
 
 const route = useRoute();
 const showToast = ref(false);
@@ -212,6 +228,9 @@ const toastMessage = ref("");
 const ModalMessage = ref("");
 const ModalTitle = ref("");
 const UUIDku = ref("");
+const showModalGambar = ref(false);
+const ModalTitleGambar = ref("");
+const viewGambarku = ref("");
 
 const searchQuery = ref("");
 
@@ -311,6 +330,30 @@ async function deleteWarga() {
     showToast.value = true;
     toastMessage.value = error;
   }
+}
+
+function viewGambar(url) {
+  console.log("View Gambar called with URL:", url);
+  try {
+    if (!url) {
+      throw new Error("URL is undefined");
+    }
+    showModalGambar.value = true;
+    ModalTitleGambar.value = "Foto Warga";
+    viewGambarku.value = `${BASE_URL}uploads/${url}`;
+    console.log("Full image URL:", viewGambarku.value);
+  } catch (error) {
+    console.error("Error in viewGambar:", error);
+  }
+}
+
+function tutupModalGambar() {
+  showModalGambar.value = false;
+}
+
+function delGambar() {
+  // This function can be implemented if needed for delete functionality
+  tutupModalGambar();
 }
 </script>
 
