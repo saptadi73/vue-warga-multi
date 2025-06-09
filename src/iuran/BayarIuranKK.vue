@@ -410,7 +410,7 @@ async function addPekerjaan() {
     const trail = await trailku(toastMessage.value);
     console.log(trail);
   
-    router.push("/iuran/bayar/iuran");
+    
     console.log(tambahKerjaan);
   } catch (error) {
     showToast.value = true;
@@ -438,7 +438,7 @@ function bukaModal(id, iuran, tanggal) {
 
 function tutupModalInput() {
   showModalInputCard.value = false;
-  router.push("/iuran/input/jenis");
+  window.location.reload();
 }
 
 async function updatePekerjaan() {

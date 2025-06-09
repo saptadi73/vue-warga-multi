@@ -236,8 +236,8 @@ async function getImageKeluarga() {
   try {
     const id_kk = route.params.id;
     const viewPhotoKK = await axios.get(`${BASE_URL}warga/viewktp/${id_kk}`);
-    console.log('Hasil Data :',viewPhotoKK.data);
-    imagekita.value = viewPhotoKK.data?.result?.url;
+    console.log('Hasil Data awal:',viewPhotoKK.data);
+    imagekita.value = viewPhotoKK.data?.result?.photo_warga?.url;
 
     if (imagekita.value) {
       ImageMessage.value =
@@ -245,6 +245,7 @@ async function getImageKeluarga() {
       isDisabled.value = true;
       const url = `${BASE_URL}uploads/${imagekita.value}`;
       previewImage.value = url;
+      console.log('alamat url akhir', url);
     }else{
       ImageMessage.value="Silakan untuk memasukan file gambar dengan format jpg, jpeg, png, dan gif.";
     }

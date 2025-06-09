@@ -22,8 +22,8 @@
       >
         <img src="../assets/logo_rukun.png" class="w-10 h-10 animate-spin" />
         <h1 v-if="isiSidebar" class="font-Poppins ml-5 text-2xl">
-          <span class="font-bold text-[#ca13c5]">IURAN</span
-          ><span class="font-semibold text-[#2b94f1]">WARGA</span>
+          <span class="font-bold text-[#ca13c5]">WARGA</span
+          ><span class="font-semibold text-[#2b94f1]">RTRW</span>
         </h1>
       </div>
       <div v-for="menu in menus" :key="menu.title" class="mt-4">
@@ -128,7 +128,7 @@ export default {
         {
           title: "Iuran Warga",
           path: "/iuran",
-          icon: "savings",
+          icon: "wallet",
           submenu: [
             {
               path: "/iuran/bayar/iuran",
@@ -140,7 +140,7 @@ export default {
             },
             {
               name: "Warga iuran",
-              path: "/iuran/warga/iuran",
+              path: "/iuran/warga/sudah",
             },
             {
               name: "Warga Belum Iuran",
@@ -150,12 +150,12 @@ export default {
           open: false,
         },
         {
-          title: "Anggaran",
+          title: "Arus Kas Umum",
           path: "/anggaran",
           icon: "account_balance",
           submenu: [
             {
-              name: "Isi Arus Anggaran",
+              name: "Pencatatan Kas",
               path: "/anggaran/input/anggaran",
             },
             {

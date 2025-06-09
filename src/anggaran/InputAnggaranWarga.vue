@@ -7,7 +7,7 @@
       <div id="card2" class="">
         <div class="p-4 md:p-5">
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-            Pengisian Anggaran
+            Pencatatan Arus Kas Warga
           </h3>
           <div class="mt-10">
             <div class="relative">
@@ -16,7 +16,7 @@
                 :onchange="listJenisAnggaran"
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
-                <option selected="">Pilih Jenis Anggaran</option>
+                <option selected="">Pilih Jenis Arus Kas</option>
                 <option value="1">Pemasukan</option>
                 <option value="2">Pengeluaran</option>
               </select>
@@ -147,6 +147,7 @@
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
                 <option selected="">Pilih Jenis Anggaran</option>
+                <option value="0">Semua</option>
                 <option value="1">Pemasukan</option>
                 <option value="2">Pengeluaran</option>
               </select>
@@ -164,6 +165,7 @@
                 class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
               >
                 <option selected="">Pilih Jenis Anggaran</option>
+                <option value="0">Semua</option>
                 <option
                   v-if="hasilJenisAnggaranCari"
                   v-for="resultku in hasilJenisAnggaranCari"
@@ -172,7 +174,6 @@
                 >
                   {{ resultku.nama }}
                 </option>
-                <option value="9999">Semua</option>
               </select>
               <label
                 for="jenis_anggaran_cari"
@@ -366,16 +367,21 @@
                               </button>
                             </td>
                             <td
-                              v-if="user.bukti[0]"
+                              v-if="user.bukti"
                               class="text-blue-600 font-semibold"
                             >
-                              <button @click="bukaModalGambar(`${user.id}`)">
+                              <button @click="bukaModalGambar(`${user.bukti.url}`)">
                                 View
                               </button>
                             </td>
                             <td v-else class="text-blue-600 font-semibold">
-                              <button @click="uploadBukti(`${user.id}`)">
-                                Upload {{ user.bukti[0] }}
+                              <button @click="uploadBukti(`${user.id}`,`${user.warga.nama }`)">
+                                Upload
+                              </button>
+                            </td>
+                            <td class="text-blue-600 font-semibold">
+                              <button @click="uploadBukti(`${user.id}`,`${user.warga.nama }`)">
+                                Edit Bukti
                               </button>
                             </td>
                           </tr>
@@ -487,12 +493,16 @@ function tutupModal() {
   showModal.value = false;
   router.push("anggaran/input/anggaran");
 }
-function tutupModalGambar() {}
+function tutupModalGambar() {
+showModalGambar.value = false;
+}
 function delGambar() {}
-function bukaModalGambar(id) {
+function bukaModalGambar(url) {
   showModalGambar.value = true;
   ModalTitleGambar.value = "View Image File";
-  viewGambarku.value = `${BASE_URL}images/1737242021681-880483274-guntoro.jpg`;
+  const imageUrl= BASE_URL+ "uploads/" + url;
+  viewGambarku.value = imageUrl;
+
 }
 
 function bukaModal(id, nama, tanggal) {
@@ -507,8 +517,8 @@ function bukaModal(id, nama, tanggal) {
   formValues.value = { id: parseInt(id) };
 }
 
-function uploadBukti(id) {
-  const url = "/anggaran/upload/bukti/" + id;
+function uploadBukti(id,nama) {
+  const url = "/anggaran/upload/bukti/" + id + "/" + nama;
   router.push(url);
 }
 function tutupToast() {

@@ -237,7 +237,7 @@ async function getImageKeluarga() {
   try {
     const id_kk = route.params.id;
     const viewPhotoKK = await axios.get(`${BASE_URL}warga/viewkk/${id_kk}`);
-    imagekita.value = viewPhotoKK.data?.result?.url;
+    imagekita.value = viewPhotoKK.data?.result?.filekeluarga?.url;
 
     if (imagekita.value) {
       ImageMessage.value =

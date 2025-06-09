@@ -308,7 +308,7 @@ const router = createRouter({
           },
         },
         {
-          path: "upload/bukti/:id",
+          path: "upload/bukti/:id/:nama",
           name: "upload_bukti_anggaran",
           component: () => import("../anggaran/InputFileBuktiSetor.vue"),
            meta: {
@@ -368,6 +368,16 @@ const router = createRouter({
             allowedRoles: ["admin","officer"],
           },
         },
+        {
+          path: 'warga/sudah',
+          name: 'sudah_bayar_iuran',
+          component: () => import("../warga/LaporanSudahIuran.vue")
+        },
+        {
+          path: 'warga/belum',
+          name: 'belum_bayar_iuran',
+          component: () => import("../warga/LaporanBelumIuran.vue")
+        }
       ],
     },
 
