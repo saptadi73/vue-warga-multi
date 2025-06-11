@@ -31,17 +31,12 @@
     <div>
       <PieDonutChart/>
     </div>
-    <div class="achievement-list">
-      <AchievementList :items="achievements" />
-    </div>
-    
   </div>
 </template>
 
 <script>
 import MetricCard from "./MetricCard.vue";
 import ProgressChart from "./ProgressCard.vue";
-import AchievementList from "./AchievementList.vue";
 import axios from "axios";
 import { onMounted, computed } from "vue";
 import { ref } from "vue";
@@ -54,7 +49,6 @@ export default {
   components: {
     MetricCard,
     ProgressChart,
-    AchievementList,
     PieDonutChart,
     KeuanganLineChart
   },
@@ -64,44 +58,6 @@ export default {
       totalPemasukan: null,
       totalPengeluaran: null,
       saldo: null,
-      achievements: [
-        {
-          id: 1,
-          name: "Belajar Vue.js",
-          progress: 100,
-          target: 100,
-          status: "completed",
-        },
-        {
-          id: 2,
-          name: "Proyek Dashboard",
-          progress: 75,
-          target: 100,
-          status: "in-progress",
-        },
-        {
-          id: 3,
-          name: "Tutorial Komponen",
-          progress: 30,
-          target: 100,
-          status: "in-progress",
-        },
-        {
-          id: 4,
-          name: "Deploy Aplikasi",
-          progress: 0,
-          target: 100,
-          status: "not-started",
-        },
-      ],
-      progressData: [
-        { month: "Jan", progress: 20 },
-        { month: "Feb", progress: 45 },
-        { month: "Mar", progress: 60 },
-        { month: "Apr", progress: 75 },
-        { month: "Mei", progress: 85 },
-        { month: "Jun", progress: 90 },
-      ],
     };
   },
   computed: {

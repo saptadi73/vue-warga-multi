@@ -7,7 +7,7 @@
       <div id="card2" class="">
         <div class="p-4 md:p-5">
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-            Laporan Warga Belum Iuran
+            Laporan Warga yang Telah Iuran
           </h3>
 
           <div class="mt-3">
@@ -71,7 +71,7 @@
             class="mt-5 bg-purple-500 text-base font-semibold rounded-lg text-white decoration-2 hover:text-purple-200 hover:underline focus:underline focus:outline-none p-2 focus:text-purple-300 disabled:opacity-50 disabled:pointer-events-none"
             href="#"
           >
-            Tambah Warga
+            Lihat Daftar
           </button>
         </div>
         <div
