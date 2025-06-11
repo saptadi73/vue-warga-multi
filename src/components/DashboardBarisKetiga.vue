@@ -27,14 +27,14 @@
         color="purple"
       />
     </div>
-
-    <div class="charts">
-      <ProgressChart :data="progressData" />
+    <div><KeuanganLineChart/></div>
+    <div>
+      <PieDonutChart/>
     </div>
-
     <div class="achievement-list">
       <AchievementList :items="achievements" />
     </div>
+    
   </div>
 </template>
 
@@ -46,12 +46,17 @@ import axios from "axios";
 import { onMounted, computed } from "vue";
 import { ref } from "vue";
 import { BASE_URL } from "../base.url.utils";
+import PieDonutChart from "./PieDonutChart.vue";
+import KeuanganLineChart from "./KeuanganLineChart.vue";
+
 
 export default {
   components: {
     MetricCard,
     ProgressChart,
     AchievementList,
+    PieDonutChart,
+    KeuanganLineChart
   },
   data() {
     return {
@@ -112,14 +117,15 @@ export default {
         console.log("total kabehane :", TotalKabehane.data);
         const totalIuranku = parseInt(TotalKabehane.data.totalIuranKabeh);
         const totalPemasukanku = parseInt(TotalKabehane.data.totalMasukKabeh);
-        const totalPengeluaranku = parseInt(TotalKabehane.data.totalKeluarKabeh);
+        const totalPengeluaranku = parseInt(
+          TotalKabehane.data.totalKeluarKabeh
+        );
         const saldoku = totalIuranku + totalPemasukanku - totalPengeluaranku;
 
         this.totalIuran = this.formatRupiah(totalIuranku);
         this.totalPemasukan = this.formatRupiah(totalPemasukanku);
         this.totalPengeluaran = this.formatRupiah(totalPengeluaranku);
         this.saldo = this.formatRupiah(saldoku);
-        
       } catch (error) {
         console.log(error);
       }
@@ -160,7 +166,6 @@ export default {
   margin-bottom: 30px;
 }
 
-.charts,
 .achievement-list {
   background: white;
   border-radius: 8px;
@@ -171,6 +176,15 @@ export default {
 
 h1 {
   color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+/* Tambahkan ini jika belum ada */
+.charts {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
 }
 </style>

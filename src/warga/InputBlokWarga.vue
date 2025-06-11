@@ -111,7 +111,7 @@
               >
               <input
                 ref="no_rumah"
-                type="number"
+                type="text"
                 class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
               />
             </div>
@@ -446,7 +446,7 @@ export default {
       const url = BASE_URL + "warga/add/kk";
       this.formValuesRumah.id_blok = parseInt(this.$refs.list_blok.value);
       this.formValuesRumah.nama = this.$refs.nama.value;
-      this.formValuesRumah.no_rumah = parseInt(this.$refs.no_rumah.value);
+      this.formValuesRumah.no_rumah = this.$refs.no_rumah.value;
       this.formValuesRumah.no_kk = this.$refs.id_kk.value;
       this.formValuesRumah.no_hp = this.$refs.no_hp.value;
       this.formValuesRumah.nik = this.$refs.nik.value;

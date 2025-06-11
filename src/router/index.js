@@ -13,6 +13,11 @@ const router = createRouter({
           },
     },
     {
+      path: "/chart",
+      name: "chart",
+      component: () => import("../components/IncomeExpenseChart.vue")
+    },
+    {
       path: "/main",
       name: "main",
       component: () => import("../views/MainLayoutView.vue"),
