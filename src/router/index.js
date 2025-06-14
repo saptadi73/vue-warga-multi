@@ -412,7 +412,7 @@ const router = createRouter({
       component: () => import("../components/DaftarKK.vue"),
        meta: {
             requiresAuth: true,
-            allowedRoles: ["admin"],
+            allowedRoles: ["admin","officer"],
           },
     },
 
