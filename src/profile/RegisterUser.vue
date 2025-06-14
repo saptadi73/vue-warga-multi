@@ -58,13 +58,19 @@
               <div class="mt-5">
                 <div class="relative">
                   <select
+                  v-model="id_level"
                     id="id_level"
                     class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
                   >
-                    <option selected>Level Akses</option>
-                    <div v-for="level in daftarUserLevelku" :key="level.id">
-                      <option :value="`${level.id}`">{{ level.nama }}</option>
-                    </div>
+                    <option disabled selected>Level Akses</option>
+
+                    <option
+                      v-for="level in daftarUserLevelku"
+                      :key="level.id"
+                      :value="`${level.id}`"
+                    >
+                      {{ level.nama }}
+                    </option>
                   </select>
                   <label
                     for="id_level"
@@ -686,25 +692,25 @@
             </div>
           </div>
           <a
-              class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-600 dark:focus:text-blue-600"
-              href="/dashboard"
+            class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-600 dark:focus:text-blue-600"
+            href="/dashboard"
+          >
+            Dashboard
+            <svg
+              class="shrink-0 size-4"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             >
-              Dashboard
-              <svg
-                class="shrink-0 size-4"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="m9 18 6-6-6-6"></path>
-              </svg>
-            </a>
+              <path d="m9 18 6-6-6-6"></path>
+            </svg>
+          </a>
         </div>
         <div
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
@@ -744,7 +750,6 @@ import ModalCard from "../components/ModalCard.vue";
 import trailku from "../Trail/trail";
 import api from "../user/axios";
 
-
 const showToast = ref(false);
 const toastMessage = ref("");
 const route = useRoute();
@@ -760,6 +765,7 @@ onMounted(async () => {
   await getUserList();
   await getUserLevel();
   getDataLocal();
+  getLocalStorage();
 });
 
 function getDataLocal() {
@@ -771,30 +777,33 @@ async function registerUser() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password1").value;
   const confirmPassword = document.getElementById("password2").value;
-  const id_level = document.getElementById("id_level").value;
 
   if (password !== confirmPassword) {
     notifikasi.value = "Password tidak sama";
+  } else if (id_level.value == "" || id_level.value == null) {
+    notifikasi.value = "Silakan pilih level akses";
   } else {
-    const data = {
+    const dataku = {
       email: email,
       password: password,
-      id_level: id_level,
+      id_level: id_level.value,
     };
-    const Url = BASE_URL + "auth/signup";
-    const regUser = await api.post(Url, data, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
 
-    if (regUser.data.access_token !== "") {
-      localStorage.setItem("access_token", regUser.data.access_token);
-    } else if (regUser.data.refresh_token !== "") {
-      localStorage.setItem("refresh_token", regUser.data.refresh_token);
-    } else {
+    try {
+      const Url = BASE_URL + "user/add";
+      const regUser = await api.post(Url, dataku, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("Data yang dikirim :", dataku);
+      console.log("response server :", regUser.data);
       showToast.value = true;
-      toastMessage.value = "Gagal mendaftar, coba lagi";
+      toastMessage.value = regUser.data.message;
+    } catch (error) {
+      console.log(error);
+      showToast.value = true;
+      toastMessage.value = error;
     }
   }
 }
@@ -820,7 +829,7 @@ async function getUserLevel() {
     const Url = BASE_URL + "user/daftar/level/user";
     const daftarUserLevel = await axios.get(Url);
     daftarUserLevelku.value = daftarUserLevel.data.result;
-    console.log(daftarUserLevelku);
+    console.log(daftarUserLevelku.value);
   } catch (error) {
     console.log(error);
   }
@@ -861,6 +870,13 @@ function bukaModal(uuid, email) {
   ModalTitle.value = "Delete Data User";
   ModalMessage.value = "Apakah anda yakin akan menghapus data user  " + email;
   uuidku.value = { uuid: uuid };
+}
+
+async function getLocalStorage() {
+  const data = localStorage.getItem("access_token");
+  const level = localStorage.getItem("level");
+  console.log("access_token :", data);
+  console.log("level :", level);
 }
 
 async function aktivasi(link) {

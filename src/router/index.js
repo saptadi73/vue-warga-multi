@@ -447,7 +447,7 @@ router.beforeEach((to, from, next) => {
     }
 
     if (to.meta.allowedRoles && !to.meta.allowedRoles.includes(userRole)) {
-      return next("/unauthorized"); // atau tampilkan pesan akses ditolak
+      return next("/error/unauthorized"); // atau tampilkan pesan akses ditolak
     }
   }
 
