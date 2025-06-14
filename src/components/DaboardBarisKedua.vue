@@ -18,11 +18,7 @@
                 <p class="text-2xl font-bold">{{jumlahTotal}}</p>
               </div>
             </div>
-            <button
-              class="text-sm text-green-600 dark:text-green-400 hover:underline"
-            >
-              Lihat Detail
-            </button>
+            
           </div>
           <!-- Sparkline -->
           <svg viewBox="0 0 100 30" class="w-full h-8 text-green-400">
@@ -49,11 +45,7 @@
                 <p class="text-2xl font-bold">{{jumlahLakiLaki}}</p>
               </div>
             </div>
-            <button
-              class="text-sm text-blue-600 dark:text-blue-400 hover:underline"
-            >
-              Lihat Detail
-            </button>
+            
           </div>
           <svg viewBox="0 0 100 30" class="w-full h-8 text-blue-400">
             <polyline
@@ -79,11 +71,7 @@
                 <p class="text-2xl font-bold">{{jumlahPerempuan}}</p>
               </div>
             </div>
-            <button
-              class="text-sm text-yellow-600 dark:text-yellow-400 hover:underline"
-            >
-              Lihat Detail
-            </button>
+            
           </div>
           <svg viewBox="0 0 100 30" class="w-full h-8 text-yellow-400">
             <polyline
@@ -108,11 +96,7 @@
                 <p class="text-2xl font-bold">{{jumlahKk}}</p>
               </div>
             </div>
-            <button
-              class="text-sm text-yellow-600 dark:text-yellow-400 hover:underline"
-            >
-              Lihat Detail
-            </button>
+            
           </div>
           <svg viewBox="0 0 100 30" class="w-full h-8 text-yellow-400">
             <polyline

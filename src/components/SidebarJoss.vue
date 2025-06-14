@@ -21,33 +21,41 @@
         class="flex items-center bg-gradient-to-r from-purple-200 to-white rounded-r-lg space-x-2"
       >
         <img src="../assets/logo_rukun.png" class="w-10 h-10 animate-spin" />
-        <h1 v-if="isiSidebar" class="font-Poppins ml-5 text-2xl">
-          <span class="font-bold text-[#ca13c5]">WARGA</span
+        <h1 v-if="isiSidebar" class="font-Poppins ml-5 text-xl">
+          <span class="font-semibold text-[#ca13c5]">WARGA</span
           ><span class="font-semibold text-[#2b94f1]">RTRW</span>
         </h1>
       </div>
+      <div class="flex items-center cursor-pointer ml-3 mt-6">
+        <router-link to="/dashboard">
+          <span class="material-icons text-[#e52bf1] w-12 h-12">dashboard</span>
+          <span v-if="isiSidebar" class="text-blue-600 text-base"
+            >Dashboard</span
+          ></router-link
+        >
+      </div>
       <div v-for="menu in menus" :key="menu.title" class="mt-4">
-        <div class="flex justify-between  hover:bg-slate-100 rounded-md"><div
+        <div class="flex justify-between hover:bg-slate-100 rounded-md">
+          <div
             @click="toggleSubmenu(menu)"
             class="flex items-center cursor-pointer ml-3 mt-4"
           >
-            
-              <RouterLink to="/dashboard">
-                <span class="material-icons text-[#e52bf1]">{{ menu.icon }}</span>
-              <span v-if="isiSidebar" class="ml-2 text-blue-600">{{
-                menu.title
-              }}</span>
-              </RouterLink>
-            
-          </div><span
-              v-if="isiSidebar && menu.submenu" :class="{
-                'rotate-180':menu.submenu && menu.open,
-                'rotate-0':!menu.submenu && menu.open,
-              }"
-              class="material-icons text-blue-600 right-2 mt-4"
-              >arrow_drop_down</span
-            ></div>
-        
+            <span class="material-icons text-[#e52bf1]">{{ menu.icon }}</span>
+            <span v-if="isiSidebar" class="ml-2 text-blue-600">{{
+              menu.title
+            }}</span>
+          </div>
+          <span
+            v-if="isiSidebar && menu.submenu"
+            :class="{
+              'rotate-180': menu.submenu && menu.open,
+              'rotate-0': !menu.submenu && menu.open,
+            }"
+            class="material-icons text-blue-600 right-2 mt-4"
+            >arrow_drop_down</span
+          >
+        </div>
+
         <ul
           v-if="menu.open && menu.submenu && isiSidebar"
           class="text-[#0824a1] bg-yellow-200 rounded-md ml-6 z-10"
@@ -73,11 +81,6 @@ export default {
     return {
       isiSidebar: false,
       menus: [
-        {
-          title: "Dashboard",
-          icon: "dashboard",
-          path: "/dashboard",
-        },
         {
           title: "Profile",
           icon: "settings_accessibility",
@@ -166,7 +169,6 @@ export default {
               name: "Isi Jenis Pengeluaran",
               path: "/anggaran/input/jenis/anggaran/keluar",
             },
-            
           ],
         },
       ],

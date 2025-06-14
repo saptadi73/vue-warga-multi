@@ -1,22 +1,40 @@
 <template>
-  <div class="overflow-x-auto">
-    <table class="min-w-full divide-y divide-gray-200">
+  <div class="overflow-x-auto w-[80vw]">
+    <div class="text-center mt-10">
+      <div class="font-bold text-xl text-slate-700">
+      Laporan Keuangan Warga
+    </div>
+    <div class="text-base text-slate-500 font-Roboto"> Tanggal {{formattedDate}}</div>
+    <div class="mt-5 text-base font-semibold text-slate-700 font-Poppins">
+      RT.{{ RT }}/{{ RW }} , {{ dusun }}, Desa/Kel. {{ desa }}, Kec. {{ kecamatan }}, {{ kabupaten }}
+    </div>
+    <div class="font-bold text-xl font-Roboto text-slate-800">
+      {{ provinsi }}
+    </div>
+    </div>
+    
+    <table class="min-w-full divide-y divide-gray-200 mt-10">
       <thead class="bg-gray-50">
-        <tr>
+        <tr class="bg-blue-300 font-Poppins font-bold text-black">
           <th
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            class="px-6 py-3 text-left text-base font-bold text-blue-900 uppercase tracking-wider"
           >
-            Nama Target
+            Item
           </th>
           <th
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            class="px-6 py-3 text-base font-bold text-blue-900 uppercase tracking-wider text-right"
           >
-            Jumlah Warga/Transaksi
+            Sub Total
           </th>
           <th
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            class="px-6 py-3 text-base font-bold text-blue-900 uppercase tracking-wider text-right"
           >
-            Total Nilai
+            Total
+          </th>
+          <th
+            class="px-6 py-3 text-base font-bold text-blue-900 uppercase tracking-wider text-right"
+          >
+            Final
           </th>
         </tr>
       </thead>
@@ -24,29 +42,145 @@
         <tr>
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm font-medium text-gray-900">Iuran Wajib</div>
-            <div class="text-sm text-gray-500">Bulan ini</div>
+            <div class="text-sm text-gray-500">Bulan Lalu</div>
           </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div>
-              {{ jmlWargaSetorBulan }}
-            </div>
+          <td class="px-6 py-4 whitespace-nowrap text-right">
+            {{ formatRupiah(iuranBulanLalu) }}
           </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            {{ jmlSetoranIuranBulan }}
-          </td>
+          <td></td>
+          <td></td>
         </tr>
         <tr>
           <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm font-medium text-gray-900">Pemasukan Lain-lain</div>
-            <div class="text-sm text-gray-500">Bulan ini</div>
+            <div class="text-sm font-medium text-gray-900">
+              Pemasukan Lain-lain
+            </div>
+            <div class="text-sm text-gray-500">Bulan Lalu</div>
           </td>
-          <td class="px-6 py-4 whitespace-nowrap">
+          <td class="px-6 py-4 whitespace-nowrap text-right">
             <div>
-              {{ jmlTransaksiPemasukanLain }}
+              {{ formatRupiah(PemasukanBulanLalu) }}
             </div>
           </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
           <td class="px-6 py-4 whitespace-nowrap">
-            {{ jmlPemasukanLainBulan }}
+            <div class="text-sm font-medium text-gray-900">Pengeluaran</div>
+            <div class="text-sm text-gray-500">Bulan Lalu</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-right">
+            <div>
+              {{ formatRupiah(PengeluaranBulanLalu) }}
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr class="bg-slate-200">
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm font-medium text-gray-900">Saldo</div>
+            <div class="text-sm text-gray-500">Bulan Lalu</div>
+          </td>
+          <td></td>
+          <td
+            class="px-6 py-4 whitespace-nowrap text-right font-semibold text-black"
+          >
+            <div>
+              {{ formatRupiah(SaldoBulanLalu) }}
+            </div>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm font-medium text-gray-900">Iuran Wajib</div>
+            <div class="text-sm text-gray-500">yang Masuk Bulan Ini</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-right">
+            <div>
+              {{ formatRupiah(iuranBulanIni) }}
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr v-for="(data, index) in pemasukanBulanIni" :key="index">
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm font-medium text-gray-900">{{ data.nama }}</div>
+            <div class="text-sm text-gray-500">Pemasukan Bulan Ini</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-right">
+            <div>
+              {{ formatRupiah(parseInt(data.pemasukan)) }}
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr class="bg-slate-200">
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm font-medium text-gray-900">Total Pemasukan</div>
+            <div class="text-sm text-gray-500">Bulan ini</div>
+          </td>
+          <td></td>
+          <td
+            class="px-6 py-4 whitespace-nowrap text-right font-semibold text-black"
+          >
+            <div>
+              {{ formatRupiah(TotalPemasukanBulanIni) }}
+            </div>
+          </td>
+          <td></td>
+        </tr>
+
+        <tr v-for="(data, index) in pengeluaranBulanIni" :key="index">
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm font-medium text-gray-900">{{ data.nama }}</div>
+            <div class="text-sm text-gray-500">Pengeluaran Bulan Ini</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-right">
+            <div>
+              {{ formatRupiah(parseInt(data.pengeluaran)) }}
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <tr class="bg-slate-200">
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm font-medium text-gray-900">
+              Total Pengeluaran
+            </div>
+            <div class="text-sm text-gray-500">Bulan ini</div>
+          </td>
+          <td></td>
+          <td
+            class="px-6 py-4 whitespace-nowrap text-right text-black font-semibold"
+          >
+            <div>
+              {{ formatRupiah(TotalPengeluaranBulanIni) }}
+            </div>
+          </td>
+          <td></td>
+        </tr>
+
+        <tr class="bg-blue-300">
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900 font-bold">Saldo AKhir</div>
+            <div class="text-sm text-gray-500">Bulan ini</div>
+          </td>
+          <td></td>
+
+          <td></td>
+          <td
+            class="px-6 py-4 whitespace-nowrap text-right text-black font-bold"
+          >
+            <div>
+              {{ formatRupiah(SaldoBulanIni) }}
+            </div>
           </td>
         </tr>
       </tbody>
@@ -56,52 +190,114 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import {
-  getWargaSetorBulan,
-  listWargaSetorBulan,
-  jmlSetoranIuranBulan,
-  getJmlSetoranBulan,
-  getJumlahWargaSetoranBulan,
-  jmlWargaSetorBulan,
-  getTransaksiPemasukanLainBulan,
-  jmlTransaksiPemasukanLain,
-  getjmlPemasukanLainBulan,
-  jmlPemasukanLainBulan,
-  getListPemasukanBulan,
-  listPemasukanLainBulan,
-} from "./dashboard.js"; // sesuaikan path
+import axios from "axios";
+import { useRoute } from "vue-router";
+import { BASE_URL } from "../base.url.utils"; // sesuaikan path
 
-// Jika props tetap diperlukan:
-defineProps({
-  items: Array,
-});
+const iuranBulanLalu = ref(null);
+const PemasukanBulanLalu = ref(null);
+const PengeluaranBulanLalu = ref(null);
+const SaldoBulanLalu = ref(null);
+let nomor = 1;
 
-// Fungsi status
-function getStatusText(status) {
-  const statusMap = {
-    completed: "Selesai",
-    "in-progress": "Dalam Proses",
-    "not-started": "Belum Dimulai",
-  };
-  return statusMap[status] || status;
+const iuranBulanIni = ref(null);
+const pemasukanBulanIni = ref([]);
+const TotalPemasukanBulanIni = ref(null);
+const pengeluaranBulanIni = ref([]);
+const TotalPengeluaranBulanIni = ref(null);
+const SaldoBulanIni = ref(null);
+
+const provinsi = ref('');
+const kabupaten = ref('');
+const kecamatan = ref('');
+const desa = ref('');
+const dusun = ref('');
+const RT = ref('');
+const RW = ref('');
+const kode_wilayah = ref('');
+
+const today = new Date();
+
+const day = String(today.getDate());
+const month = String(today.getMonth()+1);
+const year = today.getFullYear();
+
+const formattedDate = `${day}-${month}-${year}`;
+
+async function getDataLaporan() {
+  try {
+    const response = await axios.get(`${BASE_URL}bayar/laporan/rt`);
+    iuranBulanLalu.value = parseInt(response.data.result?.IuranBulanLalu);
+    PemasukanBulanLalu.value = parseInt(
+      response.data.result?.PemasukanBulanLalu
+    );
+    PengeluaranBulanLalu.value = parseInt(
+      response.data.result?.PengeluaranBulanLalu
+    );
+    SaldoBulanLalu.value =
+      iuranBulanLalu.value +
+      PemasukanBulanLalu.value -
+      PengeluaranBulanLalu.value;
+    iuranBulanIni.value = parseInt(response.data.result?.IuranBulanIni);
+    pemasukanBulanIni.value = response.data.result?.PemasukanBulanIni;
+
+    const totalPemasukanlain = pemasukanBulanIni.value.reduce((acc, item) => {
+      return acc + parseInt(item.pemasukan || 0);
+    }, 0);
+    TotalPemasukanBulanIni.value = totalPemasukanlain + iuranBulanIni.value;
+
+    pengeluaranBulanIni.value = response.data.result?.PengeluaranBulanIni;
+    console.log("Laporan RT :", totalPemasukanlain);
+
+    const totalPengeluaran = pengeluaranBulanIni.value.reduce((acc, item) => {
+      return acc + parseInt(item.pengeluaran || 0);
+    }, 0);
+    TotalPengeluaranBulanIni.value = totalPengeluaran;
+
+    SaldoBulanIni.value =
+      SaldoBulanLalu.value +
+      TotalPemasukanBulanIni.value -
+      TotalPengeluaranBulanIni.value;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getEntity() {
+  const url = BASE_URL + "profile/cari"
+  const response = await axios.get(url);
+  const hasilEntity = response.data.result;
+  provinsi.value = hasilEntity.provinsi;
+  kabupaten.value = hasilEntity.kabupaten;
+  kecamatan.value = hasilEntity.kecamatan;
+  desa.value = hasilEntity.desa;
+  dusun.value = hasilEntity.dusun;
+  RW.value = hasilEntity.rw;
+  RT.value = hasilEntity.rt;
+  kode_wilayah.value = hasilEntity.kode_wilayah;
+
+}
+
+
+
+
+function formatRupiah(number) {
+  const amount = number;
+
+  // Format as Indonesian Rupiah (IDR)
+  const formattedIDR = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0, // Rupiah usually doesn't show decimals
+    maximumFractionDigits: 0,
+  }).format(amount);
+
+  return formattedIDR;
 }
 
 // Panggil data dari dashboard.js
 onMounted(async () => {
-  await getWargaSetorBulan();
-  console.log("List warga Setor Iuran: ", listWargaSetorBulan.value);
-
-  await getJumlahWargaSetoranBulan();
-  console.log("Jumlah Warga setor bulan: ", jmlWargaSetorBulan.value);
-
-  await getJmlSetoranBulan();
-  console.log("Data Jumlah Iuran Bulan: ", jmlSetoranIuranBulan.value);
-
-  await getTransaksiPemasukanLainBulan();
-  console.log('Jumlah Transaksi Pemasukan lain :', jmlTransaksiPemasukanLain.value);
-
-  await getjmlPemasukanLainBulan();
-  console.log('Jumlah Pemasukan Lain Bulan :', jmlPemasukanLainBulan.value);
-
+  getDataLaporan();
+  getEntity();
 });
 </script>

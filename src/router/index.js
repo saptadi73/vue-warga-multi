@@ -385,7 +385,11 @@ const router = createRouter({
         }
       ],
     },
-
+    {
+      name: 'laporan',
+      path: '/laporan',
+      component: () => import("../views/MainLaporanView.vue")
+    },
     {
       path: "/cobasidebar",
       name: "cobasidebar",

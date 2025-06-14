@@ -6,17 +6,22 @@
       <nav
         class="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between"
       >
-        <div class="flex items-center justify-between">
+        <div class="flex items-center">
           <div>
             <a
               class="flex-none text-xl font-semibold dark:text-white focus:outline-none focus:opacity-80"
               href="#"
               aria-label="Brand"
-            >
-              <img
+            ><div class="flex justify-between items-center gap-1">
+              <div>
+                <img
                 src="../assets/orang_peci.jpg"
-                class="h-10 w-10 outline-1 ml-8 outline-black rounded-full"
+                class="h-6 w-6 outline-1 ml-1 outline-black rounded-full"
               />
+              </div>
+              <div class="ml-2 text-slate-500 font-Roboto text-xs">Manajemen Keuangan Warga Lingkup RT/RW</div>
+            </div>
+              
             </a>
           </div>
 
@@ -75,7 +80,7 @@
           >
             <a
               class="font-medium text-blue-500 focus:outline-none"
-              href="#"
+              href="/dashboard"
               aria-current="page"
               >Home</a
             >
@@ -86,12 +91,12 @@
             >
             <a
               class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
-              href="#"
+              href="/dashboard"
               >Dashboard</a
             >
             <a
               class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
-              href="#"
+              href="/laporan"
               >Laporan</a
             >
           </div>

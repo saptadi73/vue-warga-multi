@@ -178,10 +178,11 @@ const route = useRoute();
     }
     return users.value.filter(
       (user) =>
-        user.nama.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        user.warga[0].nama.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
         user.no_kk.toString().includes(searchQuery.value) ||
         user.blok.blok.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-        user.no_rumah.toLowerCase().includes(searchQuery.value.toLowerCase())
+        user.no_rumah.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        user.warga[0].tempat_lahir.toLowerCase().includes(searchQuery.value.toLowerCase())
     );
   });
 
