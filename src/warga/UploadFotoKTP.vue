@@ -118,6 +118,7 @@ import { useRoute } from "vue-router";
 import ToastCard from "../components/ToastCard.vue";
 import trailku from "../Trail/trail";
 import ModalCard from "../components/ModalCard.vue";
+import api from "../user/axios";
 
 const hasilUpload = ref([]);
 const formValues = ref({});
@@ -205,7 +206,7 @@ async function uploadFile() {
   console.log(formDataku);
 
   try {
-    const uploadBukti = await axios.post(url, formDataku, {
+    const uploadBukti = await api.post(url, formDataku, {
       Headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -263,7 +264,7 @@ async function unlinkFoto() {
   try {
     const url = `${BASE_URL}warga/delete/fotoktp/`;
 
-    const unlinkFile = await axios.post(url, dataImageku, {
+    const unlinkFile = await api.post(url, dataImageku, {
       headers: {
         "Content-Type": "application/json",
       },

@@ -270,6 +270,7 @@ import ModalCard from "../components/ModalCard.vue";
 import router from "../router";
 import { useRoute } from "vue-router";
 import trailku from "../Trail/trail";
+import api from "../user/axios";
 
 const searchQuery = ref("");
 
@@ -291,7 +292,7 @@ async function getJenisAnggaranMasuk() {
   const url = `${BASE_URL}bayar/list/jenis/anggaran`;
   formValues.value.id_type_anggaran = 1;
   try {
-    const listJenisAnggaranMAsuk = await axios.post(url, formValues.value, {
+    const listJenisAnggaranMAsuk = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -313,7 +314,7 @@ async function addPekerjaan() {
     id: idJenisAnggaran,
   };
   try {
-    const tambahKerjaan = await axios.post(url, formValues.value, {
+    const tambahKerjaan = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -359,7 +360,7 @@ async function cariJenisAnggaran() {
   formValues.value.id = parseInt(idJenisAnggaran);
   console.log(formValues.value);
   try {
-    const updatePekerjaan = await axios.post(url, formValues.value, {
+    const updatePekerjaan = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -378,7 +379,7 @@ async function deletePekerjaan() {
   console.log(formValues.value);
 
   try {
-    const hapusPekerjaan = await axios.post(url, formValues.value, {
+    const hapusPekerjaan = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },

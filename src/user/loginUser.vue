@@ -82,6 +82,8 @@ const showToast = ref(false);
 const toastMessage = ref("");
 
 async function login() {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("refresh_token");
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const dataLogin = { email: email, password: password };
@@ -92,6 +94,9 @@ async function login() {
   });
 
   // console.log(response.data.data.level.nama);
+  const { access_token, refresh_token } = response.data;
+  localStorage.setItem("access_token", access_token);
+  localStorage.setItem("refresh_token", refresh_token);
   localStorage.setItem("level", response.data.data.level.nama);
   localStorage.setItem("email", email);
 

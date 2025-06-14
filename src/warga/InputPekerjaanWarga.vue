@@ -236,6 +236,7 @@ import ModalInputCard from "../components/ModalInputCard.vue";
 import ModalCard from "../components/ModalCard.vue";
 import router from "../router";
 import trailku from "../Trail/trail";
+import api from "../user/axios";
 
 const searchQuery = ref("");
 
@@ -264,7 +265,7 @@ async function addPekerjaan() {
   const nama_pekerjaan = document.getElementById("nama").value;
   formValues.value = { nama: nama_pekerjaan };
   try {
-    const tambahKerjaan = await axios.post(url, formValues.value, {
+    const tambahKerjaan = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -309,7 +310,7 @@ async function updatePekerjaan() {
   formValues.value.id = parseInt(formValues.value.id);
   console.log(formValues.value);
   try {
-    const updatePekerjaan = await axios.post(url, formValues.value, {
+    const updatePekerjaan = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -332,7 +333,7 @@ async function deletePekerjaan() {
   console.log(url);
 
   try {
-    const hapusPekerjaan = await axios.post(url, formValues.value, {
+    const hapusPekerjaan = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },

@@ -220,6 +220,7 @@ import ToastCard from "../components/ToastCard.vue";
 import ModalCard from "../components/ModalCard.vue";
 import trailku from "../Trail/trail";
 import ModalViewGambar from "../components/ModalViewGambar.vue";
+import api from "../user/axios";
 
 const route = useRoute();
 const showToast = ref(false);
@@ -316,7 +317,7 @@ async function deleteWarga() {
   try {
     const dataDelete = { uuid: UUIDku.value };
     const url = BASE_URL + "warga/del/warga";
-    const hapusWargaSatu = await axios.post(url, dataDelete, {
+    const hapusWargaSatu = await api.post(url, dataDelete, {
       headers: {
         "Content-Type": "application/json",
       },

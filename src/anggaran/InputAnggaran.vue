@@ -358,6 +358,7 @@
   import router from "../router";
   import { useRoute } from 'vue-router';
   import trailku from "../Trail/trail";
+  import api from "../user/axios";
   
   const searchQuery = ref("");
   const route = useRoute();
@@ -427,7 +428,7 @@
     };
     console.log(formValues.value);
     try {
-      const tambahKerjaan = await axios.post(url, formValues.value, {
+      const tambahKerjaan = await api.post(url, formValues.value, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -473,7 +474,7 @@
     formValues.value.id = parseInt(formValues.value.id);
     console.log(formValues.value);
     try {
-      const updatePekerjaan = await axios.post(url, formValues.value, {
+      const updatePekerjaan = await api.post(url, formValues.value, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -492,7 +493,7 @@
     console.log(formValues.value);
   
     try {
-      const hapusPekerjaan = await axios.post(url, formValues.value, {
+      const hapusPekerjaan = await api.post(url, formValues.value, {
         headers: {
           "Content-Type": "application/json",
         },

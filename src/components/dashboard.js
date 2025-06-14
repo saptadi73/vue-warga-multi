@@ -1,6 +1,9 @@
 import axios from "axios";
 import { BASE_URL } from "../base.url.utils";
 import { ref } from "vue";
+import api from "../user/axios"
+import trailku from "../Trail/trail";
+
 
 const jmlWargaSetorBulan = ref(0);
 const listWargaSetorBulan = ref([]);
@@ -86,12 +89,14 @@ async function getListPemasukanBulan() {
       tanggal_awal: tanggal_awal,
     };
     console.log("hasil formvalue yang benar :", formValues.value);
-    const listSetorAnggaran = await axios.post(url, formValues.value, {
+    const listSetorAnggaran = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
     });
     listPemasukanLainBulan.value = listSetorAnggaran.data.result;
+    const trail = trailku(listPemasukanLainBulan.value);
+          console.log(trail);
     console.log(
       " Hasil Laporan Setoran Anggaran : ",
       listPemasukanLainBulan.value
@@ -142,7 +147,7 @@ async function getListPengeluaranBulan() {
       tanggal_awal: tanggal_awal,
     };
     console.log("hasil formvalue yang benar :", formValues.value);
-    const listSetorAnggaran = await axios.post(url, formValues.value, {
+    const listSetorAnggaran = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -152,6 +157,8 @@ async function getListPengeluaranBulan() {
       " Hasil Laporan Setoran Anggaran : ",
       listPengeluaranBulan.value
     );
+    const trail = trailku(listPengeluaranBulan.value);
+          console.log(trail);
   } catch (error) {
     console.log(error);
   }

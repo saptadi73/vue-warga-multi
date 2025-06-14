@@ -138,6 +138,7 @@ const ModalMessage = ref("");
 const fileError = ref("");
 const maxFileSize = 500 * 1024; // 500KB
 const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+import api from "../user/axios";
 
 onMounted(() => {
   nama_keluarga.value = decodeURIComponent(route.params.nama);
@@ -206,7 +207,7 @@ async function uploadFile() {
   console.log(formDataku);
 
   try {
-    const uploadBukti = await axios.post(url, formDataku, {
+    const uploadBukti = await api.post(url, formDataku, {
       Headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -262,7 +263,7 @@ async function unlinkFoto() {
   try {
     const url = `${BASE_URL}warga/delete/fotokk/`;
 
-    const unlinkFile = await axios.post(url, dataImageku, {
+    const unlinkFile = await api.post(url, dataImageku, {
       headers: {
         "Content-Type": "application/json",
       },

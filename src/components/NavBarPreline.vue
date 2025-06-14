@@ -107,7 +107,18 @@
 </template>
 
 <script>
-export default {};
+import { ref } from 'vue';
+
+const acces_token=ref("");
+const refresh_token=ref("");
+const email=ref("");
+const level=ref("");
+
+export default {
+  methods: {
+    
+  }
+};
 </script>
 
 <style lang="scss" scoped></style>

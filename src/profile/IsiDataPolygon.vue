@@ -113,6 +113,7 @@ import { BASE_URL } from "../base.url.utils";
 import ToastCard from "../components/ToastCard.vue";
 import ModalCard from "../components/ModalCard.vue";
 import trailku from "../Trail/trail";
+import api from "../user/axios";
 
 const formValues = ref({ latitude: null, longitude: null });
 const showToast = ref(false);
@@ -167,7 +168,7 @@ const cekMap = () => {
 
 const tambahTitikPolygon = async () => {
   const url = BASE_URL + "profile/new/polygon";
-  await axios.post(url, formValues.value, {
+  await api.post(url, formValues.value, {
     headers: { "Content-Type": "application/json" },
   });
   messageToast.value = "Titik berhasil ditambahkan";

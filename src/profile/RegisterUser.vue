@@ -742,6 +742,8 @@ import { BASE_URL } from "../base.url.utils";
 import { BASE_URL2 } from "../base.url2.utils";
 import ModalCard from "../components/ModalCard.vue";
 import trailku from "../Trail/trail";
+import api from "../user/axios";
+
 
 const showToast = ref(false);
 const toastMessage = ref("");
@@ -780,7 +782,7 @@ async function registerUser() {
       id_level: id_level,
     };
     const Url = BASE_URL + "auth/signup";
-    const regUser = await axios.post(Url, data, {
+    const regUser = await api.post(Url, data, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -827,7 +829,7 @@ async function getUserLevel() {
 async function deleteUser() {
   try {
     const Url = BASE_URL + "user/delete/user";
-    const delUser = await axios.post(Url, uuidku.value, {
+    const delUser = await api.post(Url, uuidku.value, {
       headers: {
         "Content-Type": "application/json",
       },

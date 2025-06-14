@@ -468,6 +468,7 @@ import router from "../router";
 import { useRoute } from "vue-router";
 import ModalViewGambar from "../components/ModalViewGambar.vue";
 import trailku from "../Trail/trail";
+import api from "../user/axios";
 
 const searchQuery = ref("");
 const route = useRoute();
@@ -532,7 +533,7 @@ async function listJenisAnggaran() {
     const type = document.getElementById("type").value;
     const url = `${BASE_URL}bayar/list/jenis/anggaran`;
     formValues.value.id_type_anggaran = parseInt(type);
-    const daftarJenisAnggaran = await axios.post(url, formValues.value, {
+    const daftarJenisAnggaran = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -549,7 +550,7 @@ async function listJenisAnggaranCari() {
     const type = document.getElementById("type_cari").value;
     const url = `${BASE_URL}bayar/list/jenis/anggaran`;
     formValues.value.id_type_anggaran = parseInt(type);
-    const daftarJenisAnggaran = await axios.post(url, formValues.value, {
+    const daftarJenisAnggaran = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -594,7 +595,7 @@ async function sekarangTable() {
       tanggal_awal: tanggal_awal,
     };
     console.log("isi FormValues :", formValues.value);
-    const listSetorAnggaran = await axios.post(url, formValues.value, {
+    const listSetorAnggaran = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -637,7 +638,7 @@ async function listSetoranAnggaran() {
       tanggal_awal: tanggal_awal,
     };
     console.log("hasil formvalue yang benar :", formValues.value);
-    const listSetorAnggaran = await axios.post(url, formValues.value, {
+    const listSetorAnggaran = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -669,7 +670,7 @@ async function addSetorAnggaran() {
       nilai: parseInt(nilai),
       tanggal: tanggal,
     };
-    const addAnggaran = await axios.post(url, formValues.value, {
+    const addAnggaran = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -688,7 +689,7 @@ async function addSetorAnggaran() {
 async function delSetoranAnggaran() {
   const url = `${BASE_URL}bayar/del/setor/anggaran`;
   try {
-    const delAnggaran = await axios.post(url, formValues.value, {
+    const delAnggaran = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },

@@ -281,6 +281,7 @@ import TabelBlokWarga from "./TabelBlokWarga.vue";
 import ModalInputCard from "../components/ModalInputCard.vue";
 import { error } from "jquery";
 import trailku from "../Trail/trail";
+import api from "../user/axios";
 
 export default {
   components: {
@@ -409,7 +410,8 @@ export default {
 
       // console.log("Form Data",this.formValuesRumah);
 
-      await axios
+      console.log("access_token-nya : ",localStorage.getItem("access_token"));
+      await api
         .post(url, this.formValuesRumah, {
           headers: {
             "Content-Type": "application/json",
@@ -488,6 +490,7 @@ export default {
           this.$refs.status_warga.value = this.hasilFindKK.id_status_warga;
 
           console.log("hasil find warga: ", this.hasilFindKK);
+          console.log("access_token-nya : ",localStorage.getItem("access_token"));
         })
         .catch((error) => {
           console.log(error);
