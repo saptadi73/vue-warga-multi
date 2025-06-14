@@ -281,6 +281,7 @@ import TabelBlokWarga from "./TabelBlokWarga.vue";
 import ModalInputCard from "../components/ModalInputCard.vue";
 import { error } from "jquery";
 import trailku from "../Trail/trail";
+import api from "../user/axios";
 
 export default {
   components: {
@@ -393,7 +394,7 @@ export default {
 
       // console.log("Form Data",this.formValuesRumah);
 
-      await axios
+      await api
         .post(url, this.formValuesRumah, {
           headers: {
             "Content-Type": "application/json",

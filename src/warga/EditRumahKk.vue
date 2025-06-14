@@ -203,7 +203,7 @@ export default {
     async addBlok() {
       const url = BASE_URL + "warga/add/blok";
       // console.log(this.formValuesBlok);
-      await axios
+      await api
         .post(url, this.formValuesBlok, {
           headers: {
             "Content-Type": "application/json",
@@ -323,7 +323,7 @@ export default {
       console.log("hasil FormValuesRumah: ", this.formValuesRumah);
 
       if (this.blokValue) {
-        await axios
+        await api
           .post(url, this.formValuesRumah, {
             headers: {
               "Content-Type": "application/json",

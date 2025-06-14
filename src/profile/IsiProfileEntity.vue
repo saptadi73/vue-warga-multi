@@ -210,6 +210,8 @@ import { ref } from "vue";
 import ModalCard from "../components/ModalCard.vue";
 import { error } from "jquery";
 import trailku from "../Trail/trail";
+import api from "../user/axios";
+
 
 export default {
   components: {
@@ -240,7 +242,7 @@ export default {
   methods: {
     async getProvinsi() {
       const url = BASE_URL + "profile/provinsi";
-      await axios.get(url).then((response) => {
+      await api.get(url).then((response) => {
         this.provinsi = response.data;
         console.log(this.provinsi);
       });
@@ -255,7 +257,7 @@ export default {
       this.kode_provinsi = document.getElementById("provinsi").value;
       console.log(this.kode_provinsi);
       this.formValues.kode = this.kode_provinsi;
-      await axios
+      await api
         .post(url, this.formValues, {
           headers: {
             "Content-Type": "application/json",
@@ -272,7 +274,7 @@ export default {
       this.kode_kabupaten = document.getElementById("kabupaten").value;
       console.log(this.kode_kabupaten);
       this.formValues.kode = this.kode_kabupaten;
-      await axios
+      await api
         .post(url, this.formValues, {
           headers: {
             "Content-Type": "application/json",
@@ -289,7 +291,7 @@ export default {
       this.kode_kecamatan = document.getElementById("kecamatan").value;
       console.log(this.kode_kecamatan);
       this.formValues.kode = this.kode_kecamatan;
-      await axios
+      await api
         .post(url, this.formValues, {
           headers: {
             "Content-Type": "application/json",
@@ -328,7 +330,7 @@ export default {
         this.formValues.dusun = document.getElementById("dusun").value;
         this.formValues.rt = parseInt(document.getElementById("rt").value);
         this.formValues.rw = parseInt(document.getElementById("rw").value);
-        await axios
+        await api
           .post(url, this.formValues, {
             headers: {
               "Content-Type": "application/json",

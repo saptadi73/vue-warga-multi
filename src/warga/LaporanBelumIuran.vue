@@ -142,6 +142,7 @@
 import axios from "axios";
 import { ref } from "vue";
 import { BASE_URL } from "../base.url.utils";
+import api from "../user/axios";
 
 export default {
   components: {},
@@ -218,7 +219,7 @@ export default {
 
       // console.log("Form Data",this.formValuesRumah);
 
-      await axios
+      await api
         .post(url, this.formValues, {
           headers: {
             "Content-Type": "application/json",
