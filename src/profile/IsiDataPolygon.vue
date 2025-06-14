@@ -36,14 +36,12 @@
               />
               <span
                 @click="getLocation"
+                title="Get Location Now"
                 class="material-icons shadow-sm p-2 cursor-pointer text-white bg-slate-700 rounded-e-lg"
               >
                 location_on
               </span>
-              <i
-                @click="cekMap"
-                class="lni lni-check-square-2 text-lg p-2 bg-slate-100 shadow-sm cursor-pointer"
-              ></i>
+              
             </div>
           </div>
         </div>
@@ -146,23 +144,9 @@ const getLocation = () => {
       L.marker([formValues.value.latitude, formValues.value.longitude], {
         draggable: true,
       }).addTo(map.value);
-      messageToast.value = "Lokasi berhasil diperoleh";
-      showToast.value = true;
+      
+      
     });
-  }
-};
-
-const cekMap = () => {
-  if (formValues.value.latitude && formValues.value.longitude) {
-    map.value.setView(
-      [formValues.value.latitude, formValues.value.longitude],
-      18
-    );
-    L.marker([formValues.value.latitude, formValues.value.longitude], {
-      draggable: true,
-    }).addTo(map.value);
-    messageToast.value = "Cek lokasi berhasil";
-    showToast.value = true;
   }
 };
 
