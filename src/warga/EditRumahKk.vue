@@ -101,7 +101,7 @@
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
         >
           <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-            Last updated 5 mins ago
+            Update Data Rumah Keluarga
           </p>
         </div>
       </div>
@@ -113,7 +113,7 @@
       >
         <div class="p-4 md:p-5">
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-            Card title
+            Table Wilayah Blok Keluarga
           </h3>
           <div>
             <TabelBlokWarga />
