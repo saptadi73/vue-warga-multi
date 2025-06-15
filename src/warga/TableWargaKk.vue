@@ -209,6 +209,7 @@
       v-on:cancelButton="tutupModalGambar"
       v-on:closeButton="tutupModalGambar"
     />
+    <LoadingOverlay/>
 </template>
 
 <script setup>
@@ -221,6 +222,9 @@ import ModalCard from "../components/ModalCard.vue";
 import trailku from "../Trail/trail";
 import ModalViewGambar from "../components/ModalViewGambar.vue";
 import api from "../user/axios";
+import { useLoadingStore } from "../stores/loading";
+import LoadingOverlay from "../components/LoadingOverlay.vue";
+const loadingStore = useLoadingStore();
 
 const route = useRoute();
 const showToast = ref(false);
@@ -238,6 +242,7 @@ const searchQuery = ref("");
 const users = ref([]);
 
 onMounted(async () => {
+  loadingStore.show();
   try {
     const uuid = route.params.id;
     const url = BASE_URL + "warga/list/warga/" + uuid;
@@ -246,6 +251,8 @@ onMounted(async () => {
     console.log("hasil list KK", users.value);
   } catch (error) {
     console.error("Error fetching users:", error);
+  }finally{
+    loadingStore.hide();
   }
 });
 

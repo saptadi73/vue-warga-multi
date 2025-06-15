@@ -1,8 +1,19 @@
 <template>
   <div>
-    <div class="p-5 w-[90vw]">
-      <div class="mt-2 mb-2 ml-10 text-lg font-bold text-slate-500">
-        <span>Daftar Kepala Keluarga</span>
+    <div class="p-5 w-[80vw]">
+      <div class="flex justify-between">
+        <div class="mt-2 mb-2 ml-10 text-lg font-bold text-slate-500">
+          <span>Daftar Kepala Keluarga</span>
+        </div>
+        <div>
+          <a href="/warga/daftar/kk"
+            ><span
+              class="material-icons text-black w-16 h-16"
+              title="Kanban View"
+              >grid_view</span
+            ></a
+          >
+        </div>
       </div>
 
       <div id="hs-datatable-filter mt-5" class="flex flex-col">
@@ -38,6 +49,7 @@
                 </svg>
               </div>
             </div>
+            <div></div>
           </div>
 
           <div class="flex-1 flex items-center justify-end space-x-2">
@@ -130,7 +142,8 @@
                       {{ user.warga[0].no_hp }}
                     </td>
                     <td class="p-2 text-end text-sm font-medium">
-                      <RouterLink title="Tambah Anggota Keluarga"
+                      <RouterLink
+                        title="Tambah Anggota Keluarga"
                         :to="`/warga/tambah/warga/${user.warga[0].uuid}/${user.uuid}`"
                         type="button"
                         class="text-blue-600 hover:text-blue-800"
@@ -140,14 +153,16 @@
                           >diversity_1</span
                         >
                       </RouterLink>
-                      <RouterLink title="Edit Warga"
+                      <RouterLink
+                        title="Edit Warga"
                         :to="`/warga/edit/warga/${user.warga[0].uuid}/${user.uuid}`"
                         type="button"
                         class="ml-4 text-blue-600 hover:text-blue-800"
                       >
                         <span class="material-icons text-blue-700">person</span>
                       </RouterLink>
-                      <RouterLink title="Edit KK"
+                      <RouterLink
+                        title="Edit KK"
                         :to="`/warga/edit/kk/${user.warga[0].uuid}/${user.uuid}`"
                         type="button"
                         class="ml-4 text-blue-600 hover:text-blue-800"
@@ -156,7 +171,8 @@
                           >doorbell</span
                         >
                       </RouterLink>
-                      <RouterLink title="View List Anggota"
+                      <RouterLink
+                        title="View List Anggota"
                         :to="`/warga/list/warga/kk/${user.uuid}`"
                         type="button"
                         class="ml-4 text-blue-600 hover:text-blue-800"
@@ -165,7 +181,8 @@
                           >family_restroom</span
                         >
                       </RouterLink>
-                      <RouterLink  title="Upload KK Image"
+                      <RouterLink
+                        title="Upload KK Image"
                         :to="`/warga/upload/fotokk/${
                           user.id
                         }/${encodeURIComponent(user.warga[0].nama)}`"
@@ -173,17 +190,26 @@
                           >upload_file</span
                         ></RouterLink
                       >
-                      <button v-if="user.filekeluarga && user.filekeluarga.url" @click="viewGambar(user.filekeluarga.url)" class="ml-2" title="View KK Image">
-                            <span class="material-icons text-blue-600">visibility</span>
-                          </button>
+                      <button
+                        v-if="user.filekeluarga && user.filekeluarga.url"
+                        @click="viewGambar(user.filekeluarga.url)"
+                        class="ml-2"
+                        title="View KK Image"
+                      >
+                        <span class="material-icons text-blue-600"
+                          >visibility</span
+                        >
+                      </button>
                       <RouterLink
-                        :to="`/warga/del/kk/${user.warga[0].uuid}/${user.uuid}`" title="Delete KK"
+                        :to="`/warga/del/kk/${user.warga[0].uuid}/${user.uuid}`"
+                        title="Delete KK"
                         ><span class="material-icons text-blue-600 p-4"
                           >delete</span
                         ></RouterLink
                       >
                     </td>
                   </tr>
+                  
                 </tbody>
               </table>
             </div>
@@ -220,16 +246,22 @@
       v-on:cancelButton="tutupModalGambar"
       v-on:closeButton="tutupModalGambar"
     />
+    <LoadingOverlay/>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import axios from "axios";
+
 import { BASE_URL } from "../base.url.utils";
 import ToastCard from "../components/ToastCard.vue";
 import ModalInputCard from "../components/ModalInputCard.vue";
 import ModalViewGambar from "../components/ModalViewGambar.vue";
+import { useLoadingStore } from "../stores/loading";
+import LoadingOverlay from "../components/LoadingOverlay.vue";
+
+const loadingStore = useLoadingStore();
 
 const showToast = ref(false);
 const showModal = ref(false);
@@ -240,18 +272,20 @@ const showModalGambar = ref(false);
 const ModalTitleGambar = ref("");
 const viewGambarku = ref("");
 
-
 const searchQuery = ref("");
 const url = BASE_URL + "warga/list/kk";
 const users = ref([]);
 
 onMounted(async () => {
+  loadingStore.show();
   try {
     const response = await axios.get(url);
     users.value = response.data.result;
     console.log("hasil list KK", users.value);
   } catch (error) {
     console.error("Error fetching users:", error);
+  } finally {
+    loadingStore.hide();
   }
 });
 
@@ -261,7 +295,9 @@ const filteredUsers = computed(() => {
   }
   return users.value.filter(
     (user) =>
-      user.warga[0].nama.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      user.warga[0].nama
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
       user.no_kk.toString().includes(searchQuery.value) ||
       user.blok.blok.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
       user.no_rumah.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
@@ -273,6 +309,7 @@ function handleSearch() {
   // This function is called on input event to filter users.
   // It's already handled by the computed property `filteredUsers`.
 }
+
 
 function tutupModal() {
   showModal.value = false;

@@ -111,7 +111,7 @@ export default {
             },
             {
               name: "Daftar KK",
-              path: "/warga/list/kk",
+              path: "/warga/daftar/kk",
             },
             {
               name: "Isi Jenis Pekerjaan",
