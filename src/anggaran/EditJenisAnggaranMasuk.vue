@@ -256,6 +256,7 @@
       v-on:cancelButton="tutupModal"
       v-on:closeButton="tutupModal"
     />
+    <LoadingOverlay/>
   </div>
 </template>
 
@@ -271,6 +272,10 @@ import router from "../router";
 import { useRoute } from "vue-router";
 import trailku from "../Trail/trail";
 import api from "../user/axios";
+import { useLoadingStore } from '../stores/loading'
+import LoadingOverlay from "../components/LoadingOverlay.vue";
+
+const loadingStore = useLoadingStore()
 
 const searchQuery = ref("");
 
@@ -291,6 +296,7 @@ const route = useRoute();
 async function getJenisAnggaranMasuk() {
   const url = `${BASE_URL}bayar/list/jenis/anggaran`;
   formValues.value.id_type_anggaran = 1;
+  loadingStore.show()
   try {
     const listJenisAnggaranMAsuk = await api.post(url, formValues.value, {
       headers: {
@@ -299,7 +305,11 @@ async function getJenisAnggaranMasuk() {
     });
     hasilAnggaranMasuk.value = listJenisAnggaranMAsuk.data.result;
     console.log(tambahKerjaan.data.result);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }finally{
+    loadingStore.hide();
+  }
 }
 
 async function addPekerjaan() {
@@ -313,6 +323,7 @@ async function addPekerjaan() {
     keterangan: keterangan,
     id: idJenisAnggaran,
   };
+  loadingStore.show();
   try {
     const tambahKerjaan = await api.post(url, formValues.value, {
       headers: {
@@ -328,6 +339,8 @@ async function addPekerjaan() {
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;
+  } finally {
+    loadingStore.hide();
   }
 }
 
@@ -359,6 +372,7 @@ async function cariJenisAnggaran() {
   const url = `${BASE_URL}bayar/find/jenis/anggaran`;
   formValues.value.id = parseInt(idJenisAnggaran);
   console.log(formValues.value);
+  loadingStore.show();
   try {
     const updatePekerjaan = await api.post(url, formValues.value, {
       headers: {
@@ -371,6 +385,8 @@ async function cariJenisAnggaran() {
     console.log(updatePekerjaan.data.result);
   } catch (error) {
     console.log(error);
+  } finally {
+    loadingStore.hide();
   }
 }
 async function deletePekerjaan() {

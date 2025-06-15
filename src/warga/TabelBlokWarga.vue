@@ -254,6 +254,7 @@
       v-on:closeButton="tutupModalGambar"
     />
   </div>
+  <LoadingOverlay/>
 </template>
 
 <script setup>
@@ -263,6 +264,10 @@ import { BASE_URL } from "../base.url.utils";
 import { RouterLink } from "vue-router";
 import trailku from "../Trail/trail";
 import ModalViewGambar from "../components/ModalViewGambar.vue";
+import { useLoadingStore } from '../stores/loading'
+import LoadingOverlay from "../components/LoadingOverlay.vue";
+
+const loadingStore = useLoadingStore()
 
 const searchQuery = ref("");
 const url = BASE_URL + "warga/list/kk";
@@ -273,6 +278,8 @@ const ModalTitleGambar = ref("");
 const viewGambarku = ref("");
 
 onMounted(async () => {
+
+  loadingStore.show();
   try {
     const response = await axios.get(url);
     // Make sure the data is properly structured before assigning
@@ -299,6 +306,8 @@ onMounted(async () => {
     }
   } catch (error) {
     console.error("Error fetching users:", error);
+  }finally{
+    loadingStore.hide();
   }
 });
 

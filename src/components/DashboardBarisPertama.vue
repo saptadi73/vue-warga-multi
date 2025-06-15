@@ -114,6 +114,7 @@
         </div>
       </div>
     </div>
+    <LoadingOverlay/>
   </div>
 </template>
 
@@ -125,8 +126,11 @@ import { ref, onMounted } from "vue";
 import L, { Draggable } from "leaflet";
 import { event } from "jquery";
 import { polygon } from "leaflet";
+import { useLoadingStore } from '../stores/loading'
+import LoadingOverlay from "./LoadingOverlay.vue";
 
 export default {
+  components: {LoadingOverlay},
   data() {
     return {
       provinsi: null,
@@ -172,6 +176,7 @@ export default {
     },
 
     async getDataPolygon() {
+      this.loadingStore.show();
       try {
         const url = BASE_URL + "profile/polygon";
         const response = await axios.get(url);
@@ -220,6 +225,8 @@ export default {
         // this.result = result; // Assign it if needed
       } catch (error) {
         console.error("Error fetching data:", error);
+      }finally{
+        this.loadingStore.hide();
       }
     },
 
@@ -240,6 +247,7 @@ export default {
     const latlng = ref();
     const mapContainer = ref();
     const polygonku = ref();
+    const loadingStore = useLoadingStore()
 
     onMounted(() => {
       map.value = L.map(mapContainer.value).setView([51.505, -0.09], 13);
@@ -257,6 +265,7 @@ export default {
       mapContainer,
       latlng,
       polygonku,
+      loadingStore,
     };
   },
 };

@@ -137,6 +137,7 @@
         class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
       ></div>
     </div>
+    <LoadingOverlay/>
   </div>
 </template>
 
@@ -145,9 +146,12 @@ import axios from "axios";
 import { ref } from "vue";
 import { BASE_URL } from "../base.url.utils";
 import api from "../user/axios";
+import { useLoadingStore } from '../stores/loading'
+import LoadingOverlay from "../components/LoadingOverlay.vue";
+import LoadingOverlay from "../components/LoadingOverlay.vue";
 
 export default {
-  components: {},
+  components: {LoadingOverlay},
   data() {
     return {
       formValues: {},
@@ -157,7 +161,8 @@ export default {
   },
 
   setup() {
-    return {};
+    const loadingStore = useLoadingStore()
+    return {loadingStore};;
   },
 
   methods: {
@@ -220,7 +225,7 @@ export default {
       this.formValues.jenis_iuran = parseInt(this.$refs.jenis_iuran.value);
 
       // console.log("Form Data",this.formValuesRumah);
-
+      this.loadingStore.show();
       await api
         .post(url, this.formValues, {
           headers: {
@@ -235,6 +240,8 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+        }).finally(()=>{
+          this.loadingStore.hide();
         });
     },
   },
