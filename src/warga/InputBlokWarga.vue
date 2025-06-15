@@ -383,7 +383,7 @@ export default {
   methods: {
     async addBlok() {
       const url = BASE_URL + "warga/add/blok";
-      // console.log(this.formValuesBlok);
+      // // console.log(this.formValuesBlok);
       this.loadingStore.show();
       await api
         .post(url, this.formValuesBlok, {
@@ -396,8 +396,8 @@ export default {
           this.showToast = true;
           this.toastMessage = "Blok Berhasil Ditambahkan";
           const trail = trailku(this.toastMessage);
-          console.log(trail);
-          console.log("Tambah Blok Rumah:", this.tambahBlok);
+          // console.log(trail);
+          // console.log("Tambah Blok Rumah:", this.tambahBlok);
           this.daftarBlok();
         })
         .catch((error) => {
@@ -416,7 +416,7 @@ export default {
         .get(url)
         .then((response) => {
           this.hasilBlok = response.data.result;
-          console.log("Daftar Blok Rumah:", this.hasilBlok);
+          // console.log("Daftar Blok Rumah:", this.hasilBlok);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -433,7 +433,7 @@ export default {
         .get(url)
         .then((response) => {
           this.hasilStatus = response.data.result;
-          console.log("Status Warga:", this.hasilStatus);
+          // console.log("Status Warga:", this.hasilStatus);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -446,10 +446,10 @@ export default {
         .get(url)
         .then((response) => {
           this.hasilPekerjaan = response.data.result;
-          console.log("Pekerjaan Warga:", this.hasilPekerjaan);
+          // console.log("Pekerjaan Warga:", this.hasilPekerjaan);
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     },
 
@@ -470,7 +470,7 @@ export default {
         this.$refs.tanggal_lahir.value + " 00:00:00";
       this.formValuesRumah.tempat_lahir = this.$refs.tempat_lahir.value;
 
-      console.log("Form Data",this.formValuesRumah);
+      // console.log("Form Data",this.formValuesRumah);
 
       await api
         .post(url, this.formValuesRumah, {
@@ -483,15 +483,15 @@ export default {
           this.showToast = true;
           this.toastMessage = response.data.message;
           const trail = trailku(this.toastMessage);
-          console.log(trail);
+          // console.log(trail);
           
-          console.log('Data Respon Tambah Warga',response.data);
+          // console.log('Data Respon Tambah Warga',response.data);
         })
         .catch((error) => {
           this.showToast = true;
           this.toastMessage = "Data Kepala Keluarga Gagal Ditambahkan";
 
-          console.log('Error gagal tambah warga',error);
+          // console.log('Error gagal tambah warga',error);
         });
     },
 
@@ -512,7 +512,7 @@ export default {
     async updateBlok() {
       const url = BASE_URL + "warga/edit/blok";
       this.formValuesRumah.blok = this.blokValue;
-      console.log("hasil FormValuesRumah: ", this.formValuesRumah);
+      // console.log("hasil FormValuesRumah: ", this.formValuesRumah);
 
       if (this.blokValue) {
         await api
@@ -525,7 +525,7 @@ export default {
             this.showToast = true;
             this.toastMessage = response.data.message;
             const trail = trailku(this.toastMessage);
-            console.log(trail);
+            // console.log(trail);
           })
           .catch((error) => {
             this.showToast = true;

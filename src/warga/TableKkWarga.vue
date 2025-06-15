@@ -281,7 +281,7 @@ onMounted(async () => {
   try {
     const response = await axios.get(url);
     users.value = response.data.result;
-    console.log("hasil list KK", users.value);
+    // console.log("hasil list KK", users.value);
   } catch (error) {
     console.error("Error fetching users:", error);
   } finally {
@@ -326,7 +326,7 @@ function bukaModal(idku, blok) {
 }
 
 function viewGambar(url) {
-  console.log("View Gambar called with URL:", url);
+  // console.log("View Gambar called with URL:", url);
   try {
     if (!url) {
       throw new Error("URL is undefined");
@@ -334,7 +334,7 @@ function viewGambar(url) {
     showModalGambar.value = true;
     ModalTitleGambar.value = "Foto KK";
     viewGambarku.value = `${BASE_URL}uploads/${url}`;
-    console.log("Full image URL:", viewGambarku.value);
+    // console.log("Full image URL:", viewGambarku.value);
   } catch (error) {
     console.error("Error in viewGambar:", error);
   }

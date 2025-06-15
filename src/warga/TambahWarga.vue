@@ -363,7 +363,7 @@ export default {
         .get(url)
         .then((response) => {
           this.hasilStatus = response.data.result;
-          console.log("Status Warga:", this.hasilStatus);
+          // console.log("Status Warga:", this.hasilStatus);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -376,10 +376,10 @@ export default {
         .get(url)
         .then((response) => {
           this.hasilPekerjaan = response.data.result;
-          console.log("Pekerjaan Warga:", this.hasilPekerjaan);
+          // console.log("Pekerjaan Warga:", this.hasilPekerjaan);
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     },
 
@@ -399,7 +399,7 @@ export default {
         this.$refs.tanggal_lahir.value + " 00:00:00";
       this.formValuesRumah.tempat_lahir = this.$refs.tempat_lahir.value;
 
-      // console.log("Form Data",this.formValuesRumah);
+      // // console.log("Form Data",this.formValuesRumah);
       this.loadingStore.show();
       await api
         .post(url, this.formValuesRumah, {
@@ -412,13 +412,13 @@ export default {
           this.showToast = true;
           this.toastMessage = this.tambahKK.message;
           const trail = trailku(this.toastMessage);
-          console.log(trail);
-          console.log(response.data);
+          // console.log(trail);
+          // console.log(response.data);
         })
         .catch((error) => {
           this.showToast = true;
           this.toastMessage = this.tambahKK.message;
-          console.log(error);
+          // console.log(error);
         }).finally(() => {
           this.loadingStore.hide();
         });
@@ -434,10 +434,10 @@ export default {
         .get(url)
         .then((response) => {
           this.hasilType = response.data.result;
-          console.log("daftar ype anggota: ", this.hasilType);
+          // console.log("daftar ype anggota: ", this.hasilType);
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     },
 
@@ -453,7 +453,7 @@ export default {
       const uuidkk = this.$route.params.nik;
       const url = BASE_URL + "warga/find/warga/" + uuidkk;
 
-      // console.log('uuid :', uuidkk)
+      // // console.log('uuid :', uuidkk)
 
       await axios
         .get(url)
@@ -465,13 +465,13 @@ export default {
           this.idKK = this.hasilFindKK.id_kk;
           this.idBlok = this.hasilFindKK.kk.blok.id;
 
-          console.log(
+          // console.log(
             "hasil find warga: ",
             this.hasilFindKK + " idkk:" + this.idKK
           );
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     },
 
@@ -482,12 +482,12 @@ export default {
         .get(url)
         .then((response) => {
           this.hasilWargaPerKK = response.data.result;
-          console.log(" Hasil warga per KK", this.hasilWargaPerKK);
-          console.log("id_kk", this.hasilWargaPerKK[0].kk.id);
+          // console.log(" Hasil warga per KK", this.hasilWargaPerKK);
+          // console.log("id_kk", this.hasilWargaPerKK[0].kk.id);
           this.idKK = this.hasilWargaPerKK[0].kk.id;
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     },
   },

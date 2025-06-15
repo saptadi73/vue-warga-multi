@@ -304,9 +304,9 @@ async function getJenisAnggaranMasuk() {
       },
     });
     hasilAnggaranMasuk.value = listJenisAnggaranMAsuk.data.result;
-    console.log(tambahKerjaan.data.result);
+    // console.log(tambahKerjaan.data.result);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }finally{
     loadingStore.hide();
   }
@@ -333,9 +333,9 @@ async function addPekerjaan() {
     showToast.value = true;
     toastMessage.value = tambahKerjaan.data.message;
     const trail = await trailku(tambahKerjaan.data.message);
-    console.log(trail);
+    // console.log(trail);
     router.push({ path: router.path, force: true });
-    console.log(tambahKerjaan);
+    // console.log(tambahKerjaan);
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;
@@ -371,7 +371,7 @@ async function cariJenisAnggaran() {
   const idJenisAnggaran = parseInt(route.params.id);
   const url = `${BASE_URL}bayar/find/jenis/anggaran`;
   formValues.value.id = parseInt(idJenisAnggaran);
-  console.log(formValues.value);
+  // console.log(formValues.value);
   loadingStore.show();
   try {
     const updatePekerjaan = await api.post(url, formValues.value, {
@@ -382,9 +382,9 @@ async function cariJenisAnggaran() {
     const hasilJenisAnggaran = updatePekerjaan.data.result;
     document.getElementById("nama").value = hasilJenisAnggaran.nama;
     document.getElementById("keterangan").value = hasilJenisAnggaran.keterangan;
-    console.log(updatePekerjaan.data.result);
+    // console.log(updatePekerjaan.data.result);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   } finally {
     loadingStore.hide();
   }
@@ -392,7 +392,7 @@ async function cariJenisAnggaran() {
 async function deletePekerjaan() {
   const url = `${BASE_URL}bayar/delete/jenis/anggaran`;
   formValues.value.id = parseInt(formValues.value.id);
-  console.log(formValues.value);
+  // console.log(formValues.value);
 
   try {
     const hapusPekerjaan = await api.post(url, formValues.value, {

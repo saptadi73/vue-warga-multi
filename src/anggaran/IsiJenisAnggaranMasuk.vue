@@ -298,7 +298,7 @@ async function getJenisAnggaranMasuk() {
       },
     });
     hasilAnggaranMasuk.value = listJenisAnggaranMAsuk.data.result;
-    console.log(tambahKerjaan.data.result);
+    // console.log(tambahKerjaan.data.result);
   } catch (error) {}
 }
 
@@ -320,9 +320,9 @@ async function addPekerjaan() {
     showToast.value = true;
     toastMessage.value = tambahKerjaan.data.message;
     const trail = await trailku(toastMessage.value);
-    console.log(trail);
+    // console.log(trail);
     router.push({ path: router.path, force: true });
-    console.log(tambahKerjaan);
+    // console.log(tambahKerjaan);
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;
@@ -356,7 +356,7 @@ async function updatePekerjaan() {
   const url = `${BASE_URL}bayar/create/pekerjaan`;
   formValues.value.nama = pekerjaanValue.value;
   formValues.value.id = parseInt(formValues.value.id);
-  console.log(formValues.value);
+  // console.log(formValues.value);
   try {
     const updatePekerjaan = await api.post(url, formValues.value, {
       headers: {
@@ -374,7 +374,7 @@ async function updatePekerjaan() {
 async function deletePekerjaan() {
   const url = `${BASE_URL}bayar/delete/jenis/anggaran`;
   formValues.value.id = parseInt(formValues.value.id);
-  console.log(formValues.value);
+  // console.log(formValues.value);
 
   try {
     const hapusPekerjaan = await api.post(url, formValues.value, {

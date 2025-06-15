@@ -284,7 +284,7 @@ async function getDataLaporan() {
     TotalPemasukanBulanIni.value = totalPemasukanlain + iuranBulanIni.value;
 
     pengeluaranBulanIni.value = response.data.result?.PengeluaranBulanIni;
-    console.log("Laporan RT :", totalPemasukanlain);
+    // console.log("Laporan RT :", totalPemasukanlain);
 
     const totalPengeluaran = pengeluaranBulanIni.value.reduce((acc, item) => {
       return acc + parseInt(item.pengeluaran || 0);
@@ -296,7 +296,7 @@ async function getDataLaporan() {
       TotalPemasukanBulanIni.value -
       TotalPengeluaranBulanIni.value;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   } finally {
     loadingStore.hide();
   }

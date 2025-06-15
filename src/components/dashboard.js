@@ -24,9 +24,9 @@ async function getWargaSetorBulan() {
     const response = await axios.get(`${BASE_URL}bayar/daftar/setor`);
     const data = response.data.data;
     listWargaSetorBulan.value = data;
-    console.log("warga setor iuran bulan ini : ", data);
+    // console.log("warga setor iuran bulan ini : ", data);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
   return listWargaSetorBulan.value;
 }
@@ -36,9 +36,9 @@ async function getJmlSetoranBulan() {
     const response = await axios.get(`${BASE_URL}bayar/iuran/bulanan`);
     const data = response.data.data[0].jumlah;
     jmlSetoranIuranBulan.value = data;
-    // console.log("Jumlah setor iuran bulan ini : ", data);
+    // // console.log("Jumlah setor iuran bulan ini : ", data);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
   return jmlSetoranIuranBulan.value;
 }
@@ -54,9 +54,9 @@ async function getListKK() {
     const response = await axios.get(`${BASE_URL}warga/list/kk`);
     const data = response.data.result;
     listKK.value = data;
-    console.log("list KK : ", data);
+    // console.log("list KK : ", data);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
   return listKK.value;
 }
@@ -88,7 +88,7 @@ async function getListPemasukanBulan() {
       tanggal_akhir: tanggal_akhir,
       tanggal_awal: tanggal_awal,
     };
-    console.log("hasil formvalue yang benar :", formValues.value);
+    // console.log("hasil formvalue yang benar :", formValues.value);
     const listSetorAnggaran = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
@@ -96,13 +96,13 @@ async function getListPemasukanBulan() {
     });
     listPemasukanLainBulan.value = listSetorAnggaran.data.result;
     const trail = trailku(listPemasukanLainBulan.value);
-          console.log(trail);
-    console.log(
+          // console.log(trail);
+    // console.log(
       " Hasil Laporan Setoran Anggaran : ",
       listPemasukanLainBulan.value
     );
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
   return listPemasukanLainBulan.value;
 }
@@ -112,9 +112,9 @@ async function getjmlPemasukanLainBulan() {
     const response = await axios.get(`${BASE_URL}bayar/masuk/bulanan`);
     const data = response.data.data[0].jumlah;
     jmlPemasukanLainBulan.value = data;
-    console.log("jumlah pemasukan bulan ini : ", data);
+    // console.log("jumlah pemasukan bulan ini : ", data);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
   return jmlPemasukanLainBulan.value;
 }
@@ -146,21 +146,21 @@ async function getListPengeluaranBulan() {
       tanggal_akhir: tanggal_akhir,
       tanggal_awal: tanggal_awal,
     };
-    console.log("hasil formvalue yang benar :", formValues.value);
+    // console.log("hasil formvalue yang benar :", formValues.value);
     const listSetorAnggaran = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
     });
     listPengeluaranBulan.value = listSetorAnggaran.data.result;
-    console.log(
+    // console.log(
       " Hasil Laporan Setoran Anggaran : ",
       listPengeluaranBulan.value
     );
     const trail = trailku(listPengeluaranBulan.value);
-          console.log(trail);
+          // console.log(trail);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
   return listPengeluaranBulan.value;
 }
@@ -170,9 +170,9 @@ async function getJmlPengeluaranBulan() {
     const response = await axios.get(`${BASE_URL}bayar/keluar/bulanan`);
     const data = response.data.data[0].jumlah;
     jmlPengeluaranBulan.value = data;
-    console.log("jumlah pengeluaran bulan ini : ", data);
+    // console.log("jumlah pengeluaran bulan ini : ", data);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
   return jmlPengeluaranBulan.value;
 }

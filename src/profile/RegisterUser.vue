@@ -770,7 +770,7 @@ onMounted(async () => {
 
 function getDataLocal() {
   const levelnya = localStorage.getItem("level");
-  console.log(levelnya);
+  // console.log(levelnya);
 }
 
 async function registerUser() {
@@ -796,12 +796,12 @@ async function registerUser() {
           "Content-Type": "application/json",
         },
       });
-      console.log("Data yang dikirim :", dataku);
-      console.log("response server :", regUser.data);
+      // console.log("Data yang dikirim :", dataku);
+      // console.log("response server :", regUser.data);
       showToast.value = true;
       toastMessage.value = regUser.data.message;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       showToast.value = true;
       toastMessage.value = error;
     }
@@ -818,9 +818,9 @@ async function getUserList() {
     const Url = BASE_URL + "user/list/user";
     const daftarUser = await axios.get(Url);
     daftarUserKu.value = daftarUser.data.result;
-    console.log(daftarUserKu.value);
+    // console.log(daftarUserKu.value);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
 
@@ -829,9 +829,9 @@ async function getUserLevel() {
     const Url = BASE_URL + "user/daftar/level/user";
     const daftarUserLevel = await axios.get(Url);
     daftarUserLevelku.value = daftarUserLevel.data.result;
-    console.log(daftarUserLevelku.value);
+    // console.log(daftarUserLevelku.value);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
 
@@ -847,7 +847,7 @@ async function deleteUser() {
       showToast.value = true;
       toastMessage.value = "User berhasil dihapus";
       const trail = await trailku(toastMessage.value);
-      console.log(trail);
+      // console.log(trail);
       showModal.value = false;
     } else {
       showToast.value = true;
@@ -875,8 +875,8 @@ function bukaModal(uuid, email) {
 async function getLocalStorage() {
   const data = localStorage.getItem("access_token");
   const level = localStorage.getItem("level");
-  console.log("access_token :", data);
-  console.log("level :", level);
+  // console.log("access_token :", data);
+  // console.log("level :", level);
 }
 
 async function aktivasi(link) {

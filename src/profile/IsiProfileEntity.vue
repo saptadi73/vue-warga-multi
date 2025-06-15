@@ -244,7 +244,7 @@ export default {
       const url = BASE_URL + "profile/provinsi";
       await api.get(url).then((response) => {
         this.provinsi = response.data;
-        console.log(this.provinsi);
+        // console.log(this.provinsi);
       });
     },
 
@@ -255,7 +255,7 @@ export default {
     async getKabupaten() {
       const url = BASE_URL + "profile/kabupaten";
       this.kode_provinsi = document.getElementById("provinsi").value;
-      console.log(this.kode_provinsi);
+      // console.log(this.kode_provinsi);
       this.formValues.kode = this.kode_provinsi;
       await api
         .post(url, this.formValues, {
@@ -265,14 +265,14 @@ export default {
         })
         .then((response) => {
           this.kabupaten = response.data;
-          console.log(this.kabupaten);
+          // console.log(this.kabupaten);
         });
     },
 
     async getKecamatan() {
       const url = BASE_URL + "profile/kecamatan";
       this.kode_kabupaten = document.getElementById("kabupaten").value;
-      console.log(this.kode_kabupaten);
+      // console.log(this.kode_kabupaten);
       this.formValues.kode = this.kode_kabupaten;
       await api
         .post(url, this.formValues, {
@@ -282,14 +282,14 @@ export default {
         })
         .then((response) => {
           this.kecamatan = response.data;
-          console.log(this.kecamatan);
+          // console.log(this.kecamatan);
         });
     },
 
     async getDesa() {
       const url = BASE_URL + "profile/desa";
       this.kode_kecamatan = document.getElementById("kecamatan").value;
-      console.log(this.kode_kecamatan);
+      // console.log(this.kode_kecamatan);
       this.formValues.kode = this.kode_kecamatan;
       await api
         .post(url, this.formValues, {
@@ -299,7 +299,7 @@ export default {
         })
         .then((response) => {
           this.desa = response.data;
-          console.log(this.desa);
+          // console.log(this.desa);
         });
     },
 
@@ -338,19 +338,19 @@ export default {
           })
           .then((response) => {
             this.isiProfile = response.data;
-            console.log(this.isiProfile);
+            // console.log(this.isiProfile);
             this.showToast = true;
             this.message_toastku = this.isiProfile.message;
             const trail = trailku(this.message_toastku);
-            console.log(trail);
+            // console.log(trail);
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
             this.showToast = true;
             this.message_toastku = error;
           });
       } else {
-        console.log("payah");
+        // console.log("payah");
         this.showToast = true;
         this.message_toastku = error;
       }
@@ -364,7 +364,7 @@ export default {
           .get(url)
           .then((response) => {
             this.hasilCariProfile = response.data.result;
-            console.log("hasilCek Profile: ", this.hasilCariProfile);
+            // console.log("hasilCek Profile: ", this.hasilCariProfile);
 
             if (this.hasilCariProfile) {
               this.showToast = true;
@@ -375,7 +375,7 @@ export default {
             }
           })
           .error((error) => {
-            console.log(error);
+            // console.log(error);
             (this.showToast = true), (this.message_toastku = error);
           });
       } catch (error) {}
@@ -391,7 +391,7 @@ export default {
             this.showToast = true;
             this.message_toastku = response.data.message;
             const trail = trailku(this.message_toastku);
-            console.log(trail);
+            // console.log(trail);
             this.tombolPilih = true;
           })
           .error((error) => {

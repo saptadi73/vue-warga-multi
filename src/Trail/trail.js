@@ -5,7 +5,7 @@ const trailku = async (activity) => {
   const email = localStorage.getItem("email");
   const url = `${BASE_URL}trail/write`;
   const datanya = { email, activity };
-  console.log('datanya trail',datanya);
+  // console.log('datanya trail',datanya);
 
   try {
     const response = await axios.post(url, datanya, {

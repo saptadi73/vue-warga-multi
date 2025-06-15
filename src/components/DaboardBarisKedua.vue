@@ -140,9 +140,9 @@ async function getJumlahLakiLaki() {
     try {
         const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/warga/lk`);
         jumlahLakiLaki.value = jmlLK.data?.result?._count?.id;
-        console.log("Data Jumlah Laki-laki :",jumlahLakiLaki.value);
+        // console.log("Data Jumlah Laki-laki :",jumlahLakiLaki.value);
     } catch (error) {
-        console.log("Error Jumlah Laki-laki :", error);
+        // console.log("Error Jumlah Laki-laki :", error);
     }finally{
       loadingStore.hide();
     }
@@ -153,9 +153,9 @@ async function getJumlahAll() {
   try {
         const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/warga/all`);
         jumlahTotal.value = jmlLK.data?.result?._count?.id;
-        console.log("Data Jumlah Warga :",jumlahTotal.value);
+        // console.log("Data Jumlah Warga :",jumlahTotal.value);
     } catch (error) {
-        console.log("Error Jumlah Warga :", error);
+        // console.log("Error Jumlah Warga :", error);
     }finally{
       loadingStore.hide();
     }
@@ -166,9 +166,9 @@ async function getJumlahWanita() {
     try {
         const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/warga/pr`);
         jumlahPerempuan.value = jmlLK.data?.result?._count?.id;
-        console.log("Data Jumlah Perempuan :",jumlahPerempuan.value);
+        // console.log("Data Jumlah Perempuan :",jumlahPerempuan.value);
     } catch (error) {
-        console.log("Error Jumlah Perempuan :", error);
+        // console.log("Error Jumlah Perempuan :", error);
     }finally{
       loadingStore.hide();
     }
@@ -179,9 +179,9 @@ async function getJumlahKk() {
     try {
         const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/kk/all`);
         jumlahKk.value = jmlLK.data?.result?._count?.id;
-        console.log("Data Jumlah KK :",jumlahKk.value);
+        // console.log("Data Jumlah KK :",jumlahKk.value);
     } catch (error) {
-        console.log("Error Jumlah KK :", error);
+        // console.log("Error Jumlah KK :", error);
     }finally{
       loadingStore.hide();
     }

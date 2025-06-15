@@ -248,7 +248,7 @@ onMounted(async () => {
     const url = BASE_URL + "warga/list/warga/" + uuid;
     const response = await axios.get(url);
     users.value = response.data.result;
-    console.log("hasil list KK", users.value);
+    // console.log("hasil list KK", users.value);
   } catch (error) {
     console.error("Error fetching users:", error);
   }finally{
@@ -329,11 +329,11 @@ async function deleteWarga() {
         "Content-Type": "application/json",
       },
     });
-    console.log(hapusWargaSatu.data);
+    // console.log(hapusWargaSatu.data);
     showToast.value = true;
     toastMessage.value = hapusWargaSatu.data.message;
     await trailku(toastMessage.value);
-    console.log('datakirim :', dataDelete);
+    // console.log('datakirim :', dataDelete);
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;
@@ -341,7 +341,7 @@ async function deleteWarga() {
 }
 
 function viewGambar(url) {
-  console.log("View Gambar called with URL:", url);
+  // console.log("View Gambar called with URL:", url);
   try {
     if (!url) {
       throw new Error("URL is undefined");
@@ -349,7 +349,7 @@ function viewGambar(url) {
     showModalGambar.value = true;
     ModalTitleGambar.value = "Foto Warga";
     viewGambarku.value = `${BASE_URL}uploads/${url}`;
-    console.log("Full image URL:", viewGambarku.value);
+    // console.log("Full image URL:", viewGambarku.value);
   } catch (error) {
     console.error("Error in viewGambar:", error);
   }
