@@ -179,6 +179,7 @@
                           <RouterLink
                             :to="`/warga/tambah/warga/${user.warga[0].uuid}/${user.uuid}`"
                             type="button"
+                            title="Tambah Anggota Keluarga"
                             class="text-blue-600 hover:text-blue-800"
                           >
                             +
@@ -189,6 +190,7 @@
                           <RouterLink
                             :to="`/warga/edit/warga/${user.warga[0].uuid}/${user.uuid}`"
                             type="button"
+                            title="Edit Data Warga"
                             class="ml-4 text-blue-600 hover:text-blue-800"
                           >
                             <span class="material-icons text-blue-700"
@@ -198,6 +200,7 @@
                           <RouterLink
                             :to="`/warga/edit/kk/${user.warga[0].uuid}/${user.uuid}`"
                             type="button"
+                            title="Edit Data Keluarga/Rumah"
                             class="ml-4 text-blue-600 hover:text-blue-800"
                           >
                             <span class="material-icons text-blue-700"
@@ -205,6 +208,7 @@
                             >
                           </RouterLink>
                           <RouterLink
+                          title="Upload Foto KK"
                             :to="`/warga/upload/fotokk/${
                               user.id
                             }/${encodeURIComponent(user.warga[0].nama)}`"
@@ -216,6 +220,7 @@
                             <span class="material-icons text-blue-600">visibility</span>
                           </button>
                           <RouterLink
+                          title="Delete Data Keluarga"
                             :to="`/warga/del/kk/${user.warga[0].uuid}/${user.uuid}`"
                             ><span class="material-icons text-blue-600 p-4"
                               >delete</span
