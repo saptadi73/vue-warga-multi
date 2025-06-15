@@ -268,6 +268,7 @@
       v-model:modelValue="blokValue"
     />
   </div>
+  <LoadingOverlay/>
 </template>
 
 <script>
@@ -282,6 +283,9 @@ import ModalInputCard from "../components/ModalInputCard.vue";
 import { error } from "jquery";
 import trailku from "../Trail/trail";
 import api from "../user/axios";
+import { useLoadingStore } from "../stores/loading";
+import LoadingOverlay from "../components/LoadingOverlay.vue";
+
 
 export default {
   components: {
@@ -290,6 +294,7 @@ export default {
     TableKkWarga,
     TabelBlokWarga,
     ModalInputCard,
+    LoadingOverlay,
   },
   data() {
     return {
@@ -318,6 +323,7 @@ export default {
     const ModalTitle = ref("");
     const blokValue = ref("");
     const noBlok = ref(null);
+    const loadingStore = useLoadingStore();
     return {
       showToast,
       toastMessage,
@@ -326,6 +332,7 @@ export default {
       ModalTitle,
       blokValue,
       noBlok,
+      loadingStore
     };
   },
 
@@ -411,6 +418,7 @@ export default {
       // console.log("Form Data",this.formValuesRumah);
 
       console.log("access_token-nya : ",localStorage.getItem("access_token"));
+      this.loadingStore.show();
       await api
         .post(url, this.formValuesRumah, {
           headers: {
@@ -429,6 +437,8 @@ export default {
           this.showToast = true;
           this.toastMessage = this.tambahKK.message;
           console.log(error);
+        }).finally(() => {
+          this.loadingStore.hide();
         });
     },
 

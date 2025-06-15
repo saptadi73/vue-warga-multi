@@ -105,6 +105,7 @@
       v-on:cancelButton="tutupModal"
       v-on:closeButton="tutupModal"
     />
+    <LoadingOverlay/>
   </div>
 </template>
 
@@ -118,6 +119,11 @@ import { useRoute } from "vue-router";
 import ToastCard from "../components/ToastCard.vue";
 import trailku from "../Trail/trail";
 import ModalCard from "../components/ModalCard.vue";
+import { useLoadingStore } from "../stores/loading";
+import LoadingOverlay from "../components/LoadingOverlay.vue";
+import api from "../user/axios";
+
+const loadingStore = useLoadingStore();
 
 const hasilUpload = ref([]);
 const formValues = ref({});
@@ -138,7 +144,7 @@ const ModalMessage = ref("");
 const fileError = ref("");
 const maxFileSize = 500 * 1024; // 500KB
 const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-import api from "../user/axios";
+
 
 onMounted(() => {
   nama_keluarga.value = decodeURIComponent(route.params.nama);
@@ -206,6 +212,7 @@ async function uploadFile() {
   formDataku.append("nama", "bukti foto KK");
   console.log(formDataku);
 
+  loadingStore.show();
   try {
     const uploadBukti = await api.post(url, formDataku, {
       Headers: {
@@ -220,6 +227,8 @@ async function uploadFile() {
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;
+  }finally{
+    loadingStore.hide();
   }
 }
 
@@ -260,6 +269,7 @@ async function unlinkFoto() {
   const dataImageku = { url: imagekita.value };
   console.log("Data Image", dataImageku);
 
+  loadingStore.show();
   try {
     const url = `${BASE_URL}warga/delete/fotokk/`;
 
@@ -274,6 +284,8 @@ async function unlinkFoto() {
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;
+  }finally{
+    loadingStore.hide();
   }
 }
 
