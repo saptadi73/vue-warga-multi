@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p-5 w-[90vw]">
+    <div class="p-5 w-[80vw]">
       <div class="mt-2 mb-2 ml-10 text-lg font-bold text-slate-500">
         <span>Daftar Anggota Keluarga</span>
       </div>

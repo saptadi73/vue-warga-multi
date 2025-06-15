@@ -195,6 +195,7 @@
           </tr>
         </tbody>
       </table>
+      <LoadingOverlay/>
     </div>
     <!-- Button to generate PDF -->
     <button
@@ -220,6 +221,10 @@ import { useRoute } from "vue-router";
 import { BASE_URL } from "../base.url.utils";
 import html2pdf from 'html2pdf.js';
 import html2canvas from 'html2canvas';
+import { useLoadingStore } from "../stores/loading";
+import LoadingOverlay from "../components/LoadingOverlay.vue";
+const loadingStore = useLoadingStore();
+
 
 const captureArea = ref(null);
 
@@ -256,6 +261,7 @@ const year = today.getFullYear();
 const formattedDate = `${day}-${month}-${year}`;
 
 async function getDataLaporan() {
+  loadingStore.show();
   try {
     const response = await axios.get(`${BASE_URL}bayar/laporan/rt`);
     iuranBulanLalu.value = parseInt(response.data.result?.IuranBulanLalu);
@@ -291,6 +297,8 @@ async function getDataLaporan() {
       TotalPengeluaranBulanIni.value;
   } catch (error) {
     console.log(error);
+  } finally {
+    loadingStore.hide();
   }
 }
 

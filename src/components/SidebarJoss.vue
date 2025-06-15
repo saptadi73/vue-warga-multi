@@ -20,7 +20,7 @@
       <div
         class="flex items-center bg-gradient-to-r from-purple-200 to-white rounded-r-lg space-x-2"
       >
-        <img src="../assets/logo_rukun.png" class="w-10 h-10 animate-spin" />
+        <img src="../assets/logo_rukun.png" class="w-10 h-10" />
         <h1 v-if="isiSidebar" class="font-Poppins ml-5 text-xl">
           <span class="font-semibold text-[#ca13c5]">WARGA</span
           ><span class="font-semibold text-[#2b94f1]">RTRW</span>

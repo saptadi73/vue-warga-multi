@@ -109,6 +109,7 @@
         </div>
       </div>
     </div>
+    <LoadingOverlay/>
   </div>
 </template>
 
@@ -117,6 +118,10 @@ import axios from "axios";
 import { onMounted, computed } from "vue";
 import { ref } from "vue";
 import { BASE_URL } from "../base.url.utils";
+import { useLoadingStore } from "../stores/loading";
+import LoadingOverlay from "../components/LoadingOverlay.vue";
+
+const loadingStore = useLoadingStore();
 
 const jumlahLakiLaki = ref(null);
 const jumlahPerempuan = ref(null);
@@ -131,42 +136,54 @@ onMounted(() => {
 });
 
 async function getJumlahLakiLaki() {
+  loadingStore.show();
     try {
         const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/warga/lk`);
         jumlahLakiLaki.value = jmlLK.data?.result?._count?.id;
         console.log("Data Jumlah Laki-laki :",jumlahLakiLaki.value);
     } catch (error) {
         console.log("Error Jumlah Laki-laki :", error);
+    }finally{
+      loadingStore.hide();
     }
 }
 
 async function getJumlahAll() {
-    try {
+  loadingStore.show();  
+  try {
         const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/warga/all`);
         jumlahTotal.value = jmlLK.data?.result?._count?.id;
         console.log("Data Jumlah Warga :",jumlahTotal.value);
     } catch (error) {
         console.log("Error Jumlah Warga :", error);
+    }finally{
+      loadingStore.hide();
     }
 }
 
 async function getJumlahWanita() {
+  loadingStore.show();
     try {
         const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/warga/pr`);
         jumlahPerempuan.value = jmlLK.data?.result?._count?.id;
         console.log("Data Jumlah Perempuan :",jumlahPerempuan.value);
     } catch (error) {
         console.log("Error Jumlah Perempuan :", error);
+    }finally{
+      loadingStore.hide();
     }
 }
 
 async function getJumlahKk() {
+  loadingStore.show();
     try {
         const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/kk/all`);
         jumlahKk.value = jmlLK.data?.result?._count?.id;
         console.log("Data Jumlah KK :",jumlahKk.value);
     } catch (error) {
         console.log("Error Jumlah KK :", error);
+    }finally{
+      loadingStore.hide();
     }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[90vw]">
+    <div class="w-[80vw]">
       <div
         class="flex p-5 flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70"
       >

@@ -2,7 +2,7 @@
     <div>
         <!-- <SidebarJoss/> -->
         <div
-            class="grid w-[90vw] p-5 md:grid-cols-2 md:gap-4 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+            class="grid w-[80vw] p-5 md:grid-cols-2 md:gap-4 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
             <!-- start Card  -->
             <div id="card1" class="">
                 <h3 class="text-lg font-bold text-gray-800 dark:text-white">

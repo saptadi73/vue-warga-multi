@@ -31,6 +31,7 @@
     <div>
       <PieDonutChart/>
     </div>
+    <LoadingOverlay/>
   </div>
 </template>
 
@@ -43,6 +44,10 @@ import { ref } from "vue";
 import { BASE_URL } from "../base.url.utils";
 import PieDonutChart from "./PieDonutChart.vue";
 import KeuanganLineChart from "./KeuanganLineChart.vue";
+import { useLoadingStore } from "../stores/loading";
+import LoadingOverlay from "../components/LoadingOverlay.vue";
+
+
 
 
 export default {
@@ -50,7 +55,8 @@ export default {
     MetricCard,
     ProgressChart,
     PieDonutChart,
-    KeuanganLineChart
+    KeuanganLineChart,
+    LoadingOverlay,
   },
   data() {
     return {
@@ -68,6 +74,7 @@ export default {
 
   methods: {
     async getTotalKabeh() {
+      this.loadingStore.show();
       try {
         const TotalKabehane = await axios.get(`${BASE_URL}bayar/total/total`);
         console.log("total kabehane :", TotalKabehane.data);
@@ -84,6 +91,8 @@ export default {
         this.saldo = this.formatRupiah(saldoku);
       } catch (error) {
         console.log(error);
+      }finally{
+        this.loadingStore.hide();
       }
     },
 
@@ -104,6 +113,10 @@ export default {
   created() {
     this.getTotalKabeh();
   },
+  setup() {
+    const loadingStore = useLoadingStore();
+    return {loadingStore}
+  }
 };
 </script>
 

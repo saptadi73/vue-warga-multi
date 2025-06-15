@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="grid w-[90vw] p-5 md:grid-cols-2 md:gap-4 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70"
+      class="grid w-[80vw] p-5 md:grid-cols-2 md:gap-4 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70"
     >
       <!-- start Card2  -->
       <div id="card2" class="">
@@ -147,7 +147,6 @@ import { ref } from "vue";
 import { BASE_URL } from "../base.url.utils";
 import api from "../user/axios";
 import { useLoadingStore } from '../stores/loading'
-import LoadingOverlay from "../components/LoadingOverlay.vue";
 import LoadingOverlay from "../components/LoadingOverlay.vue";
 
 export default {
