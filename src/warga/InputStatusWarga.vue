@@ -272,7 +272,7 @@ async function getJenisPekerjaan() {
   const url = `${BASE_URL}warga/list/status`;
   const listJenisPekerjaan = await axios.get(url);
   hasilPekerjaan.value = listJenisPekerjaan.data.result;
-  // console.log(hasilPekerjaan.value);
+  console.log(hasilPekerjaan.value);
 }
 
 async function addPekerjaan() {
@@ -288,9 +288,9 @@ async function addPekerjaan() {
     showToast.value = true;
     toastMessage.value = tambahKerjaan.data.message;
     const trail = await trailku(toastMessage.value);
-    // console.log(trail);
+    console.log(trail);
     router.push("/warga/input/status");
-    // console.log(tambahKerjaan);
+    console.log(tambahKerjaan);
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;
@@ -324,7 +324,7 @@ async function updatePekerjaan() {
   const url = `${BASE_URL}warga/update/status`;
   formValues.value.status = pekerjaanValue.value;
   formValues.value.id = parseInt(formValues.value.id);
-  // console.log(formValues.value);
+  console.log(formValues.value);
   try {
     const updatePekerjaan = await api.post(url, formValues.value, {
       headers: {
@@ -334,7 +334,7 @@ async function updatePekerjaan() {
     showToast.value = true;
     toastMessage.value = updatePekerjaan.data.message;
     const trail = await trailku(toastMessage.value);
-    // console.log(trail);
+    console.log(trail);
     showModalInputCard.value = false;
   } catch (error) {
     showToast.value = true;
@@ -344,7 +344,7 @@ async function updatePekerjaan() {
 async function deletePekerjaan() {
   const url = `${BASE_URL}warga/hapus/status`;
   formValues.value.id = parseInt(formValues.value.id);
-  // console.log(url);
+  console.log(url);
 
   try {
     const hapusPekerjaan = await api.post(url, formValues.value, {
@@ -356,7 +356,7 @@ async function deletePekerjaan() {
     showToast.value = true;
     toastMessage.value = hapusPekerjaan.data.message;
     const trail = await trailku(toastMessage.value);
-    // console.log('hasil', trail);
+    console.log('hasil', trail);
   } catch (error) {
     showModal.value = false;
     showToast.value = true;

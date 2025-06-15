@@ -77,7 +77,7 @@ export default {
       this.loadingStore.show();
       try {
         const TotalKabehane = await axios.get(`${BASE_URL}bayar/total/total`);
-        // console.log("total kabehane :", TotalKabehane.data);
+        console.log("total kabehane :", TotalKabehane.data);
         const totalIuranku = parseInt(TotalKabehane.data.totalIuranKabeh);
         const totalPemasukanku = parseInt(TotalKabehane.data.totalMasukKabeh);
         const totalPengeluaranku = parseInt(
@@ -90,7 +90,7 @@ export default {
         this.totalPengeluaran = this.formatRupiah(totalPengeluaranku);
         this.saldo = this.formatRupiah(saldoku);
       } catch (error) {
-        // console.log(error);
+        console.log(error);
       }finally{
         this.loadingStore.hide();
       }

@@ -309,7 +309,7 @@ async function getJenisPekerjaan() {
   const url = `${BASE_URL}bayar/list/iuran`;
   const listJenisPekerjaan = await axios.get(url);
   hasilPekerjaan.value = listJenisPekerjaan.data.result;
-  // console.log(hasilPekerjaan.value);
+  console.log(hasilPekerjaan.value);
 }
 
 async function addPekerjaan() {
@@ -333,9 +333,9 @@ async function addPekerjaan() {
     showToast.value = true;
     toastMessage.value = tambahKerjaan.data.message;
     const trail = await trailku(toastMessage.value);
-    // console.log(trail);
+    console.log(trail);
     router.push("/iuran/input/jenis");
-    // console.log(tambahKerjaan);
+    console.log(tambahKerjaan);
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;
@@ -369,14 +369,14 @@ async function cariIuran() {
   const idIuran = route.params.id;
   const url = `${BASE_URL}bayar/find/iuran`;
   formValues.value.id = parseInt(idIuran);
-  // console.log(formValues.value);
+  console.log(formValues.value);
   try {
     const updatePekerjaan = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-    // console.log(updatePekerjaan.data);
+    console.log(updatePekerjaan.data);
     document.getElementById("nama").value = updatePekerjaan.data.result.nama;
     document.getElementById("iuran").value = parseInt(
       updatePekerjaan.data.result.iuran
@@ -384,13 +384,13 @@ async function cariIuran() {
     document.getElementById("keterangan").value =
       updatePekerjaan.data.result.keterangan;
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 async function deletePekerjaan() {
   const url = `${BASE_URL}bayar/delete/iuran`;
   formValues.value.id = parseInt(formValues.value.id);
-  // console.log(url);
+  console.log(url);
 
   try {
     const hapusPekerjaan = await api.post(url, formValues.value, {
@@ -402,7 +402,7 @@ async function deletePekerjaan() {
     showToast.value = true;
     toastMessage.value = hapusPekerjaan.data.message;
     const trail = await trailku(toastMessage.value);
-    // console.log(trail);
+    console.log(trail);
   } catch (error) {
     showModal.value = false;
     showToast.value = true;

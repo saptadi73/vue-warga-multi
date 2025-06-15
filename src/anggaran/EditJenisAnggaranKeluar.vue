@@ -282,7 +282,7 @@
         },
       });
       hasilAnggaranMasuk.value = listJenisAnggaranMAsuk.data.result;
-      // console.log(tambahKerjaan.data.result)
+      console.log(tambahKerjaan.data.result)
     } catch (error) {
       
     }
@@ -303,9 +303,9 @@
       showToast.value = true;
       toastMessage.value = tambahKerjaan.data.message;
       router.push({path: router.path, force: true});
-      // console.log(tambahKerjaan);
+      console.log(tambahKerjaan);
       const trail = await trailku('add pekerjaan');
-      // console.log(trail);
+      console.log(trail);
     } catch (error) {
       showToast.value = true;
       toastMessage.value = error;
@@ -338,7 +338,7 @@
     const idJenisAnggaran = parseInt(route.params.id);
     const url = `${BASE_URL}bayar/find/jenis/anggaran`;
     formValues.value.id = parseInt(idJenisAnggaran);
-    // console.log(formValues.value);
+    console.log(formValues.value);
     try {
       const updatePekerjaan = await api.post(url, formValues.value, {
         headers: {
@@ -348,9 +348,9 @@
       const hasilJenisAnggaran = updatePekerjaan.data.result;
       document.getElementById('nama').value = hasilJenisAnggaran.nama;
       document.getElementById('keterangan').value = hasilJenisAnggaran.keterangan;
-      // console.log(updatePekerjaan.data.result)
+      console.log(updatePekerjaan.data.result)
     } catch (error) {
-      // console.log(error)
+      console.log(error)
     }
   
   
@@ -358,7 +358,7 @@
   async function deletePekerjaan() {
     const url = `${BASE_URL}bayar/delete/jenis/anggaran`;
     formValues.value.id = parseInt(formValues.value.id);
-    // console.log(formValues.value);
+    console.log(formValues.value);
   
     try {
       const hapusPekerjaan = await api.post(url, formValues.value, {
@@ -370,7 +370,7 @@
       showToast.value = true;
       toastMessage.value = hapusPekerjaan.data.message;
       const trail = await trailku(hapusPekerjaan.data.message);
-      // console.log(trail);
+      console.log(trail);
     } catch (error) {
       showModal.value = false;
       showToast.value = true;

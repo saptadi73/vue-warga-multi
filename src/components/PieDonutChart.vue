@@ -124,7 +124,7 @@ const pieData = ref({
 async function getTotalKabeh() {
   try {
     const TotalKabehane = await axios.get(`${BASE_URL}bayar/total/total`);
-    // console.log("total kabehane :", TotalKabehane.data);
+    console.log("total kabehane :", TotalKabehane.data);
 
     const totalIuran = parseInt(TotalKabehane.data.totalIuranKabeh);
     const totalPemasukanLain = parseInt(TotalKabehane.data.totalMasukKabeh);
@@ -139,16 +139,16 @@ async function getTotalKabeh() {
         },
       ],
     };
-    // console.log("donutdata :",donutData.value);
+    console.log("donutdata :",donutData.value);
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
 async function getGroupKeluar() {
   try {
     const TotalKabehane = await axios.get(`${BASE_URL}bayar/keluar/group`);
-    // console.log("total keluaran :", TotalKabehane.data.result);
+    console.log("total keluaran :", TotalKabehane.data.result);
 
     const PengeluaranLabels = TotalKabehane.data.result.map(item=>item.nama);
     const valuePengeluaran = TotalKabehane.data.result.map(item=>item.total);
@@ -163,9 +163,9 @@ async function getGroupKeluar() {
         },
       ],
     };
-    // console.log("piedata :",pieData.value);
+    console.log("piedata :",pieData.value);
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 

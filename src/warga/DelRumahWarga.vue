@@ -73,22 +73,22 @@ export default {
             .get(url)
             .then((response) => {
               this.hasilDelWargaKK = response.data;
-              // console.log("hasil Del All Warga KK", this.hasilDelWargaKK);
+              console.log("hasil Del All Warga KK", this.hasilDelWargaKK);
               this.showToast = true;
               this.toastMessage =
                 this.hasilDelKK.message + this.hasilDelWargaKK;
               const trail = trailku(this.toastMessage);
-              // console.log(trail);
+              console.log(trail);
               this.$router.push("/dashboard");
             })
             .catch((error) => {
-              // console.log(error);
+              console.log(error);
               this.showToast = true;
               this.toastMessage = error;
             });
         })
         .catch((error) => {
-          // console.log(error);
+          console.log(error);
           this.showToast = true;
           this.toastMessage = error;
         });
@@ -111,7 +111,7 @@ export default {
         .get(url)
         .then((response) => {
           this.hasilFindKK = response.data.result;
-          // console.log(this.hasilFindKK);
+          console.log(this.hasilFindKK);
           this.namaKK = this.hasilFindKK.warga[0].nama;
           this.id_kk = this.hasilFindKK.id;
           this.namaBlok = this.hasilFindKK.blok.blok;
@@ -127,7 +127,7 @@ export default {
           this.titleModal = "Penghapusan data Rumah Keluarga";
         })
         .catch((error) => {
-          // console.log(error);
+          console.log(error);
           this.showModal = true;
           this.messageModal = error;
         });

@@ -210,7 +210,7 @@ export default {
         .get(url)
         .then((response) => {
           this.hasilJenisIuran = response.data.result;
-          // console.log("Hasil Jenis Iuran:", this.hasilJenisIuran);
+          console.log("Hasil Jenis Iuran:", this.hasilJenisIuran);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -223,7 +223,7 @@ export default {
       this.formValues.bulan = parseInt(this.$refs.bulan.value);
       this.formValues.jenis_iuran = parseInt(this.$refs.jenis_iuran.value);
 
-      // // console.log("Form Data",this.formValuesRumah);
+      // console.log("Form Data",this.formValuesRumah);
       this.loadingStore.show();
       await api
         .post(url, this.formValues, {
@@ -234,11 +234,11 @@ export default {
         .then((response) => {
         //   this.hasilListBelum = response.data.result;
 
-          // console.log(response.data.result);
+          console.log(response.data.result);
           this.hasilListBelum = response.data.result;
         })
         .catch((error) => {
-          // console.log(error);
+          console.log(error);
         }).finally(()=>{
           this.loadingStore.hide();
         });

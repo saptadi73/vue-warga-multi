@@ -539,9 +539,9 @@ async function listJenisAnggaran() {
       },
     });
     hasilJenisAnggaran.value = daftarJenisAnggaran.data.result;
-    // console.log(hasilJenisAnggaran.value);
+    console.log(hasilJenisAnggaran.value);
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
@@ -556,9 +556,9 @@ async function listJenisAnggaranCari() {
       },
     });
     hasilJenisAnggaranCari.value = daftarJenisAnggaran.data.result;
-    // console.log(hasilJenisAnggaranCari.value);
+    console.log(hasilJenisAnggaranCari.value);
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
@@ -594,19 +594,19 @@ async function sekarangTable() {
       tanggal_akhir: tanggal_akhir,
       tanggal_awal: tanggal_awal,
     };
-    // console.log("isi FormValues :", formValues.value);
+    console.log("isi FormValues :", formValues.value);
     const listSetorAnggaran = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
     });
     hasilListSetorAnggaran.value = listSetorAnggaran.data.result;
-    // console.log(
+    console.log(
       " Hasil Laporan Setoran Anggaran Sekarang : ",
       hasilListSetorAnggaran.value
     );
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
@@ -615,9 +615,9 @@ async function listWarga() {
     const url = `${BASE_URL}warga/list/all`;
     const listWarga = await axios.get(url);
     hasilWarga.value = listWarga.data.result;
-    // console.log("Hasil Warga : ", hasilWarga.value);
+    console.log("Hasil Warga : ", hasilWarga.value);
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
@@ -637,19 +637,19 @@ async function listSetoranAnggaran() {
       tanggal_akhir: tanggal_akhir,
       tanggal_awal: tanggal_awal,
     };
-    // console.log("hasil formvalue yang benar :", formValues.value);
+    console.log("hasil formvalue yang benar :", formValues.value);
     const listSetorAnggaran = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
       },
     });
     hasilListSetorAnggaran.value = listSetorAnggaran.data.result;
-    // console.log(
+    console.log(
       " Hasil Laporan Setoran Anggaran : ",
       hasilListSetorAnggaran.value
     );
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
@@ -677,12 +677,12 @@ async function addSetorAnggaran() {
     });
     hasilTambahAnggaran.value = addAnggaran.data.result;
     const trail = await trailku(addAnggaran.data.message);
-    // console.log(trail);
-    // console.log("hasil Tambah Anggaran :", hasilJenisAnggaran.value);
+    console.log(trail);
+    console.log("hasil Tambah Anggaran :", hasilJenisAnggaran.value);
     showToast.value = true;
     toastMessage.value = addAnggaran.data.message;
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
@@ -696,13 +696,13 @@ async function delSetoranAnggaran() {
     });
     hasilHapusSetorAnggaran.value = delAnggaran.data.result;
     const trail = await trailku(delAnggaran.data.message);
-    // console.log(trail);
+    console.log(trail);
     showModal.value = false;
     showToast.value = true;
     toastMessage.value = delAnggaran.data.message;
-    // console.log(hasilHapusSetorAnggaran.value);
+    console.log(hasilHapusSetorAnggaran.value);
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 function formatRupiah(number) {

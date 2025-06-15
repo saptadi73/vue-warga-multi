@@ -157,7 +157,7 @@ const tambahTitikPolygon = async () => {
   });
   messageToast.value = "Titik berhasil ditambahkan";
   const trail = await trailku(messageToast.value);
-  // console.log(trail);
+  console.log(trail);
   showToast.value = true;
   await getDataPolygon();
 };
@@ -169,7 +169,7 @@ const clearDataPolygon = async () => {
   if (polygonLayer.value) map.value.removeLayer(polygonLayer.value);
   messageToast.value = "Data polygon berhasil dihapus";
   const trail = await trailku(messageToast.value);
-  // console.log(trail);
+  console.log(trail);
   showToast.value = true;
 };
 

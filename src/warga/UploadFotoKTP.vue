@@ -164,7 +164,7 @@ function pickFile(event) {
     return;
   }
 
-  // console.log(selectedFile);
+  console.log(selectedFile);
 
   // Validate file type
   if (!allowedTypes.includes(selectedFile.type)) {
@@ -208,7 +208,7 @@ async function uploadFile() {
   formDataku.append("id_warga", idAnggaran);
   formDataku.append("keterangan", keterangan);
   formDataku.append("nama", "bukti foto KTP");
-  // console.log(formDataku);
+  console.log(formDataku);
 
   loadingStore.show();
   try {
@@ -221,7 +221,7 @@ async function uploadFile() {
     showToast.value = true;
     toastMessage.value = uploadBukti.data.message;
     const trail = await trailku(toastMessage.value);
-    // console.log(trail);
+    console.log(trail);
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;
@@ -245,7 +245,7 @@ async function getImageKeluarga() {
   try {
     const id_kk = route.params.id;
     const viewPhotoKK = await axios.get(`${BASE_URL}warga/viewktp/${id_kk}`);
-    // console.log('Hasil Data awal:',viewPhotoKK.data);
+    console.log('Hasil Data awal:',viewPhotoKK.data);
     imagekita.value = viewPhotoKK.data?.result?.photo_warga?.url;
 
     if (imagekita.value) {
@@ -254,12 +254,12 @@ async function getImageKeluarga() {
       isDisabled.value = true;
       const url = `${BASE_URL}uploads/${imagekita.value}`;
       previewImage.value = url;
-      // console.log('alamat url akhir', url);
+      console.log('alamat url akhir', url);
     }else{
       ImageMessage.value="Silakan untuk memasukan file gambar dengan format jpg, jpeg, png, dan gif. Dan hanya boleh memiliki kapasitas lebih kecil dari 300 Kb. Jika melebihi silakan untuk melakukan resizing melalui editor gambar atau melalui situs kompresi gambar online di internet yang banyak tersedia.";
     }
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
@@ -267,7 +267,7 @@ async function unlinkFoto() {
   isDisabled.value = false;
   previewImage.value = "";
   const dataImageku = { url: imagekita.value };
-  // console.log("Data Image", dataImageku);
+  console.log("Data Image", dataImageku);
 
   loadingStore.show();
   try {
@@ -278,7 +278,7 @@ async function unlinkFoto() {
         "Content-Type": "application/json",
       },
     });
-    // console.log("Data Image", dataImageku);
+    console.log("Data Image", dataImageku);
     showToast.value = true;
     toastMessage.value = unlinkFile.data.message;
   } catch (error) {

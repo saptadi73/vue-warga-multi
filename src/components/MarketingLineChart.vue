@@ -117,9 +117,9 @@ async function fetchChartData() {
         }
       ]
     }
-    // console.log("data Iuran", dataMarketing);
-    // console.log("data Pemasukan", dataIncome);
-    // console.log("data Pengeluaran", dataExpense);
+    console.log("data Iuran", dataMarketing);
+    console.log("data Pemasukan", dataIncome);
+    console.log("data Pengeluaran", dataExpense);
   } catch (err) {
     console.error('Gagal mengambil data chart:', err)
   }

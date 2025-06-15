@@ -50,7 +50,7 @@
             L.marker([this.lat, this.lng], { draggable: true })
               .addTo(this.map)
               .on("dragend", (event) => {
-                // console.log(event);
+                console.log(event);
               });
           });
         }

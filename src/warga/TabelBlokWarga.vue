@@ -294,19 +294,19 @@ onMounted(async () => {
     }));
     users.value = result;
     
-    // console.log("hasil list KK", users.value);
+    console.log("hasil list KK", users.value);
     // Debug filekeluarga data
     if (users.value && users.value.length > 0) {
       currentUser.value = users.value[0];  // Store first user reactively
-      // console.log("First user data:", currentUser.value);
-      // console.log("File Keluarga type:", typeof currentUser.value.filekeluarga);
-      // console.log("File Keluarga value:", currentUser.value.filekeluarga);
+      console.log("First user data:", currentUser.value);
+      console.log("File Keluarga type:", typeof currentUser.value.filekeluarga);
+      console.log("File Keluarga value:", currentUser.value.filekeluarga);
       
       if (currentUser.value.filekeluarga) {
-        // console.log("File Keluarga properties:", Object.keys(currentUser.value.filekeluarga));
-        // console.log("Full File Keluarga Object:", JSON.stringify(currentUser.value.filekeluarga, null, 2));
+        console.log("File Keluarga properties:", Object.keys(currentUser.value.filekeluarga));
+        console.log("Full File Keluarga Object:", JSON.stringify(currentUser.value.filekeluarga, null, 2));
       } else {
-        // console.log("filekeluarga is undefined for first user");
+        console.log("filekeluarga is undefined for first user");
       }
     }
   } catch (error) {
@@ -380,7 +380,7 @@ function jk(gender) {
 }
 
 function viewGambar(url) {
-  // console.log("View Gambar called with URL:", url);
+  console.log("View Gambar called with URL:", url);
   try {
     if (!url) {
       throw new Error("URL is undefined");
@@ -388,7 +388,7 @@ function viewGambar(url) {
     showModalGambar.value = true;
     ModalTitleGambar.value = "Foto KK";
     viewGambarku.value = `${BASE_URL}uploads/${url}`;
-    // console.log("Full image URL:", viewGambarku.value);
+    console.log("Full image URL:", viewGambarku.value);
   } catch (error) {
     console.error("Error in viewGambar:", error);
   }

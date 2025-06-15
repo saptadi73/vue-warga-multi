@@ -162,18 +162,18 @@ export default {
           this.rw = this.hasilEntity.rw;
           this.rt = this.hasilEntity.rt;
           this.kode_wilayah = this.hasilEntity.kode_wilayah;
-          // console.log("hasil cek Profile: ",this.hasilEntity);
+          console.log("hasil cek Profile: ",this.hasilEntity);
         })
         .catch((error) => {
-          // console.log(error);
+          console.log(error);
         });
     },
 
     async getLocalStorage() {
       const data = localStorage.getItem('access_token');
       const level = localStorage.getItem('level');
-      // console.log('access_token :',data);
-      // console.log('level :', level);
+      console.log('access_token :',data);
+      console.log('level :', level);
     },
 
     async getDataPolygon() {
@@ -191,17 +191,17 @@ export default {
         this.dataPolygon = response.data.result;
 
         // Check the structure of `this.dataPolygon`
-        // console.log("Data received:", this.dataPolygon);
+        console.log("Data received:", this.dataPolygon);
 
         const polygonLatitude = this.dataPolygon.map(data => data.latitude);
-        // console.log("Data Map",polygonLatitude);
+        console.log("Data Map",polygonLatitude);
 
         const polygonLongitude = this.dataPolygon.map(data => data.longitude);
-        // console.log("Data Map",polygonLongitude);
+        console.log("Data Map",polygonLongitude);
 
         const polygonLengkap = polygonLatitude.map((value,index) => [value,polygonLongitude[index]]);
 
-        // console.log("Data AKhir Jos", polygonLengkap);
+        console.log("Data AKhir Jos", polygonLengkap);
 
         this.polygonku = L.polygon(polygonLengkap, { color: "red" }).addTo(
         this.map
@@ -214,7 +214,7 @@ export default {
      const area = turf.area(geoJsonPolygon);
 
      this.luas = area.toFixed(2);
-     // console.log("Area", area);
+     console.log("Area", area);
     
 
         // // Ensure `row` is an array before calling `.map()`
@@ -222,7 +222,7 @@ export default {
         //   Array.isArray(row) ? row.map((obj) => Object.values(obj)[0]) : []
         // );
 
-        // // console.log("Transformed result:", result);
+        // console.log("Transformed result:", result);
         // this.result = result; // Assign it if needed
       } catch (error) {
         console.error("Error fetching data:", error);

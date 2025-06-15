@@ -356,7 +356,7 @@ async function getJenisPekerjaan() {
   const url = `${BASE_URL}bayar/list/iuran`;
   const listJenisPekerjaan = await axios.get(url);
   hasilPekerjaan.value = listJenisPekerjaan.data.result;
-  // console.log(hasilPekerjaan.value);
+  console.log(hasilPekerjaan.value);
 }
 
 async function getIuran() {
@@ -366,9 +366,9 @@ async function getIuran() {
     const url = `${BASE_URL}bayar/list/iuran`;
     const listJenisIuran = await axios.get(url);
     hasilIuran.value = listJenisIuran.data.result;
-    // console.log(hasilIuran.value);
+    console.log(hasilIuran.value);
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
@@ -377,9 +377,9 @@ async function getIuranKK() {
     const idKK = parseInt(route.params.id);
     const listIuranKK = await axios.get(`${BASE_URL}bayar/setor/kk/${idKK}`);
     hasilIuranKK.value = listIuranKK.data.result;
-    // console.log('Laporan Iuran : ',hasilIuranKK.value);
+    console.log('Laporan Iuran : ',hasilIuranKK.value);
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
@@ -399,7 +399,7 @@ async function addPekerjaan() {
     keterangan: keterangan,
     id_kk: idKK,
   };
-  // console.log(formValues.value);
+  console.log(formValues.value);
   try {
     const tambahKerjaan = await api.post(url, formValues.value, {
       headers: {
@@ -409,10 +409,10 @@ async function addPekerjaan() {
     showToast.value = true;
     toastMessage.value = tambahKerjaan.data.message;
     const trail = await trailku(toastMessage.value);
-    // console.log(trail);
+    console.log(trail);
   
     
-    // console.log(tambahKerjaan);
+    console.log(tambahKerjaan);
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;
@@ -446,7 +446,7 @@ async function updatePekerjaan() {
   const url = `${BASE_URL}bayar/create/pekerjaan`;
   formValues.value.nama = pekerjaanValue.value;
   formValues.value.id = parseInt(formValues.value.id);
-  // console.log(formValues.value);
+  console.log(formValues.value);
   try {
     const updatePekerjaan = await api.post(url, formValues.value, {
       headers: {
@@ -456,7 +456,7 @@ async function updatePekerjaan() {
     showToast.value = true;
     toastMessage.value = updatePekerjaan.data.message;
     const trail = await trailku(toastMessage.value);
-    // console.log(trail);
+    console.log(trail);
     showModalInputCard.value = false;
   } catch (error) {
     showToast.value = true;
@@ -466,7 +466,7 @@ async function updatePekerjaan() {
 async function deleteIuranKK() {
   const url = `${BASE_URL}bayar/delete/setor`;
   formValues.value.id = parseInt(formValues.value.id);
-  // console.log(formValues.value);
+  console.log(formValues.value);
 
   try {
     const hapusPekerjaan = await api.post(url, formValues.value, {
@@ -478,7 +478,7 @@ async function deleteIuranKK() {
     showToast.value = true;
     toastMessage.value = hapusPekerjaan.data.message;
     const trail = await trailku(toastMessage.value);
-    // console.log(trail);
+    console.log(trail);
   } catch (error) {
     showModal.value = false;
     showToast.value = true;
