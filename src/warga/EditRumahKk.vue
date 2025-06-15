@@ -160,6 +160,7 @@ import ModalInputCard from "../components/ModalInputCard.vue";
 import trailku from "../Trail/trail";
 import api from "../user/axios";
 import LoadingOverlay from "../components/LoadingOverlay.vue";
+import { useLoadingStore } from "../stores/loading";
 
 export default {
   components: {
@@ -192,6 +193,7 @@ export default {
     const blokValue = ref("");
     const noBlok = ref(null);
      const loadingStore = useLoadingStore();
+
     return {
       showToast,
       toastMessage,
