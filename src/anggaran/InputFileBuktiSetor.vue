@@ -143,7 +143,7 @@ const showModal = ref(false);
 const ModalTitle = ref("");
 const ModalMessage = ref("");
 const fileError = ref("");
-const maxFileSize = 500 * 1024; // 500KB
+const maxFileSize = 300 * 1024; // 300KB
 const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
 
 onMounted(() => {
@@ -182,7 +182,7 @@ function pickFile(event) {
   // Validate file size
   if (selectedFile.size > maxFileSize) {
     const maxSizeKB = maxFileSize / 1024;
-    fileError.value = `Ukuran file terlalu besar. Maksimal ${maxSizeKB}KB.`;
+    fileError.value = `Ukuran file terlalu besar. Harus lebih kecil dari ${maxSizeKB}KB.`;
     event.target.value = ""; // Clear the input
     file.value = null;
     namaGambar.value = null;
@@ -253,7 +253,7 @@ async function getImageKeluarga() {
       previewImage.value = url;
     } else {
       ImageMessage.value =
-        "Silakan untuk memasukan file gambar dengan format jpg, jpeg, png, dan gif.";
+        "Silakan untuk memasukan file gambar dengan format jpg, jpeg, png, dan gif. Dan hanya boleh memiliki kapasitas lebih kecil dari 300 Kb. Jika melebihi silakan untuk melakukan resizing melalui editor gambar atau melalui situs kompresi gambar online di internet yang banyak tersedia.";
     }
   } catch (error) {
     console.log(error);
