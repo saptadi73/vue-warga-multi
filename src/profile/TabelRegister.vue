@@ -4,7 +4,7 @@
         class="flex p-5 flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70"
       >
         <div class="p-4 md:p-5">
-          <h3 class="text-lg font-bold text-gray-800 dark:text-white">Card title</h3>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-white">Daftar User</h3>
           <div>
             <div
               id="hs-datatable-filter"

@@ -218,7 +218,7 @@
 
         <div class="flex items-center mt-4">
           <div class="text-xs text-gray-500 ms-auto dark:text-neutral-400">
-            Showing <span>{{ filteredUsers.length }}</span> users
+            Showing <span>{{ filteredUsers.length }}</span> warga
           </div>
         </div>
       </div>
