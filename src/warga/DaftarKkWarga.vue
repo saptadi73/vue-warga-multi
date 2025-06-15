@@ -166,7 +166,7 @@
                           jumptoBayar(`${user.id}`, `${user.warga[0].nama}`)
                         "
                       ><span class="material-icons text-blue-700"
-                        >savings</span
+                        >wallet</span
                       >
                         Bayar Iuran
                       </button>
