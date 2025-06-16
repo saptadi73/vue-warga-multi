@@ -104,7 +104,7 @@
                     <tbody
                       class="divide-y divide-gray-200 dark:divide-neutral-700 text-center"
                     >
-                      <tr v-for="user in filteredUsers" :key="user.id">
+                      <tr v-for="user in filteredUsers" :key="user.id" class="even:bg-slate-100">
                         <!-- Checkbox -->
                         <td class="py-4 ps-4">
                           <div class="flex items-center h-5">

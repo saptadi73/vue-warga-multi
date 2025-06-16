@@ -76,7 +76,7 @@
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
-                    <tr v-for="(user, index) in filteredUsers" :key="user.id">
+                    <tr v-for="(user, index) in filteredUsers" :key="user.id" class="even:bg-slate-100">
                       <td class="py-3 ps-3">
                         <div class="flex items-center h-5">
                           <input
@@ -129,7 +129,7 @@
                           class="text-blue-600 hover:text-blue-800"
                           @click="jumptoBayar(`${user.id}`,`${user.warga[0].nama}`)"
                         >
-                          Bayar Iuran
+                          <span class="material-icons text-[#e52bf1] w-12 h-12">wallet</span>Bayar Iuran
                         </button>
                       </td>
                     </tr>
