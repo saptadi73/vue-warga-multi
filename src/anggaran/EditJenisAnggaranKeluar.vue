@@ -253,7 +253,7 @@
   import ModalCard from "../components/ModalCard.vue";
   import router from "../router";
   import { useRoute } from 'vue-router';
-  import { trailku } from '../Trail/trail'
+  import trailku from '../trail/trail'
   import api from "../user/axios";
   
   const searchQuery = ref("");

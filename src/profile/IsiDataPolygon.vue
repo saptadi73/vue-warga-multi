@@ -110,7 +110,7 @@ import L from "leaflet";
 import { BASE_URL } from "../base.url.utils";
 import ToastCard from "../components/ToastCard.vue";
 import ModalCard from "../components/ModalCard.vue";
-import trailku from "../Trail/trail";
+import trailku from "../trail/trail";
 import api from "../user/axios";
 
 const formValues = ref({ latitude: null, longitude: null });

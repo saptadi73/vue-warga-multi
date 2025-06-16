@@ -209,7 +209,7 @@ import ToastCard from "../components/ToastCard.vue";
 import { ref } from "vue";
 import ModalCard from "../components/ModalCard.vue";
 import { error } from "jquery";
-import trailku from "../Trail/trail";
+import trailku from "../trail/trail";
 import api from "../user/axios";
 
 

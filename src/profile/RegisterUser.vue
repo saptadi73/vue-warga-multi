@@ -747,7 +747,7 @@ import router from "../router";
 import { BASE_URL } from "../base.url.utils";
 import { BASE_URL2 } from "../base.url2.utils";
 import ModalCard from "../components/ModalCard.vue";
-import trailku from "../Trail/trail";
+import trailku from "../trail/trail";
 import api from "../user/axios";
 
 const showToast = ref(false);

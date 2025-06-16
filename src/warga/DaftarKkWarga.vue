@@ -222,7 +222,7 @@ import { ref, computed, onMounted } from "vue";
 import axios from "axios";
 import { BASE_URL } from "../base.url.utils";
 import { RouterLink } from "vue-router";
-import trailku from "../Trail/trail";
+import trailku from "../trail/trail";
 import ModalViewGambar from "../components/ModalViewGambar.vue";
 import { useLoadingStore } from "../stores/loading";
 import LoadingOverlay from "../components/LoadingOverlay.vue";

@@ -219,7 +219,7 @@ import { BASE_URL } from "../base.url.utils";
 import { useRoute } from "vue-router";
 import ToastCard from "../components/ToastCard.vue";
 import ModalCard from "../components/ModalCard.vue";
-import trailku from "../Trail/trail";
+import trailku from "../trail/trail";
 import ModalViewGambar from "../components/ModalViewGambar.vue";
 import api from "../user/axios";
 import { useLoadingStore } from "../stores/loading";

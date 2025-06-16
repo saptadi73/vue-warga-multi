@@ -23,7 +23,7 @@ import { BASE_URL } from "../base.url.utils";
 import ModalCard from "../components/ModalCard.vue";
 import ToastCard from "../components/ToastCard.vue";
 import { error } from "jquery";
-import trailku from "../Trail/trail";
+import trailku from "../trail/trail";
 
 export default {
   components: {

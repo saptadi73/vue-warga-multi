@@ -270,7 +270,7 @@ import ModalInputCard from "../components/ModalInputCard.vue";
 import ModalCard from "../components/ModalCard.vue";
 import router from "../router";
 import { useRoute } from "vue-router";
-import trailku from "../Trail/trail";
+import trailku from "../trail/trail";
 import api from "../user/axios";
 import { useLoadingStore } from '../stores/loading'
 import LoadingOverlay from "../components/LoadingOverlay.vue";

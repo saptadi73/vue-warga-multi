@@ -157,7 +157,7 @@ import DaftarKkWarga from "./DaftarKkWarga.vue";
 import TableKkWarga from "./TableKkWarga.vue";
 import TabelBlokWarga from "./TabelBlokWarga.vue";
 import ModalInputCard from "../components/ModalInputCard.vue";
-import trailku from "../Trail/trail";
+import trailku from "../trail/trail";
 import api from "../user/axios";
 import LoadingOverlay from "../components/LoadingOverlay.vue";
 import { useLoadingStore } from "../stores/loading";
