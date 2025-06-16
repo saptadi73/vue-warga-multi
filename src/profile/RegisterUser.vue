@@ -611,6 +611,7 @@
                         <tr
                           v-for="(user, index) in daftarUserKu"
                           :key="user.id"
+                          class="even:bg-slate-100"
                         >
                           <td
                             class="p-3 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200"
@@ -625,7 +626,7 @@
                           <td
                             class="p-3 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200"
                           >
-                            {{ user.id_level == 1 ? "Admin" : "User" }}
+                            {{ user.level.nama}}
                           </td>
                           <td
                             class="p-3 whitespace-nowrap text-sm text-gray-800"

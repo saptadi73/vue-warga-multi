@@ -127,7 +127,7 @@
                   <td class="px-2 py-2">{{ user.warga[0].no_hp }}</td>
                 </tr>
                 <tr>
-                  <td class="px-2 py-2 text-gray-500 font-semibold">
+                  <td class="px-2 py-2 text-gray-500 font-semibold" colspan="2">
                     <RouterLink
                       title="Lihat Anggota Keluarga"
                       :to="`/warga/list/warga/kk/${user.uuid}`"
@@ -142,7 +142,7 @@
                 </tr>
 
                 <tr>
-                  <td class="px-2 py-2 text-gray-500 font-semibold">
+                  <td class="px-2 py-2 text-gray-500 font-semibold" colspan="2">
                     <RouterLink
                       title="Tambah Anggota Keluarga"
                       :to="`/warga/tambah/warga/${user.warga[0].uuid}/${user.uuid}`"
@@ -157,7 +157,7 @@
                   </td>
                 </tr>
                 <tr>
-                    <td class="px-2 py-2 text-gray-500 font-semibold">
+                    <td class="px-2 py-2 text-gray-500 font-semibold" colspan="2">
                       <button
                         type="button"
                         title="Bayar Iuran Keluarga"
@@ -173,7 +173,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="px-2 py-2 text-gray-500 font-semibold">
+                    <td class="px-2 py-2 text-gray-500 font-semibold" colspan="2">
                       <button
                         v-if="user.filekeluarga && user.filekeluarga.url"
                         @click="viewGambar(user.filekeluarga.url,'Foto Kartu Keluarga')"
