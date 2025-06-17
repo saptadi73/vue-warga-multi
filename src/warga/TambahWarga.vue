@@ -370,6 +370,18 @@ export default {
         });
     },
 
+    isValidDate(dateString) {
+      const regex = /^\d{4}-\d{2}-\d{2}$/;
+      if (!regex.test(dateString)) return false;
+
+      const date = new Date(dateString);
+      const timestamp = date.getTime();
+
+      return (
+        !isNaN(timestamp) && date.toISOString().slice(0, 10) === dateString
+      );
+    },
+
     async getPekerjaan() {
       const url = BASE_URL + "warga/list/pekerjaan";
       axios
@@ -395,8 +407,19 @@ export default {
         this.$refs.status_warga.value
       );
       this.formValuesRumah.id_type = parseInt(this.$refs.type.value);
-      this.formValuesRumah.tanggal_lahir =
-        this.$refs.tanggal_lahir.value + " 00:00:00";
+
+      const tanggalInput = this.$refs.tanggal_lahir.value;
+
+      if (!this.isValidDate(tanggalInput)) {
+        this.showToast = true;
+        this.toastMessage =
+          "Format tanggal tidak valid.";
+        return;
+      } else {
+        this.formValuesRumah.tanggal_lahir =
+          this.$refs.tanggal_lahir.value + " 00:00:00";
+      }
+
       this.formValuesRumah.tempat_lahir = this.$refs.tempat_lahir.value;
 
       // console.log("Form Data",this.formValuesRumah);
@@ -419,7 +442,8 @@ export default {
           this.showToast = true;
           this.toastMessage = this.tambahKK.message;
           console.log(error);
-        }).finally(() => {
+        })
+        .finally(() => {
           this.loadingStore.hide();
         });
     },

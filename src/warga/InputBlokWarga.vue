@@ -285,9 +285,7 @@
         class="flex p-5 flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70"
       >
         <div class="p-4 md:p-5">
-          <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-            
-          </h3>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-white"></h3>
           <div>
             <TabelBlokWarga />
           </div>
@@ -316,7 +314,7 @@
       v-model:modelValue="blokValue"
     />
   </div>
-  <LoadingOverlay/>
+  <LoadingOverlay />
 </template>
 
 <script>
@@ -334,7 +332,6 @@ import trailku from "../trail/trail";
 import api from "../user/axios";
 import { useLoadingStore } from "../stores/loading";
 import LoadingOverlay from "../components/LoadingOverlay.vue";
-
 
 export default {
   components: {
@@ -367,7 +364,7 @@ export default {
     const blokValue = ref("");
     const noBlok = ref(null);
     const loadingStore = useLoadingStore();
-    
+
     return {
       showToast,
       toastMessage,
@@ -404,7 +401,8 @@ export default {
           console.error("Error:", error);
           this.showToast = true;
           this.toastMessage = error;
-        }).finally(() => {
+        })
+        .finally(() => {
           this.loadingStore.hide();
         });
     },
@@ -453,6 +451,18 @@ export default {
         });
     },
 
+    isValidDate(dateString) {
+      const regex = /^\d{4}-\d{2}-\d{2}$/;
+      if (!regex.test(dateString)) return false;
+
+      const date = new Date(dateString);
+      const timestamp = date.getTime();
+
+      return (
+        !isNaN(timestamp) && date.toISOString().slice(0, 10) === dateString
+      );
+    },
+
     async addWarga() {
       const url = BASE_URL + "warga/add/kk";
       this.formValuesRumah.id_blok = parseInt(this.$refs.list_blok.value);
@@ -466,11 +476,21 @@ export default {
       this.formValuesRumah.id_status_warga = parseInt(
         this.$refs.status_warga.value
       );
-      this.formValuesRumah.tanggal_lahir =
-        this.$refs.tanggal_lahir.value + " 00:00:00";
+      const tanggalInput = this.$refs.tanggal_lahir.value;
+
+      if (!this.isValidDate(tanggalInput)) {
+        this.showToast = true;
+        this.toastMessage =
+          "Format tanggal tidak valid. Gunakan format yang sesuai ";
+        return;
+      } else {
+        this.formValuesRumah.tanggal_lahir =
+          this.$refs.tanggal_lahir.value + " 00:00:00";
+      }
+
       this.formValuesRumah.tempat_lahir = this.$refs.tempat_lahir.value;
 
-      console.log("Form Data",this.formValuesRumah);
+      console.log("Form Data", this.formValuesRumah);
 
       await api
         .post(url, this.formValuesRumah, {
@@ -484,14 +504,14 @@ export default {
           this.toastMessage = response.data.message;
           const trail = trailku(this.toastMessage);
           console.log(trail);
-          
-          console.log('Data Respon Tambah Warga',response.data);
+
+          console.log("Data Respon Tambah Warga", response.data);
         })
         .catch((error) => {
           this.showToast = true;
           this.toastMessage = "Data Kepala Keluarga Gagal Ditambahkan";
 
-          console.log('Error gagal tambah warga',error);
+          console.log("Error gagal tambah warga", error);
         });
     },
 
@@ -540,7 +560,6 @@ export default {
     this.getStatusWarga();
     this.getPekerjaan();
   },
-  
 };
 </script>
 

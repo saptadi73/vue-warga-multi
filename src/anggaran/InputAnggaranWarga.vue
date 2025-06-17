@@ -303,7 +303,11 @@
                         <tbody
                           class="divide-y divide-gray-200 dark:divide-neutral-700"
                         >
-                          <tr v-for="user in filteredPekerjaan" :key="user.id" class="even:bg-slate-100">
+                          <tr
+                            v-for="user in filteredPekerjaan"
+                            :key="user.id"
+                            class="even:bg-slate-100"
+                          >
                             <!-- Checkbox -->
                             <td class="py-4 ps-4">
                               <div class="flex items-center h-5">
@@ -354,7 +358,6 @@
                             </td>
 
                             <td class="text-blue-600 font-semibold">
-
                               <button
                                 @click="
                                   bukaModal(
@@ -364,25 +367,49 @@
                                   )
                                 "
                               >
-                                <span class="material-icons text-blue-600">delete</span>
+                                <span class="material-icons text-blue-600"
+                                  >delete</span
+                                >
                               </button>
                             </td>
                             <td
                               v-if="user.bukti"
                               class="text-blue-600 font-semibold"
                             >
-                              <button @click="bukaModalGambar(`${user.bukti.url}`)">
-                                <span class="material-icons text-blue-600">visibility</span>
+                              <button
+                                @click="bukaModalGambar(`${user.bukti.url}`)"
+                              >
+                                <span class="material-icons text-blue-600"
+                                  >visibility</span
+                                >
                               </button>
                             </td>
                             <td v-else class="text-blue-600 font-semibold">
-                              <button @click="uploadBukti(`${user.id}`,`${user.warga.nama }`)">
-                                <span class="material-icons text-blue-600">attach_file</span>
+                              <button
+                                @click="
+                                  uploadBukti(
+                                    `${user.id}`,
+                                    `${user.warga.nama}`
+                                  )
+                                "
+                              >
+                                <span class="material-icons text-blue-600"
+                                  >attach_file</span
+                                >
                               </button>
                             </td>
                             <td class="text-blue-600 font-semibold">
-                              <button @click="uploadBukti(`${user.id}`,`${user.warga.nama }`)">
-                                <span class="material-icons text-blue-600">upload</span>
+                              <button
+                                @click="
+                                  uploadBukti(
+                                    `${user.id}`,
+                                    `${user.warga.nama}`
+                                  )
+                                "
+                              >
+                                <span class="material-icons text-blue-600"
+                                  >upload</span
+                                >
                               </button>
                             </td>
                           </tr>
@@ -404,31 +431,32 @@
             </div>
           </div>
           <a
-              class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-600 dark:focus:text-blue-600"
-              href="/dashboard"
+            class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-600 dark:focus:text-blue-600"
+            href="/dashboard"
+          >
+            Dashboard
+            <svg
+              class="shrink-0 size-4"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             >
-              Dashboard
-              <svg
-                class="shrink-0 size-4"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="m9 18 6-6-6-6"></path>
-              </svg>
-            </a>
+              <path d="m9 18 6-6-6-6"></path>
+            </svg>
+          </a>
         </div>
         <div
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
         >
           <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-            Input Pencatatan Kas Keluar dan Masuk yang Menggunakan Anggaran Keuangan Warga
+            Input Pencatatan Kas Keluar dan Masuk yang Menggunakan Anggaran
+            Keuangan Warga
           </p>
         </div>
       </div>
@@ -496,15 +524,14 @@ function tutupModal() {
   router.push("anggaran/input/anggaran");
 }
 function tutupModalGambar() {
-showModalGambar.value = false;
+  showModalGambar.value = false;
 }
 function delGambar() {}
 function bukaModalGambar(url) {
   showModalGambar.value = true;
   ModalTitleGambar.value = "View Image File";
-  const imageUrl= BASE_URL+ "uploads/" + url;
+  const imageUrl = BASE_URL + "uploads/" + url;
   viewGambarku.value = imageUrl;
-
 }
 
 function bukaModal(id, nama, tanggal) {
@@ -519,7 +546,7 @@ function bukaModal(id, nama, tanggal) {
   formValues.value = { id: parseInt(id) };
 }
 
-function uploadBukti(id,nama) {
+function uploadBukti(id, nama) {
   const url = "/anggaran/upload/bukti/" + id + "/" + nama;
   router.push(url);
 }
@@ -660,7 +687,15 @@ async function addSetorAnggaran() {
     const id_jenis_anggaran = document.getElementById("jenis_anggaran").value;
     const keterangan = document.getElementById("keterangan").value;
     const nilai = document.getElementById("nominal").value;
-    const tanggal = document.getElementById("tanggal").value;
+    let tanggal = document.getElementById("tanggal").value;
+    if (!isValidDate(tanggal)) {
+      showToast.value = true;
+      toastMessage.value = "Format tanggal tidak valid. Gunakan format yang sesuai ";
+      return;
+    } else {
+      tanggal = tanggal + " 00:00:00";
+    }
+
     const url = `${BASE_URL}bayar/add/anggaran`;
     formValues.value = {
       id_warga: parseInt(id_warga),
@@ -747,6 +782,16 @@ const filteredPekerjaan = computed(() => {
 function handleSearch() {
   // This function is called on input event to filter users.
   // It's already handled by the computed property `filteredUsers`.
+}
+
+function isValidDate(dateString) {
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!regex.test(dateString)) return false;
+
+  const date = new Date(dateString);
+  const timestamp = date.getTime();
+
+  return !isNaN(timestamp) && date.toISOString().slice(0, 10) === dateString;
 }
 
 onMounted(() => {

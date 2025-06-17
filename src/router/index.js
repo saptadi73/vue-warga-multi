@@ -435,6 +435,9 @@ const router = createRouter({
           },
     },
   ],
+  scrollBehavior() {
+    return { top: 0 }; // scroll ke atas setiap ganti halaman
+  },
 });
 
 router.beforeEach((to, from, next) => {

@@ -35,28 +35,46 @@ api.interceptors.response.use(
     if (
       error.response &&
       error.response.status === 401 &&
-      !originalRequest._retry
+      error.config &&
+      !error.config._retry
     ) {
       originalRequest._retry = true;
 
       const refreshToken = localStorage.getItem("refresh_token");
+      // if (!refreshToken) {
+      //   router.push({ name: "login" });
+      //   return Promise.reject(error);
+      // }
+
       if (!refreshToken) {
-        router.push({ name: "login" });
+        setTimeout(() => {
+          router.push({ name: "login" });
+        }, 0); // next tick
         return Promise.reject(error);
       }
 
       if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-          failedQueue.push({ resolve, reject });
-        })
-          .then((token) => {
-            originalRequest.headers = {
-              ...originalRequest.headers,
-              Authorization: "Bearer " + newAccessToken,
-            };
-            return api(originalRequest);
+        return (
+          new Promise((resolve, reject) => {
+            failedQueue.push({ resolve, reject });
           })
-          .catch((err) => Promise.reject(err));
+            // .then((token) => {
+            //   originalRequest.headers = {
+            //     ...originalRequest.headers,
+            //     Authorization: "Bearer " + newAccessToken,
+            //   };
+            //   return api(originalRequest);
+            // })
+
+            .then((token) => {
+              originalRequest.headers = {
+                ...originalRequest.headers,
+                Authorization: "Bearer " + token,
+              };
+              return api(originalRequest);
+            })
+            .catch((err) => Promise.reject(err))
+        );
       }
 
       isRefreshing = true;

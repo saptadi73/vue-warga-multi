@@ -11,23 +11,42 @@
           </h3>
           <div>
             <div>
-              <div class="sm:flex rounded-lg shadow-sm">
-                <span
-                  class="py-3 px-4 inline-flex items-center min-w-fit w-full border border-gray-200 bg-gray-50 text-sm text-gray-500 -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:w-auto sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg dark:bg-neutral-700 dark:border-neutral-700 dark:text-neutral-400"
-                  >Nama Kepala Keluarga</span
-                >
-                <input
-                  id="nama"
-                  type="text"
-                  disabled
-                  class="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                />
-              </div>
               <div class="mt-1">
                 <div class="relative">
                   <select
+                    v-model="selectedIDKK"
+                    @change="getIDKK"
+                    id="idKK"
+                    ref="idKKRef"
+                    class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
+                  >
+                    <option selected="">Pilih Kepala Keluarga</option>
+                    <option
+                      v-if="hasilListKK"
+                      v-for="resultku in hasilListKK"
+                      :key="resultku.id"
+                      :value="resultku.id"
+                    >
+                      {{ resultku.warga[0].nama }} [ {{ resultku.blok.blok }}/{{
+                        resultku.no_rumah
+                      }}]
+                    </option>
+                  </select>
+                  <label
+                    for="idKK"
+                    class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-gray-500 dark:peer-focus:text-neutral-500 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500"
+                    >Kepala Keluarga</label
+                  >
+                </div>
+              </div>
+
+              <div class="mt-1">
+                <div class="relative">
+                  <select
+                    v-model="selectedIuran"
+                    @change="getNominal"
                     id="iuran"
-                    ref="iuran"
+                    ref="iuranRef"
                     class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
                   >
                     <option selected="">Pilih Jenis Iuran</option>
@@ -41,9 +60,9 @@
                     </option>
                   </select>
                   <label
-                    for="status_warga"
+                    for="iuran"
                     class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-gray-500 dark:peer-focus:text-neutral-500 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500"
-                    >Status Warga</label
+                    >Jenis Iuran</label
                   >
                 </div>
               </div>
@@ -55,6 +74,7 @@
                 <input
                   id="nilai"
                   type="number"
+                  :value="nominal || 0"
                   class="py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                 />
               </div>
@@ -93,7 +113,9 @@
           class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
         >
           <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-            Jika ada kesalahan dalam pengisian, untuk mempermudah tidak perlu melakukan update, tetapi dengan melakukan penghapusan dan diganti pengisian baru.
+            Jika ada kesalahan dalam pengisian, untuk mempermudah tidak perlu
+            melakukan update, tetapi dengan melakukan penghapusan dan diganti
+            pengisian baru.
           </p>
         </div>
       </div>
@@ -178,9 +200,7 @@
                           </th>
                           <th class="py-3 px-4 text-xs font-normal">Nama</th>
                           <th class="py-3 px-4 text-xs font-normal">Blok</th>
-                          <th class="py-3 px-4 text-xs font-normal">
-                            No.
-                          </th>
+                          <th class="py-3 px-4 text-xs font-normal">No.</th>
                           <th class="py-3 px-4 text-xs font-normal">Jenis</th>
                           <th class="py-3 px-4 text-xs font-normal">Nominal</th>
                           <th class="py-3 px-4 text-xs font-normal">Tanggal</th>
@@ -239,10 +259,16 @@
                           >
                             {{ formatTanggal(user.tanggal) }}
                           </td>
-                          
+
                           <td class="text-blue-600 font-semibold">
                             <button
-                              @click="bukaModal(`${user.id}`,`${user.iuran.nama}`, `${user.tanggal}`)"
+                              @click="
+                                bukaModal(
+                                  `${user.id}`,
+                                  `${user.iuran.nama}`,
+                                  `${user.tanggal}`
+                                )
+                              "
                             >
                               Delete
                             </button>
@@ -317,6 +343,7 @@
       v-on:cancelButton="tutupModal"
       v-on:closeButton="tutupModal"
     />
+    <LoadingOverlay />
   </div>
 </template>
 
@@ -329,14 +356,19 @@ import { BASE_URL } from "../base.url.utils";
 import ModalInputCard from "../components/ModalInputCard.vue";
 import ModalCard from "../components/ModalCard.vue";
 import router from "../router";
-import { useRoute } from 'vue-router';
+import { useRoute } from "vue-router";
 import trailku from "../trail/trail";
 import api from "../user/axios";
+import { useLoadingStore } from "../stores/loading";
+import LoadingOverlay from "../components/LoadingOverlay.vue";
+
+const loadingStore = useLoadingStore();
 
 const searchQuery = ref("");
 const route = useRoute();
 const nama_kk = ref("");
 
+const hasilListKK = ref([]);
 const hasilPekerjaan = ref([]);
 const hasilIuran = ref([]);
 const hasilIuranKK = ref([]);
@@ -351,22 +383,28 @@ const ModalInputMessage = ref("");
 const ModalTitle = ref("");
 const ModalMessage = ref("");
 const Idku = ref("");
+const nominal = ref(0);
+const selectedIuran = ref("");
+const iuranRef = ref(null);
+
+const selectedIDKK = ref("");
+const idKKRef = ref(null);
 
 async function getJenisPekerjaan() {
   const url = `${BASE_URL}bayar/list/iuran`;
   const listJenisPekerjaan = await axios.get(url);
   hasilPekerjaan.value = listJenisPekerjaan.data.result;
-  console.log(hasilPekerjaan.value);
+  // console.log(hasilPekerjaan.value);
 }
 
+// In your getIuran() function, ensure the select has a default value
 async function getIuran() {
   try {
     nama_kk.value = route.params.nama;
-    document.getElementById("nama").value = nama_kk.value;
+
     const url = `${BASE_URL}bayar/list/iuran`;
     const listJenisIuran = await axios.get(url);
-    hasilIuran.value = listJenisIuran.data.result;
-    console.log(hasilIuran.value);
+    hasilIuran.value = listJenisIuran.data?.result;
   } catch (error) {
     console.log(error);
   }
@@ -375,20 +413,63 @@ async function getIuran() {
 async function getIuranKK() {
   try {
     const idKK = parseInt(route.params.id);
+    selectedIDKK.value = idKK;
     const listIuranKK = await axios.get(`${BASE_URL}bayar/setor/kk/${idKK}`);
-    hasilIuranKK.value = listIuranKK.data.result;
-    console.log('Laporan Iuran : ',hasilIuranKK.value);
+    hasilIuranKK.value = listIuranKK.data?.result;
+    console.log("Laporan Iuran : ", hasilIuranKK.value);
   } catch (error) {
     console.log(error);
   }
 }
 
+async function getIuranKKLagi() {
+  try {
+    const idKK = selectedIDKK.value;
+    const listIuranKK = await axios.get(`${BASE_URL}bayar/setor/kk/${idKK}`);
+    hasilIuranKK.value = listIuranKK.data?.result;
+    console.log("Laporan Iuran : ", hasilIuranKK.value);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
+async function getNominal() {
+  if (!iuranRef.value) return;
+  const type = iuranRef.value.value;
+  try {
+    const url = `${BASE_URL}bayar/get/nominal/${type}`;
+    const response = await axios.get(url);
+    nominal.value = response.data?.result?.iuran || 0;
+    console.log("nominalnya :", nominal.value);
+  } catch (error) {
+    console.error(error);
+    nominal.value = 0;
+  }
+}
+
+function getIDKK() {
+  const selectEl = idKKRef.value;
+  const text = selectEl.options[selectEl.selectedIndex].text;
+  getIuranKKLagi();
+}
 
 async function addPekerjaan() {
-  const idKK = parseInt(route.params.id);
+  if (!selectedIuran.value) {
+    showToast.value = true;
+    toastMessage.value = "Please select an iuran type";
+    return;
+  }
+
+  const idKK = parseInt(selectedIDKK.value);
   const url = `${BASE_URL}bayar/add/setor`;
-  const tanggal = document.getElementById("tanggal").value;
+  let tanggal = document.getElementById("tanggal").value;
+  if (!isValidDate(tanggal)) {
+    showToast.value = true;
+    toastMessage.value = "Format tanggal tidak valid. Gunakan format  yang sesuai";
+    return;
+  } else {
+    tanggal = tanggal + " 00:00:00";
+  }
   const iuran = parseInt(document.getElementById("iuran").value);
   const keterangan = document.getElementById("keterangan").value;
   const nilai = parseInt(document.getElementById("nilai").value);
@@ -410,8 +491,7 @@ async function addPekerjaan() {
     toastMessage.value = tambahKerjaan.data.message;
     const trail = await trailku(toastMessage.value);
     console.log(trail);
-  
-    
+
     console.log(tambahKerjaan);
   } catch (error) {
     showToast.value = true;
@@ -433,7 +513,11 @@ function bukaModal(id, iuran, tanggal) {
   showModal.value = true;
   ModalTitle.value = "Delete Setoran";
   ModalMessage.value =
-    "Anda yakin ingin menghapus dan mengganti " + iuran +" tanggal " + formatTanggal(tanggal) + " ini?";
+    "Anda yakin ingin menghapus dan mengganti " +
+    iuran +
+    " tanggal " +
+    formatTanggal(tanggal) +
+    " ini?";
   formValues.value.id = id;
 }
 
@@ -491,6 +575,7 @@ function bukaModalInput(id, pekerjaan) {
   router.push(url_id);
 }
 onMounted(() => {
+  listKK();
   getJenisPekerjaan();
   getIuran();
   getIuranKK();
@@ -500,10 +585,23 @@ const filteredPekerjaan = computed(() => {
   if (!searchQuery.value) {
     return hasilIuranKK.value;
   }
-  return hasilIuranKK.value.filter((pekerjaan) =>
-    pekerjaan.kk.warga[0].nama.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-    formatTanggal(pekerjaan.tanggal).toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-    formatRupiah(pekerjaan.nilai).toLowerCase().includes(searchQuery.value.toLowerCase())
+  return hasilIuranKK.value.filter(
+    (pekerjaan) =>
+      pekerjaan.kk.warga[0].nama
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
+      formatTanggal(pekerjaan.tanggal)
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
+      formatRupiah(pekerjaan.nilai)
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
+      pekerjaan.kk.blok.blok
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
+      pekerjaan.kk.no_rumah
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase())
   );
 });
 
@@ -511,7 +609,6 @@ function handleSearch() {
   // This function is called on input event to filter users.
   // It's already handled by the computed property `filteredUsers`.
 }
-
 
 function formatRupiah(number) {
   const amount = number;
@@ -527,6 +624,19 @@ function formatRupiah(number) {
   return formattedIDR;
 }
 
+async function listKK() {
+  loadingStore.show();
+  try {
+    const listIuranKK = await axios.get(`${BASE_URL}warga/list/kk`);
+    hasilListKK.value = listIuranKK.data?.result;
+    console.log("Laporan Daftar KK : ", hasilListKK.value);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    loadingStore.hide();
+  }
+}
+
 function formatTanggal(dateString) {
   const tanggal = new Date(dateString);
   const localeDate = tanggal.toLocaleDateString("en-GB");
@@ -534,6 +644,15 @@ function formatTanggal(dateString) {
   return localeDate;
 }
 
+function isValidDate(dateString) {
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!regex.test(dateString)) return false;
+
+  const date = new Date(dateString);
+  const timestamp = date.getTime();
+
+  return !isNaN(timestamp) && date.toISOString().slice(0, 10) === dateString;
+}
 </script>
 
 <style lang="css">
