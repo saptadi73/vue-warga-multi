@@ -761,6 +761,8 @@ const showModal = ref(false);
 const ModalTitle = ref("");
 const ModalMessage = ref("");
 const uuidku = ref({});
+const id_tenant = localStorage.getItem("id_tenant");
+const id_level = ref(null);
 
 onMounted(async () => {
   await getUserList();
@@ -788,6 +790,7 @@ async function registerUser() {
       email: email,
       password: password,
       id_level: id_level.value,
+      id_tenant: id_tenant,
     };
 
     try {
@@ -816,7 +819,7 @@ function tutupToast() {
 
 async function getUserList() {
   try {
-    const Url = BASE_URL + "user/list/user";
+    const Url = BASE_URL + "user/list/user/" + id_tenant;
     const daftarUser = await axios.get(Url);
     daftarUserKu.value = daftarUser.data.result;
     console.log(daftarUserKu.value);

@@ -41,7 +41,6 @@
               >
                 location_on
               </span>
-              
             </div>
           </div>
         </div>
@@ -100,6 +99,7 @@
       @closeButton="showModal = false"
       @cancelButton="showModal = false"
     />
+    <LoadingOverlay />
   </div>
 </template>
 
@@ -112,6 +112,8 @@ import ToastCard from "../components/ToastCard.vue";
 import ModalCard from "../components/ModalCard.vue";
 import trailku from "../trail/trail";
 import api from "../user/axios";
+import LoadingOverlay from "../components/LoadingOverlay.vue";
+import { useLoadingStore } from "../stores/loading";
 
 const formValues = ref({ latitude: null, longitude: null });
 const showToast = ref(false);
@@ -121,9 +123,13 @@ const modalTitle = ref("");
 const modalMessage = ref("");
 const showClear = ref(false);
 const dataPolygon = ref([]);
+const polygonku = ref([]);
 const map = ref(null);
 const mapContainer = ref(null);
 const polygonLayer = ref(null);
+const id_tenant = localStorage.getItem("id_tenant");
+const loadingStore = useLoadingStore();
+const luas = ref(0);
 
 const tutupToast = () => {
   showToast.value = false;
@@ -144,26 +150,34 @@ const getLocation = () => {
       L.marker([formValues.value.latitude, formValues.value.longitude], {
         draggable: true,
       }).addTo(map.value);
-      
-      
     });
   }
 };
 
 const tambahTitikPolygon = async () => {
   const url = BASE_URL + "profile/new/polygon";
-  await api.post(url, formValues.value, {
-    headers: { "Content-Type": "application/json" },
-  });
-  messageToast.value = "Titik berhasil ditambahkan";
-  const trail = await trailku(messageToast.value);
-  console.log(trail);
-  showToast.value = true;
+  formValues.value.id_tenant = id_tenant;
+  await api
+    .post(url, formValues.value, {
+      headers: { "Content-Type": "application/json" },
+    })
+    .then((response) => {
+      const data = response.data;
+      showToast.value = true;
+      messageToast.value = data.message;
+      const trail = trailku(messageToast.value);
+    })
+    .catch((error) => {
+      console.log(error);
+      showToast.value = true;
+      messageToast.value = error;
+    });
+
   await getDataPolygon();
 };
 
 const clearDataPolygon = async () => {
-  const url = BASE_URL + "profile/clear";
+  const url = BASE_URL + "profile/clear/" + id_tenant;
   await axios.get(url);
   dataPolygon.value = [];
   if (polygonLayer.value) map.value.removeLayer(polygonLayer.value);
@@ -180,22 +194,81 @@ const confirmDeletePolygon = () => {
 };
 
 const getDataPolygon = async () => {
-  const url = BASE_URL + "profile/polygon";
-  const response = await axios.get(url);
-  dataPolygon.value = response.data.result;
+  // const url = BASE_URL + "profile/polygon/" + id_tenant;
+  // const response = await axios.get(url);
+  // dataPolygon.value = response.data.result;
+  // console.log("Data Polygon :",dataPolygon.value);
 
-  if (polygonLayer.value) map.value.removeLayer(polygonLayer.value);
+  // if (polygonLayer.value) map.value.removeLayer(polygonLayer.value);
 
-  const latlngs = dataPolygon.value.map((item) => [
-    item.latitude,
-    item.longitude,
-  ]);
-  if (latlngs.length >= 3) {
-    polygonLayer.value = L.polygon(latlngs, { color: "red" }).addTo(map.value);
-    map.value.fitBounds(polygonLayer.value.getBounds());
+  // const latlngs = dataPolygon.value.map((item) => [
+  //   item.latitude,
+  //   item.longitude,
+  // ]);
+  // if (latlngs.length >= 3) {
+  //   polygonLayer.value = L.polygon(latlngs, { color: "red" }).addTo(map.value);
+  //   map.value.fitBounds(polygonLayer.value.getBounds());
+  // }
+
+  // if (latlngs.length) showClear.value = true;
+
+  try {
+    const url = BASE_URL + "profile/polygon/" + id_tenant;
+    const response = await axios.get(url);
+
+    // Ensure it's an array
+    if (!Array.isArray(response.data.result)) {
+      console.error("Unexpected response format:", response.data);
+      return;
+    }
+
+    dataPolygon.value = response.data.result;
+
+    // Check the structure of `this.dataPolygon`
+    console.log("Data received:", dataPolygon.value);
+
+    const polygonLatitude = dataPolygon.value.map((data) => data.latitude);
+    console.log("Data Map", polygonLatitude);
+
+    const polygonLongitude = dataPolygon.value.map((data) => data.longitude);
+    console.log("Data Map", polygonLongitude);
+
+    const polygonLengkap = polygonLatitude.map((value, index) => [
+      value,
+      polygonLongitude[index],
+    ]);
+
+    console.log("Data AKhir Jos", polygonLengkap);
+
+    if (polygonku.value) {
+      map.value.removeLayer(polygonku.value);
+    }
+
+    polygonku.value = L.polygon(polygonLengkap, { color: "red" }).addTo(
+      map.value
+    );
+
+    // zoom the map to the polygon
+    map.value.fitBounds(polygonku.value.getBounds());
+
+    const geoJsonPolygon = turf.polygon([polygonLengkap]);
+    const area = turf.area(geoJsonPolygon);
+
+    luas.value = area.toFixed(2);
+    console.log("Area", area);
+
+    // // Ensure `row` is an array before calling `.map()`
+    // const result = this.dataPolygon.map((row) =>
+    //   Array.isArray(row) ? row.map((obj) => Object.values(obj)[0]) : []
+    // );
+
+    // console.log("Transformed result:", result);
+    // this.result = result; // Assign it if needed
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  } finally {
+
   }
-
-  if (latlngs.length) showClear.value = true;
 };
 
 onMounted(() => {

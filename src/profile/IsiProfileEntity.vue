@@ -330,6 +330,7 @@ export default {
         this.formValues.dusun = document.getElementById("dusun").value;
         this.formValues.rt = parseInt(document.getElementById("rt").value);
         this.formValues.rw = parseInt(document.getElementById("rw").value);
+        this.formValues.id_tenant=this.id_tenant;
         await api
           .post(url, this.formValues, {
             headers: {
@@ -358,7 +359,7 @@ export default {
 
     async getProfile() {
       try {
-        const url = BASE_URL + "profile/cari";
+        const url = BASE_URL + "profile/cari/" + this.id_tenant;
 
         await axios
           .get(url)
@@ -383,7 +384,7 @@ export default {
 
     async clearProfile() {
       try {
-        const url = BASE_URL + "profile/hapus";
+        const url = BASE_URL + "profile/hapus/" + this.id_tenant;
         await axios
           .get(url)
           .then((response) => {
@@ -424,8 +425,10 @@ export default {
   },
   setup() {
     const showToast = ref(false);
+    const id_tenant = localStorage.getItem("id_tenant");
     return {
       showToast,
+      id_tenant
     };
   },
 };

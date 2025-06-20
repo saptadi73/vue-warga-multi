@@ -230,10 +230,6 @@ export default {
         this.loadingStore.hide();
       }
     },
-
-    getMemberMap(item) {
-
-    }
   },
   created() {
     this.getEntity();
