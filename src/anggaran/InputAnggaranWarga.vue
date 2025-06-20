@@ -501,6 +501,8 @@ import api from "../user/axios";
 const searchQuery = ref("");
 const route = useRoute();
 
+const id_tenant = localStorage.getItem("id_tenant");
+
 const hasilWarga = ref([]);
 const hasilJenisAnggaran = ref([]);
 const hasilJenisAnggaranCari = ref([]);
@@ -521,7 +523,7 @@ const Idku = ref("");
 
 function tutupModal() {
   showModal.value = false;
-  router.push("anggaran/input/anggaran");
+  window.location.reload();
 }
 function tutupModalGambar() {
   showModalGambar.value = false;
@@ -560,6 +562,7 @@ async function listJenisAnggaran() {
     const type = document.getElementById("type").value;
     const url = `${BASE_URL}bayar/list/jenis/anggaran`;
     formValues.value.id_type_anggaran = parseInt(type);
+    formValues.value.id_tenant = id_tenant;
     const daftarJenisAnggaran = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
@@ -577,6 +580,7 @@ async function listJenisAnggaranCari() {
     const type = document.getElementById("type_cari").value;
     const url = `${BASE_URL}bayar/list/jenis/anggaran`;
     formValues.value.id_type_anggaran = parseInt(type);
+    formValues.value.id_tenant = id_tenant;
     const daftarJenisAnggaran = await api.post(url, formValues.value, {
       headers: {
         "Content-Type": "application/json",
@@ -620,6 +624,7 @@ async function sekarangTable() {
       id_jenis_anggaran: parseInt(id_jenis_anggaran),
       tanggal_akhir: tanggal_akhir,
       tanggal_awal: tanggal_awal,
+      id_tenant: id_tenant,
     };
     console.log("isi FormValues :", formValues.value);
     const listSetorAnggaran = await api.post(url, formValues.value, {
@@ -639,7 +644,7 @@ async function sekarangTable() {
 
 async function listWarga() {
   try {
-    const url = `${BASE_URL}warga/list/all`;
+    const url = `${BASE_URL}warga/list/all/` + id_tenant;
     const listWarga = await axios.get(url);
     hasilWarga.value = listWarga.data.result;
     console.log("Hasil Warga : ", hasilWarga.value);
@@ -663,6 +668,7 @@ async function listSetoranAnggaran() {
       id_jenis_anggaran: parseInt(id_jenis_anggaran),
       tanggal_akhir: tanggal_akhir,
       tanggal_awal: tanggal_awal,
+      id_tenant: id_tenant,
     };
     console.log("hasil formvalue yang benar :", formValues.value);
     const listSetorAnggaran = await api.post(url, formValues.value, {
@@ -704,6 +710,7 @@ async function addSetorAnggaran() {
       keterangan: keterangan,
       nilai: parseInt(nilai),
       tanggal: tanggal,
+      id_tenant: id_tenant,
     };
     const addAnggaran = await api.post(url, formValues.value, {
       headers: {
