@@ -58,6 +58,7 @@ async function logout() {
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("level");
     localStorage.removeItem("email");
+    localStorage.removeItem("id_tenant");
   } catch (error) {
     messageLogOut.value = error.message;
   }

@@ -149,7 +149,7 @@ export default {
   },
   methods: {
     async getEntity() {
-      const url = BASE_URL + "profile/cari";
+      const url = BASE_URL + "profile/cari/" + this.id_tenant;
       await axios
         .get(url)
         .then((response) => {
@@ -179,7 +179,7 @@ export default {
     async getDataPolygon() {
       this.loadingStore.show();
       try {
-        const url = BASE_URL + "profile/polygon";
+        const url = BASE_URL + "profile/polygon/" + this.id_tenant;
         const response = await axios.get(url);
 
         // Ensure it's an array
@@ -249,6 +249,7 @@ export default {
     const mapContainer = ref();
     const polygonku = ref();
     const loadingStore = useLoadingStore()
+    const id_tenant = localStorage.getItem("id_tenant");
 
     onMounted(() => {
       map.value = L.map(mapContainer.value).setView([51.505, -0.09], 13);
@@ -267,6 +268,7 @@ export default {
       latlng,
       polygonku,
       loadingStore,
+      id_tenant,
     };
   },
 };

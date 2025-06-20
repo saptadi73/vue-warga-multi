@@ -24,14 +24,15 @@ export default {
   setup() {
     const chart = ref(null)
     const myChart = ref(null)
+    const id_tenant = localStorage.getItem("id_tenant");
 
     // ✅ Ambil data dan tampilkan chart
     const fetchChartData = async () => {
       try {
         const [marketingRes, incomeRes, expenseRes] = await Promise.all([
-          axios.get(`${BASE_URL}bayar/iuran/deret/bulan`),
-          axios.get(`${BASE_URL}bayar/masuk/deret/bulan`),
-          axios.get(`${BASE_URL}bayar/keluar/deret/bulan`)
+          axios.get(`${BASE_URL}bayar/iuran/deret/bulan/${id_tenant}`),
+          axios.get(`${BASE_URL}bayar/masuk/deret/bulan/${id_tenant}`),
+          axios.get(`${BASE_URL}bayar/keluar/deret/bulan/${id_tenant}`)
         ])
 
         const labels = marketingRes.data.result.map(item => item.bulan)
@@ -105,7 +106,7 @@ export default {
       fetchChartData()
     })
 
-    return { chart }
+    return { chart,id_tenant }
   }
 }
 </script>

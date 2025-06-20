@@ -124,6 +124,7 @@ import LoadingOverlay from "../components/LoadingOverlay.vue";
 import api from "../user/axios";
 
 const loadingStore = useLoadingStore();
+const id_tenant = localStorage.getItem("id_tenant");
 
 const hasilUpload = ref([]);
 const formValues = ref({});
@@ -206,6 +207,7 @@ async function uploadFile() {
   const keterangan = document.getElementById("keterangan").value;
 
   const formDataku = new FormData();
+  formDataku.append("id_tenant", id_tenant)
   formDataku.append("file", file.value);
   formDataku.append("id_kk", idAnggaran);
   formDataku.append("keterangan", keterangan);

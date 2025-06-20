@@ -147,6 +147,7 @@ import api from "../user/axios";
 import { useLoadingStore } from '../stores/loading'
 import LoadingOverlay from "../components/LoadingOverlay.vue";
 
+
 export default {
   components: {LoadingOverlay},
   data() {
@@ -159,7 +160,8 @@ export default {
 
   setup() {
     const loadingStore = useLoadingStore()
-    return {loadingStore};
+    const id_tenant = localStorage.getItem("id_tenant");
+    return {loadingStore, id_tenant};
   },
 
   methods: {
@@ -203,7 +205,7 @@ export default {
     },
     
     async getJenisIuran() {
-      const url = BASE_URL + "bayar/list/iuran";
+      const url = BASE_URL + "bayar/list/iuran/" + this.id_tenant;
       axios
         .get(url)
         .then((response) => {
@@ -220,6 +222,7 @@ export default {
       const url = BASE_URL + "bayar/list/belum";
       this.formValues.tahun = parseInt(this.$refs.tahun.value);
       this.formValues.bulan = parseInt(this.$refs.bulan.value);
+      this.formValues.id_tenant = this.id_tenant;
       this.formValues.jenis_iuran = parseInt(this.$refs.jenis_iuran.value);
 
       // console.log("Form Data",this.formValuesRumah);

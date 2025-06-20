@@ -286,9 +286,10 @@ const ModalInputMessage = ref("");
 const ModalTitle = ref("");
 const ModalMessage = ref("");
 const Idku = ref("");
+const id_tenant = localStorage.getItem("id_tenant");
 
 async function getJenisPekerjaan() {
-  const url = `${BASE_URL}bayar/list/iuran`;
+  const url = `${BASE_URL}bayar/list/iuran/${id_tenant}`;
   const listJenisPekerjaan = await axios.get(url);
   hasilPekerjaan.value = listJenisPekerjaan.data.result;
   console.log(hasilPekerjaan.value);
@@ -299,7 +300,7 @@ async function addPekerjaan() {
   const nama_pekerjaan = document.getElementById("nama").value;
   const iuran = parseInt(document.getElementById("iuran").value);
   const keterangan = document.getElementById("keterangan").value;
-  formValues.value = { nama: nama_pekerjaan, iuran: iuran, keterangan: keterangan };
+  formValues.value = { nama: nama_pekerjaan, iuran: iuran, keterangan: keterangan, id_tenant: id_tenant };
   try {
     const tambahKerjaan = await api.post(url, formValues.value, {
       headers: {

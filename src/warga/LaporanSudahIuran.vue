@@ -161,7 +161,8 @@ export default {
 
   setup() {
     const loadingStore = useLoadingStore()
-    return {loadingStore};;
+    const id_tenant = localStorage.getItem("id_tenant");
+    return {loadingStore, id_tenant};;
   },
 
   methods: {
@@ -205,7 +206,7 @@ export default {
     },
     
     async getJenisIuran() {
-      const url = BASE_URL + "bayar/list/iuran";
+      const url = BASE_URL + "bayar/list/iuran/" + this.id_tenant;
       axios
         .get(url)
         .then((response) => {
@@ -222,6 +223,7 @@ export default {
       this.formValues.tahun = parseInt(this.$refs.tahun.value);
       this.formValues.bulan = parseInt(this.$refs.bulan.value);
       this.formValues.jenis_iuran = parseInt(this.$refs.jenis_iuran.value);
+      this.formValues.id_tenant=this.id_tenant;
 
       // console.log("Form Data",this.formValuesRumah);
       this.loadingStore.show();

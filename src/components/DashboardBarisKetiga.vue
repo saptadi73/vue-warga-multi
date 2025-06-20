@@ -76,7 +76,7 @@ export default {
     async getTotalKabeh() {
       this.loadingStore.show();
       try {
-        const TotalKabehane = await axios.get(`${BASE_URL}bayar/total/total`);
+        const TotalKabehane = await axios.get(`${BASE_URL}bayar/total/total/${this.id_tenant}`);
         console.log("total kabehane :", TotalKabehane.data);
         const totalIuranku = parseInt(TotalKabehane.data.totalIuranKabeh);
         const totalPemasukanku = parseInt(TotalKabehane.data.totalMasukKabeh);
@@ -115,7 +115,8 @@ export default {
   },
   setup() {
     const loadingStore = useLoadingStore();
-    return {loadingStore}
+    const id_tenant = localStorage.getItem("id_tenant");
+    return {loadingStore,id_tenant}
   }
 };
 </script>

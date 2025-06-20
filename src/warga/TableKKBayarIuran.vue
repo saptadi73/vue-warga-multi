@@ -156,10 +156,12 @@
   import router from "../router";
   import { useRoute } from 'vue-router';
 
+  const id_tenant = localStorage.getItem("id_tenant");
+
 const route = useRoute();
   
   const searchQuery = ref("");
-  const url = BASE_URL + "warga/list/kk";
+  const url = BASE_URL + "warga/list/kk/" + id_tenant;
   const users = ref([]);
   
   onMounted(async () => {

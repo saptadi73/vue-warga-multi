@@ -363,6 +363,7 @@ import { useLoadingStore } from "../stores/loading";
 import LoadingOverlay from "../components/LoadingOverlay.vue";
 
 const loadingStore = useLoadingStore();
+const id_tenant = localStorage.getItem("id_tenant");
 
 const searchQuery = ref("");
 const route = useRoute();
@@ -391,7 +392,7 @@ const selectedIDKK = ref("");
 const idKKRef = ref(null);
 
 async function getJenisPekerjaan() {
-  const url = `${BASE_URL}bayar/list/iuran`;
+  const url = `${BASE_URL}bayar/list/iuran/${id_tenant}`;
   const listJenisPekerjaan = await axios.get(url);
   hasilPekerjaan.value = listJenisPekerjaan.data.result;
   // console.log(hasilPekerjaan.value);
@@ -402,7 +403,7 @@ async function getIuran() {
   try {
     nama_kk.value = route.params.nama;
 
-    const url = `${BASE_URL}bayar/list/iuran`;
+    const url = `${BASE_URL}bayar/list/iuran/` + id_tenant;
     const listJenisIuran = await axios.get(url);
     hasilIuran.value = listJenisIuran.data?.result;
   } catch (error) {
@@ -479,6 +480,7 @@ async function addPekerjaan() {
     id_iuran: iuran,
     keterangan: keterangan,
     id_kk: idKK,
+    id_tenant: id_tenant,
   };
   console.log(formValues.value);
   try {
@@ -627,7 +629,7 @@ function formatRupiah(number) {
 async function listKK() {
   loadingStore.show();
   try {
-    const listIuranKK = await axios.get(`${BASE_URL}warga/list/kk`);
+    const listIuranKK = await axios.get(`${BASE_URL}warga/list/kk/` + id_tenant);
     hasilListKK.value = listIuranKK.data?.result;
     console.log("Laporan Daftar KK : ", hasilListKK.value);
   } catch (error) {

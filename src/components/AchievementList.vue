@@ -224,6 +224,7 @@ import html2canvas from 'html2canvas';
 import { useLoadingStore } from "../stores/loading";
 import LoadingOverlay from "../components/LoadingOverlay.vue";
 const loadingStore = useLoadingStore();
+const id_tenant = localStorage.getItem("id_tenant");
 
 
 const captureArea = ref(null);
@@ -263,7 +264,7 @@ const formattedDate = `${day}-${month}-${year}`;
 async function getDataLaporan() {
   loadingStore.show();
   try {
-    const response = await axios.get(`${BASE_URL}bayar/laporan/rt`);
+    const response = await axios.get(`${BASE_URL}bayar/laporan/rt/${id_tenant}`);
     iuranBulanLalu.value = parseInt(response.data.result?.IuranBulanLalu);
     PemasukanBulanLalu.value = parseInt(
       response.data.result?.PemasukanBulanLalu
@@ -329,7 +330,7 @@ async function exportAsImage() {
 }
 
 async function getEntity() {
-  const url = BASE_URL + "profile/cari";
+  const url = BASE_URL + "profile/cari/" + id_tenant;
   const response = await axios.get(url);
   const hasilEntity = response.data.result;
   provinsi.value = hasilEntity.provinsi;

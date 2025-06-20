@@ -125,6 +125,8 @@ import LoadingOverlay from "../components/LoadingOverlay.vue";
 
 const loadingStore = useLoadingStore();
 
+const id_tenant = localStorage.getItem("id_tenant");
+
 const hasilUpload = ref([]);
 const formValues = ref({});
 const previewImage = ref(null);
@@ -204,6 +206,7 @@ async function uploadFile() {
   const keterangan = document.getElementById("keterangan").value;
 
   const formDataku = new FormData();
+  formDataku.append("id_tenant", id_tenant);
   formDataku.append("file", file.value);
   formDataku.append("id_warga", idAnggaran);
   formDataku.append("keterangan", keterangan);

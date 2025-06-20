@@ -127,6 +127,7 @@ const jumlahLakiLaki = ref(null);
 const jumlahPerempuan = ref(null);
 const jumlahTotal = ref(null);
 const jumlahKk = ref(null);
+const id_tenant = localStorage.getItem("id_tenant");
 
 onMounted(() => {
     getJumlahLakiLaki();
@@ -138,7 +139,7 @@ onMounted(() => {
 async function getJumlahLakiLaki() {
   loadingStore.show();
     try {
-        const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/warga/lk`);
+        const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/warga/lk/${id_tenant}`);
         jumlahLakiLaki.value = jmlLK.data?.result?._count?.id;
         console.log("Data Jumlah Laki-laki :",jumlahLakiLaki.value);
     } catch (error) {
@@ -151,7 +152,7 @@ async function getJumlahLakiLaki() {
 async function getJumlahAll() {
   loadingStore.show();  
   try {
-        const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/warga/all`);
+        const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/warga/all/${id_tenant}`);
         jumlahTotal.value = jmlLK.data?.result?._count?.id;
         console.log("Data Jumlah Warga :",jumlahTotal.value);
     } catch (error) {
@@ -164,7 +165,7 @@ async function getJumlahAll() {
 async function getJumlahWanita() {
   loadingStore.show();
     try {
-        const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/warga/pr`);
+        const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/warga/pr/${id_tenant}`);
         jumlahPerempuan.value = jmlLK.data?.result?._count?.id;
         console.log("Data Jumlah Perempuan :",jumlahPerempuan.value);
     } catch (error) {
@@ -177,7 +178,7 @@ async function getJumlahWanita() {
 async function getJumlahKk() {
   loadingStore.show();
     try {
-        const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/kk/all`);
+        const jmlLK = await axios.get(`${BASE_URL}warga/jumlah/kk/all/${id_tenant}`);
         jumlahKk.value = jmlLK.data?.result?._count?.id;
         console.log("Data Jumlah KK :",jumlahKk.value);
     } catch (error) {

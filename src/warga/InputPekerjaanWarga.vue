@@ -239,6 +239,7 @@ import trailku from "../trail/trail";
 import api from "../user/axios";
 
 const searchQuery = ref("");
+const id_tenant = localStorage.getItem("id_tenant");
 
 const hasilPekerjaan = ref([]);
 const formValues = ref({});
@@ -254,7 +255,7 @@ const ModalMessage = ref("");
 const Idku = ref("");
 
 async function getJenisPekerjaan() {
-  const url = `${BASE_URL}warga/list/pekerjaan`;
+  const url = `${BASE_URL}warga/list/pekerjaan/` + id_tenant;
   const listJenisPekerjaan = await axios.get(url);
   hasilPekerjaan.value = listJenisPekerjaan.data.result;
   console.log(hasilPekerjaan.value);
@@ -263,7 +264,7 @@ async function getJenisPekerjaan() {
 async function addPekerjaan() {
   const url = `${BASE_URL}warga/tambah/pekerjaan`;
   const nama_pekerjaan = document.getElementById("nama").value;
-  formValues.value = { nama: nama_pekerjaan };
+  formValues.value = { nama: nama_pekerjaan, id_tenant: id_tenant };
   try {
     const tambahKerjaan = await api.post(url, formValues.value, {
       headers: {

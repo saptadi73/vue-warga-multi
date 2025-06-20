@@ -251,8 +251,8 @@ import ModalCard from "../components/ModalCard.vue";
 import router from "../router";
 import trailku from "../trail/trail";
 import api from "../user/axios";
-api
 
+const id_tenant = localStorage.getItem("id_tenant");
 const searchQuery = ref("");
 
 const hasilPekerjaan = ref([]);
@@ -269,7 +269,7 @@ const ModalMessage = ref("");
 const Idku = ref("");
 
 async function getJenisPekerjaan() {
-  const url = `${BASE_URL}warga/list/status`;
+  const url = `${BASE_URL}warga/list/status/` + id_tenant;
   const listJenisPekerjaan = await axios.get(url);
   hasilPekerjaan.value = listJenisPekerjaan.data.result;
   console.log(hasilPekerjaan.value);
@@ -278,7 +278,7 @@ async function getJenisPekerjaan() {
 async function addPekerjaan() {
   const url = `${BASE_URL}warga/tambah/status`;
   const nama_status = document.getElementById("status").value;
-  formValues.value = { status: nama_status };
+  formValues.value = { status: nama_status, id_tenant: id_tenant };
   try {
     const tambahKerjaan = await api.post(url, formValues.value, {
       headers: {

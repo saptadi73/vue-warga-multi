@@ -324,11 +324,13 @@ export default {
     const blokValue = ref("");
     const noBlok = ref(null);
     const loadingStore = useLoadingStore();
+    const id_tenant = localStorage.getItem("id_tenant");
     return {
       showToast,
       toastMessage,
       showModal,
       ModalMessage,
+      id_tenant,
       ModalTitle,
       blokValue,
       noBlok,
@@ -373,7 +375,7 @@ export default {
     },
 
     async getStatusWarga() {
-      const url = BASE_URL + "warga/list/status";
+      const url = BASE_URL + "warga/list/status/" + this.id_tenant;
       axios
         .get(url)
         .then((response) => {
@@ -386,7 +388,7 @@ export default {
     },
 
     async getPekerjaan() {
-      const url = BASE_URL + "warga/list/pekerjaan";
+      const url = BASE_URL + "warga/list/pekerjaan/" + this.id_tenant;
       axios
         .get(url)
         .then((response) => {
@@ -405,6 +407,7 @@ export default {
       this.formValuesRumah.id_kk = parseInt(this.idKK);
       this.formValuesRumah.no_hp = this.$refs.no_hp.value;
       this.formValuesRumah.nik = this.$refs.nik.value;
+      this.formValuesRumah.id_tenant = this.id_tenant;
       this.formValuesRumah.jenis_kelamin = this.$refs.jk.value;
       this.formValuesRumah.id_pekerjaan = parseInt(this.$refs.pekerjaan.value);
       this.formValuesRumah.id_status_warga = parseInt(

@@ -262,6 +262,7 @@ import { useLoadingStore } from "../stores/loading";
 import LoadingOverlay from "../components/LoadingOverlay.vue";
 
 const loadingStore = useLoadingStore();
+const id_tenant = localStorage.getItem("id_tenant");
 
 const showToast = ref(false);
 const showModal = ref(false);
@@ -273,7 +274,7 @@ const ModalTitleGambar = ref("");
 const viewGambarku = ref("");
 
 const searchQuery = ref("");
-const url = BASE_URL + "warga/list/kk";
+const url = BASE_URL + "warga/list/kk/" + id_tenant;
 const users = ref([]);
 
 onMounted(async () => {

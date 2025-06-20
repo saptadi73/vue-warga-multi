@@ -30,6 +30,7 @@ import { Doughnut, Pie } from "vue-chartjs";
 import axios from "axios";
 import { ref, onMounted } from "vue";
 import { BASE_URL } from "../base.url.utils";
+const id_tenant = localStorage.getItem("id_tenant");
 
 // Register Chart.js components
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
@@ -123,7 +124,7 @@ const pieData = ref({
 
 async function getTotalKabeh() {
   try {
-    const TotalKabehane = await axios.get(`${BASE_URL}bayar/total/total`);
+    const TotalKabehane = await axios.get(`${BASE_URL}bayar/total/total/${id_tenant}`);
     console.log("total kabehane :", TotalKabehane.data);
 
     const totalIuran = parseInt(TotalKabehane.data.totalIuranKabeh);
@@ -147,7 +148,7 @@ async function getTotalKabeh() {
 
 async function getGroupKeluar() {
   try {
-    const TotalKabehane = await axios.get(`${BASE_URL}bayar/keluar/group`);
+    const TotalKabehane = await axios.get(`${BASE_URL}bayar/keluar/group/${id_tenant}`);
     console.log("total keluaran :", TotalKabehane.data.result);
 
     const PengeluaranLabels = TotalKabehane.data.result.map(item=>item.nama);

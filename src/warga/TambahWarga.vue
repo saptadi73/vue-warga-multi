@@ -216,11 +216,11 @@
                 </thead>
                 <tbody>
                   <tr
-                    v-for="resultku in hasilWargaPerKK"
+                    v-for="(resultku,index) in hasilWargaPerKK"
                     :key="resultku.id"
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200"
                   >
-                    <td class="px-6 py-4">{{ resultku.id }}</td>
+                    <td class="px-6 py-4">{{ index+1 }}</td>
                     <td
                       scope="row"
                       class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -323,9 +323,11 @@ export default {
     const blokValue = ref("");
     const noBlok = ref(null);
     const loadingStore = useLoadingStore();
+    const id_tenant = localStorage.getItem("id_tenant");
 
     return {
       showToast,
+      id_tenant,
       toastMessage,
       showModal,
       ModalMessage,
@@ -358,7 +360,7 @@ export default {
     },
 
     async getStatusWarga() {
-      const url = BASE_URL + "warga/list/status";
+      const url = BASE_URL + "warga/list/status/" + this.id_tenant;
       axios
         .get(url)
         .then((response) => {
@@ -383,7 +385,7 @@ export default {
     },
 
     async getPekerjaan() {
-      const url = BASE_URL + "warga/list/pekerjaan";
+      const url = BASE_URL + "warga/list/pekerjaan/" + this.id_tenant;
       axios
         .get(url)
         .then((response) => {
@@ -400,6 +402,7 @@ export default {
       this.formValuesRumah.nama = this.$refs.nama.value;
       this.formValuesRumah.id_kk = parseInt(this.idKK);
       this.formValuesRumah.no_hp = this.$refs.no_hp.value;
+      this.formValuesRumah.id_tenant = this.id_tenant;
       this.formValuesRumah.nik = this.$refs.nik.value;
       this.formValuesRumah.jenis_kelamin = this.$refs.jk.value;
       this.formValuesRumah.id_pekerjaan = parseInt(this.$refs.pekerjaan.value);

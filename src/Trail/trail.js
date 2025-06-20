@@ -1,10 +1,13 @@
 import axios from "axios";
 import { BASE_URL } from "../base.url.utils";
 
+
+
 const trailku = async (activity) => {
+  const id_tenant = localStorage.getItem("id_tenant");
   const email = localStorage.getItem("email");
   const url = `${BASE_URL}trail/write`;
-  const datanya = { email, activity };
+  const datanya = { email: email, id_tenant: id_tenant, activity: activity };
   console.log('datanya trail',datanya);
 
   try {

@@ -231,9 +231,10 @@ import { useRoute } from "vue-router";
 
 
 const loadingStore = useLoadingStore();
+const id_tenant = localStorage.getItem("id_tenant");
 
 const searchQuery = ref("");
-const url = BASE_URL + "warga/list/kk";
+const url = BASE_URL + "warga/list/kk/" + id_tenant;
 const users = ref([]);
 const currentUser = ref(null); // Add reactive reference for current user
 const showModalGambar = ref(false);

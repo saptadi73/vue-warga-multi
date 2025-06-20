@@ -364,6 +364,7 @@ export default {
     const blokValue = ref("");
     const noBlok = ref(null);
     const loadingStore = useLoadingStore();
+    const id_tenant = localStorage.getItem("id_tenant");
 
     return {
       showToast,
@@ -374,12 +375,14 @@ export default {
       blokValue,
       noBlok,
       loadingStore,
+      id_tenant
     };
   },
 
   methods: {
     async addBlok() {
       const url = BASE_URL + "warga/add/blok";
+      this.formValuesBlok.id_tenant = this.id_tenant;
       // console.log(this.formValuesBlok);
       this.loadingStore.show();
       await api
@@ -408,7 +411,7 @@ export default {
     },
 
     async daftarBlok() {
-      const url = BASE_URL + "warga/daftar/blok";
+      const url = BASE_URL + "warga/daftar/blok" + "/" + this.id_tenant;
 
       await axios
         .get(url)
@@ -426,7 +429,7 @@ export default {
     },
 
     async getStatusWarga() {
-      const url = BASE_URL + "warga/list/status";
+      const url = BASE_URL + "warga/list/status/" + this.id_tenant;
       axios
         .get(url)
         .then((response) => {
@@ -439,7 +442,7 @@ export default {
     },
 
     async getPekerjaan() {
-      const url = BASE_URL + "warga/list/pekerjaan";
+      const url = BASE_URL + "warga/list/pekerjaan/" + this.id_tenant;
       axios
         .get(url)
         .then((response) => {
@@ -471,6 +474,8 @@ export default {
       this.formValuesRumah.no_kk = this.$refs.id_kk.value;
       this.formValuesRumah.no_hp = this.$refs.no_hp.value;
       this.formValuesRumah.nik = this.$refs.nik.value;
+      this.formValuesRumah.id_tenant = this.id_tenant;
+      this.formValuesRumah.id_type = 1;
       this.formValuesRumah.jenis_kelamin = this.$refs.jk.value;
       this.formValuesRumah.id_pekerjaan = parseInt(this.$refs.pekerjaan.value);
       this.formValuesRumah.id_status_warga = parseInt(
@@ -506,6 +511,7 @@ export default {
           console.log(trail);
 
           console.log("Data Respon Tambah Warga", response.data);
+          console.log("Data Form Tambah Warga", response.data);
         })
         .catch((error) => {
           this.showToast = true;

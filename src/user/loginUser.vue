@@ -8,10 +8,10 @@
         class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
       >
         <img class="w-8 h-8 mr-2" src="../assets/logo_rukun.png" alt="logo" />
-        <span class="font-bold text-[#ca13c5] font-Poppins">IURAN</span
-        >&nbsp;<span class="font-semibold text-[#2b94f1] font-Roboto"
-          >WARGA</span
-        >
+        <span class="font-bold text-[#ca13c5] font-Poppins">WARGA</span
+        ><span class="font-semibold text-[#2b94f1] font-Roboto"
+          >RTRW</span
+        ><span class="text-base font-bold font-Poppins text-[#BDB76B}">.com</span>
       </a>
       <div
         class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
@@ -99,6 +99,7 @@ async function login() {
   localStorage.setItem("refresh_token", refresh_token);
   localStorage.setItem("level", response.data.data.level.nama);
   localStorage.setItem("email", email);
+  localStorage.setItem("id_tenant", response.data.data.tenant.id);
 
   if (response.data.status == "ok") {
     router.push("/dashboard");

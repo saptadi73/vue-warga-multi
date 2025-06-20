@@ -107,6 +107,7 @@ api.interceptors.response.use(
         processQueue(err, null);
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
+        
         router.push({ name: "login" });
         return Promise.reject(err);
       } finally {

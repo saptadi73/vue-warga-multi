@@ -193,6 +193,7 @@ export default {
     const blokValue = ref("");
     const noBlok = ref(null);
      const loadingStore = useLoadingStore();
+     const id_tenant = localStorage.getItem("id_tenant");
 
     return {
       showToast,
@@ -203,11 +204,13 @@ export default {
       blokValue,
       noBlok,
       loadingStore,
+      id_tenant,
     };
   },
 
   methods: {
     async addBlok() {
+      this.formValuesBlok.id_tenant = this.id_tenant;
       const url = BASE_URL + "warga/add/blok";
       // console.log(this.formValuesBlok);
       this.loadingStore.show();
@@ -236,7 +239,7 @@ export default {
     },
 
     async daftarBlok() {
-      const url = BASE_URL + "warga/daftar/blok";
+      const url = BASE_URL + "warga/daftar/blok/" + this.id_tenant;
 
       await axios
         .get(url)
@@ -254,7 +257,7 @@ export default {
     },
 
     async getStatusWarga() {
-      const url = BASE_URL + "warga/list/status";
+      const url = BASE_URL + "warga/list/status/" + this.id_tenant;
       axios
         .get(url)
         .then((response) => {
@@ -267,7 +270,7 @@ export default {
     },
 
     async getPekerjaan() {
-      const url = BASE_URL + "warga/list/pekerjaan";
+      const url = BASE_URL + "warga/list/pekerjaan/" + this.id_tenant;
       axios
         .get(url)
         .then((response) => {
@@ -280,24 +283,11 @@ export default {
     },
 
     async addWarga() {
-      const url = BASE_URL + "warga/add/kk";
+      const uuidkk = this.$route.params.kk;
+      const url = BASE_URL + "warga/update/kk/" + uuidkk;
       this.formValuesRumah.id_blok = parseInt(this.$refs.list_blok.value);
-      this.formValuesRumah.nama = this.$refs.nama.value;
       this.formValuesRumah.no_rumah = this.$refs.no_rumah.value;
       this.formValuesRumah.no_kk = this.$refs.id_kk.value;
-      this.formValuesRumah.no_hp = this.$refs.no_hp.value;
-      this.formValuesRumah.nik = this.$refs.nik.value;
-      this.formValuesRumah.jenis_kelamin = this.$refs.jk.value;
-      this.formValuesRumah.id_pekerjaan = parseInt(this.$refs.pekerjaan.value);
-      this.formValuesRumah.id_status_warga = parseInt(
-        this.$refs.status_warga.value
-      );
-      this.formValuesRumah.tanggal_lahir =
-        this.$refs.tanggal_lahir.value + " 00:00:00";
-      this.formValuesRumah.tempat_lahir = this.$refs.tempat_lahir.value;
-
-      // console.log("Form Data",this.formValuesRumah);
-
       await api
         .post(url, this.formValuesRumah, {
           headers: {
@@ -309,9 +299,13 @@ export default {
           const trail = trailku(response.data.message);
           console.log(trail);
           console.log(response.data);
+          this.showToast = true;
+          this.toastMessage = response.data.message;
         })
         .catch((error) => {
           console.log(error);
+          this.showToast = true;
+          this.toastMessage = error;
         });
     },
 
