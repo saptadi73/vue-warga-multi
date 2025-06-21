@@ -15,8 +15,8 @@
             <div class="w-full space-y-3">
               <span>Keterangan File</span>
               <input
-              :disabled="isDisabled"
-              v-model="formValues.keterangan"
+                :disabled="isDisabled"
+                v-model="formValues.keterangan"
                 type="text"
                 id="keterangan"
                 class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
@@ -31,7 +31,7 @@
               >Upload file</label
             >
             <input
-            :disabled="isDisabled"
+              :disabled="isDisabled"
               class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
               id="file_input"
               :onchange="pickFile"
@@ -49,25 +49,25 @@
         </form>
 
         <a
-              class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-600 dark:focus:text-blue-600"
-              href="/dashboard"
-            >
-              Dashboard
-              <svg
-                class="shrink-0 size-4"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="m9 18 6-6-6-6"></path>
-              </svg>
-            </a>
+          class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-600 dark:focus:text-blue-600"
+          href="/dashboard"
+        >
+          Dashboard
+          <svg
+            class="shrink-0 size-4"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m9 18 6-6-6-6"></path>
+          </svg>
+        </a>
       </div>
       <div
         class="bg-gray-100 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700"
@@ -81,16 +81,14 @@
             Image
             <img :src="previewImage" v-if="previewImage" width="350" />
           </div>
-          
         </div>
-        
       </div>
       <button
-            :onclick="disableEditFoto"
-            class="w-52 bg-purple-600 text-white rounded-lg shadow-lg"
-          >
-            <span class="material-icons text-white">image</span>Edit
-          </button>
+        :onclick="disableEditFoto"
+        class="w-52 bg-purple-600 text-white rounded-lg shadow-lg"
+      >
+        <span class="material-icons text-white">image</span>Edit
+      </button>
     </div>
 
     <ToastCard
@@ -107,7 +105,7 @@
     v-on:cancelButton="tutupModal"
     v-on:closeButton="tutupModal"
   />
-  <LoadingOverlay/>
+  <LoadingOverlay />
 </template>
 
 <script setup>
@@ -123,6 +121,8 @@ import ModalCard from "../components/ModalCard.vue";
 import { useLoadingStore } from "../stores/loading";
 import LoadingOverlay from "../components/LoadingOverlay.vue";
 import api from "../user/axios";
+
+const id_tenant = localStorage.getItem("id_tenant");
 
 const loadingStore = useLoadingStore();
 
@@ -207,17 +207,22 @@ async function uploadFile() {
   const url = `${BASE_URL}warga/bukti`;
   const keterangan = document.getElementById("keterangan").value;
 
+
   const formDataku = new FormData();
   formDataku.append("file", file.value);
   formDataku.append("id_anggaran", idAnggaran);
   formDataku.append("keterangan", keterangan);
   formDataku.append("nama", "bukti foto Kwitansi/Nota");
-  console.log(formDataku);
+  formDataku.append("id_tenant", id_tenant);
+  console.log("Isi FormData Bukti:");
+  for (let [key, value] of formDataku.entries()) {
+    console.log(`${key}:`, value);
+  }
 
   loadingStore.show();
   try {
     const uploadBukti = await api.post(url, formDataku, {
-      Headers: {
+      headers: {
         "Content-Type": "multipart/form-data",
       },
     });
@@ -229,7 +234,7 @@ async function uploadFile() {
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;
-  }finally{
+  } finally {
     loadingStore.hide();
   }
 }
@@ -242,7 +247,9 @@ function tutupToast() {
 async function getImageKeluarga() {
   try {
     const id_kk = route.params.id;
-    const viewPhotoKK = await axios.get(`${BASE_URL}bayar/find/anggaran/${id_kk}`);
+    const viewPhotoKK = await axios.get(
+      `${BASE_URL}bayar/find/anggaran/${id_kk}`
+    );
     imagekita.value = viewPhotoKK.data?.result?.bukti?.url;
 
     if (imagekita.value) {
@@ -281,7 +288,7 @@ async function unlinkFoto() {
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;
-  }finally{
+  } finally {
     loadingStore.hide();
   }
 }
