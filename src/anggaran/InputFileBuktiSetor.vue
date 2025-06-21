@@ -252,6 +252,8 @@ async function getImageKeluarga() {
     );
     imagekita.value = viewPhotoKK.data?.result?.bukti?.url;
 
+    console.log("Response Data Image :", viewPhotoKK.data);
+
     if (imagekita.value) {
       ImageMessage.value =
         "Photo Bukti sudah ada jika ingin mengganti silakan untuk tap/klik tombol Edit";
@@ -272,10 +274,10 @@ async function unlinkFoto() {
   previewImage.value = "";
   const dataImageku = { url: imagekita.value };
   console.log("Data Image", dataImageku);
-  loadingStore.show();
 
+  loadingStore.show();
   try {
-    const url = `${BASE_URL}warga/delete/fotokk/`;
+    const url = `${BASE_URL}warga/delete/bukti/`;
 
     const unlinkFile = await api.post(url, dataImageku, {
       headers: {
@@ -288,7 +290,7 @@ async function unlinkFoto() {
   } catch (error) {
     showToast.value = true;
     toastMessage.value = error;
-  } finally {
+  }finally{
     loadingStore.hide();
   }
 }
