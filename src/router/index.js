@@ -6,11 +6,7 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: () => import("../views/MainDashboard.vue"),
-      meta: {
-            requiresAuth: true,
-            allowedRoles: ["admin","officer"],
-          },
+      component: () => import("../user/loginUser.vue"),
     },
     {
       path: "/chart",

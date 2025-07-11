@@ -298,7 +298,7 @@ async function getJenisAnggaranMasuk() {
       },
     });
     hasilAnggaranMasuk.value = listJenisAnggaranMAsuk.data.result;
-    console.log(tambahKerjaan.data.result);
+    console.log("Hasil get Jenis Anggaran Keluar :",hasilAnggaranMasuk.value);
   } catch (error) {}
 }
 

@@ -84,7 +84,7 @@
               aria-current="page"
               >Home</a
             >
-            <a
+            <a v-if="access_token"
               class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
               href="/error/logout"
               >Logout</a
@@ -116,7 +116,19 @@ const level=ref("");
 
 export default {
   methods: {
-    
+    getLocalStorage() {
+      this.access_token = localStorage.getItem('access_token');
+      const level = localStorage.getItem('level');
+      console.log('access_token :',this.access_token);
+      console.log('level :', level);
+    },
+  },
+  created(){
+    this.getLocalStorage();
+  },
+  setup() {
+    const access_token = ref(null);
+    return { access_token }
   }
 };
 </script>

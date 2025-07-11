@@ -34,6 +34,14 @@
           ></router-link
         >
       </div>
+      <div v-if="!access_token" class="flex items-center cursor-pointer ml-3 mt-6">
+        <router-link to="/login">
+          <span class="material-icons text-[#e52bf1] w-12 h-12">login</span>
+          <span v-if="isiSidebar" class="text-blue-600 text-base"
+            >Login</span
+          ></router-link
+        >
+      </div>
       <div v-for="menu in menus" :key="menu.title" class="mt-4">
         <div class="flex justify-between hover:bg-slate-100 rounded-md">
           <div
@@ -74,6 +82,7 @@
 </template>
 
 <script>
+import { ref } from "vue";
 import { RouterLink } from "vue-router";
 
 export default {
@@ -178,7 +187,25 @@ export default {
     toggleSubmenu(menu) {
       menu.open = !menu.open;
     },
+
+     getLocalStorage() {
+      this.access_token = localStorage.getItem('access_token');
+      const level = localStorage.getItem('level');
+      console.log('access_token :',this.access_token);
+      console.log('level :', level);
+    },
   },
+  created() {
+    this.getLocalStorage();
+  },
+  setup() {
+
+    const access_token = ref(null);
+
+    return{
+      access_token,
+    }
+  }
 };
 </script>
 
