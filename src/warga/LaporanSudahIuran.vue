@@ -33,7 +33,7 @@
               >
               <input
                 ref="bulan"
-                type="integer"
+                type="number"
                 min="1"
                 max="12"
                 class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-e-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"

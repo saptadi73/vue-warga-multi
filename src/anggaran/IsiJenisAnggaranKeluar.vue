@@ -274,6 +274,8 @@ import api from "../user/axios";
 
 const searchQuery = ref("");
 
+const id_tenant = localStorage.getItem("id_tenant");
+
 const hasilAnggaranMasuk = ref([]);
 const formValues = ref({});
 const pekerjaanValue = ref("");
@@ -291,6 +293,7 @@ const route = useRoute();
 async function getJenisAnggaranMasuk() {
   const url = `${BASE_URL}bayar/list/jenis/anggaran`;
   formValues.value.id_type_anggaran = 2;
+  formValues.value.id_tenant = id_tenant;
   try {
     const listJenisAnggaranMAsuk = await api.post(url, formValues.value, {
       headers: {
@@ -306,11 +309,14 @@ async function addPekerjaan() {
   const url = `${BASE_URL}bayar/add/jenis/anggaran`;
   const nama_pekerjaan = document.getElementById("nama").value;
   const keterangan = document.getElementById("keterangan").value;
+  formValues.value.id_tenant = id_tenant;
   formValues.value = {
     nama: nama_pekerjaan,
     id_type_anggaran: 2,
     keterangan: keterangan,
+    id_tenant: id_tenant,
   };
+ console.log("Isi Data yang mau dikirim: ", formValues.value);
   try {
     const tambahKerjaan = await api.post(url, formValues.value, {
       headers: {
